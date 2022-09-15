@@ -1,8 +1,0 @@
-@import 'antd/dist/antd.css';
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
-.hello {
-  @apply text-[17px] bg-[#4267B2] text-white
-}
