@@ -1,5 +1,7 @@
+import React from 'react';
+
 interface IBtnProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: () => void;
   text: string;
 }
 const Btn = ({ onClick, text }: IBtnProps) => {
