@@ -7,7 +7,7 @@ import RoutineEditor from './pages/routineEditor';
 const App = () => {
   const [onAdd, setOnAdd] = useState(false);
   const routineToggle = () => {
-    setOnAdd(!onAdd);
+    setOnAdd((onAdd) => !onAdd);
   };
   const routineSave = () => routineToggle();
   return (

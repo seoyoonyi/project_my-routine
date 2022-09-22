@@ -6,6 +6,8 @@ interface IRoutineState {
   onAdd: boolean;
 }
 
-export const RoutineStateContext = createContext<IRoutineState | undefined>(
-  undefined,
-);
+export const RoutineStateContext = createContext<IRoutineState>({
+  routineSave() {},
+  routineToggle() {},
+  onAdd: false,
+});
