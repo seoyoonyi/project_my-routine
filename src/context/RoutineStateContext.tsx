@@ -1,13 +1,10 @@
 import { createContext } from 'react';
-
-interface IRoutineState {
-  routineSave: () => void;
-  routineToggle: () => void;
-  onAdd: boolean;
+export interface IDataType {
+  title: string;
+  content: string;
+  id: number;
 }
 
-export const RoutineStateContext = createContext<IRoutineState>({
-  routineSave() {},
-  routineToggle() {},
-  onAdd: false,
-});
+export interface IRoutineState extends Array<IDataType> {}
+
+export const RoutineStateContext = createContext<IRoutineState | []>([]);

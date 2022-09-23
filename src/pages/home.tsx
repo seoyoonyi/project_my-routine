@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { RoutineStateContext } from '../context/RoutineStateContext';
+import { RoutineDispatchContext } from '../context/routineDispatchContext';
 import Btn from '../components/btn';
 import RoutineEditor from './routineEditor';
+import RoutineList from './routineList';
 
 const Home = () => {
   //TODO: Error 처리하기
-  const { routineToggle, onAdd } = useContext(RoutineStateContext);
+  const { routineToggle, onAdd } = useContext(RoutineDispatchContext);
 
   return (
     <>
@@ -13,8 +14,11 @@ const Home = () => {
       {onAdd ? (
         <RoutineEditor></RoutineEditor>
       ) : (
-        <Btn onClick={routineToggle} text={'루틴추가하기'} />
+        <>
+          <Btn onClick={routineToggle} text={'루틴추가하기'} />
+        </>
       )}
+      <RoutineList />
     </>
   );
 };
