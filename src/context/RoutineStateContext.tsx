@@ -3,6 +3,7 @@ export interface IDataType {
   title: string;
   content: string;
   id: number;
+  date: string;
 }
 
 export interface IRoutineState extends Array<IDataType> {}

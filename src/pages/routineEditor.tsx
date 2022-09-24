@@ -2,10 +2,15 @@ import React, { useContext, useRef, useState } from 'react';
 import { RoutineDispatchContext } from '../context/routineDispatchContext';
 import Btn from '../components/btn';
 
+export const getStringDate = (date: Date) => {
+  return date.toISOString().slice(0, 10);
+};
+
 const RoutineEditor = () => {
   const [routine, setRoutine] = useState({
     title: '',
     content: '',
+    date: getStringDate(new Date()),
   });
   const [onDate, setOnDate] = useState(false);
   const titleInput = useRef<HTMLInputElement>(null);
@@ -28,7 +33,7 @@ const RoutineEditor = () => {
   };
 
   const handleSubmit = () => {
-    onCreate(routine.title, routine.content);
+    onCreate(routine.title, routine.content, routine.date);
     alert('저장성공');
 
     routineSave();

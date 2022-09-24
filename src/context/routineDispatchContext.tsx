@@ -4,7 +4,7 @@ interface IRoutineDispatch {
   routineSave: () => void;
   routineToggle: () => void;
   onAdd: boolean;
-  onCreate: (title: string, content: string) => void;
+  onCreate: (title: string, content: string, date: string) => void;
 }
 
 export const RoutineDispatchContext = createContext<IRoutineDispatch>({

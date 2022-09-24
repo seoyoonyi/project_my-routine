@@ -10,15 +10,17 @@ const Home = () => {
 
   return (
     <>
-      <h2>마이루틴</h2>
-      {onAdd ? (
-        <RoutineEditor></RoutineEditor>
-      ) : (
-        <>
-          <Btn onClick={routineToggle} text={'루틴추가하기'} />
-        </>
-      )}
-      <RoutineList />
+      <div className="home">
+        <h2>마이루틴</h2>
+        {onAdd ? (
+          <RoutineEditor></RoutineEditor>
+        ) : (
+          <>
+            <Btn onClick={routineToggle} text={'루틴추가하기'} />
+          </>
+        )}
+        <RoutineList />
+      </div>
     </>
   );
 };
