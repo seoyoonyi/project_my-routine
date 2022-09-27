@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import Btn from '../components/btn';
+import Btn from './btn';
 
 export const getStringDate = (date: Date) => {
   return date.toISOString().slice(0, 10);
@@ -57,8 +57,8 @@ const RoutineEditor = () => {
       ></textarea>
       <br />
       <div>
-        <Btn onClick={dateToggle} text={'날짜'} />
-        {onDate ? <input type="date" /> : null}
+        <Btn onClick={dateToggle} text={'오늘'} />
+        {onDate ? <input type="date" name="date" value={routine.date} /> : null}
         <Btn onClick={handleSubmit} text={'루틴저장'} />
       </div>
     </>

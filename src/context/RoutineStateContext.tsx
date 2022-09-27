@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 export interface IDataType {
+  id: number;
   title: string;
   content: string;
-  id: number;
   date: string;
 }
 

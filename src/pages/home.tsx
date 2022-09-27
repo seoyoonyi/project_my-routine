@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { RoutineDispatchContext } from '../context/routineDispatchContext';
 import Btn from '../components/btn';
-import RoutineEditor from './routineEditor';
-import RoutineList from './routineList';
+import RoutineEditor from '../components/routineEditor';
+import RoutineList from '../components/routineList';
 
 const Home = () => {
   //TODO: Error 처리하기
