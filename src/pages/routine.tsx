@@ -1,15 +1,22 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  PropsWithChildren,
+} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Btn from '../components/btn';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import { IDataType, RoutineStateContext } from '../context/routineStateContext';
 
-const Routine = () => {
-  const { id } = useParams();
+import { IDataType, RoutineStateContext } from '../context/RoutineStateContext';
+interface IRoutineProps {
+  closeRoutine?: () => void;
+}
+
+const Routine = ({ closeRoutine }: PropsWithChildren<IRoutineProps>) => {
+  let { id } = useParams();
   const routineList = useContext(RoutineStateContext);
   const navigate = useNavigate();
   const [data, setData] = useState<IDataType | undefined>();
-  const { closeRoutine } = useContext(RoutineDispatchContext);
 
   useEffect(() => {
     if (routineList.length >= 1) {

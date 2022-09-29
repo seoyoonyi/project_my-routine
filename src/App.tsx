@@ -3,33 +3,23 @@ import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import {
   RoutineStateContext,
   IRoutineState,
-} from './context/routineStateContext';
-import { RoutineDispatchContext } from './context/routineDispatchContext';
+} from './context/RoutineStateContext';
+import { RoutineDispatchContext } from './context/RoutineDispatchContext';
 import Home from './pages/home';
 import RoutineEditor from './components/routineEditor';
 import Routine from './pages/routine';
+import RoutineList from './components/routineList';
 
 const App = () => {
   const [data, setData] = useState<IRoutineState>([]);
   const [onAdd, setOnAdd] = useState(false);
-  const [onRoutine, setOnRoutine] = useState(false);
+
   const dataId = useRef(0);
-  // const navigate = useNavigate();
 
   const routineToggle = () => {
     setOnAdd((onAdd) => !onAdd);
   };
   const routineSave = () => routineToggle();
-
-  const openRoutine = () => {
-    setOnRoutine(true);
-    // navigate(`/routine/${id}`);
-  };
-
-  const closeRoutine = () => {
-    setOnRoutine(false);
-    // navigate('/', { replace: true });
-  };
 
   const onCreate = (title: string, content: string, date: string) => {
     const newItem = {
@@ -49,9 +39,6 @@ const App = () => {
           routineToggle,
           onAdd,
           onCreate,
-          onRoutine,
-          openRoutine,
-          closeRoutine,
         }}
       >
         <BrowserRouter>

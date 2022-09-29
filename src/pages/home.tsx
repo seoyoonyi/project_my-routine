@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
+import { RoutineDispatchContext } from '../context/RoutineDispatchContext';
 import Btn from '../components/btn';
 import RoutineEditor from '../components/routineEditor';
 import RoutineList from '../components/routineList';

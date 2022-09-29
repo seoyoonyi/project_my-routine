@@ -1,12 +1,23 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import { IDataType } from '../context/routineStateContext';
+import { IDataType } from '../context/RoutineStateContext';
 import Routine from '../pages/routine';
 
 const RoutineItem = ({ id, title, content, date }: IDataType) => {
+  const [onRoutine, setOnRoutine] = useState(false);
+  const navigate = useNavigate();
+
   const strDate = new Date(date).toLocaleDateString();
-  const { onRoutine, openRoutine } = useContext(RoutineDispatchContext);
+
+  const openRoutine = () => {
+    setOnRoutine(true);
+    navigate(`/routine/${id}`);
+  };
+
+  const closeRoutine = () => {
+    setOnRoutine(false);
+    navigate('/', { replace: true });
+  };
 
   return (
     <>
@@ -15,7 +26,7 @@ const RoutineItem = ({ id, title, content, date }: IDataType) => {
         <p>{content}</p>
         <p>{strDate}</p>
       </div>
-      {onRoutine === true ? <Routine /> : null}
+      {onRoutine === true ? <Routine closeRoutine={closeRoutine} /> : null}
     </>
   );
 };
