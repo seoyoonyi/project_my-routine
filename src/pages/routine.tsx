@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Btn from '../components/btn';
 import { IDataType, RoutineStateContext } from '../context/RoutineStateContext';
 interface IRoutineProps {
-  closeRoutine?: () => void;
+  closeRoutine: () => void;
 }
 
 const Routine = ({ closeRoutine }: IRoutineProps) => {
