@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import {
   RoutineStateContext,
   IRoutineState,
@@ -8,13 +8,13 @@ import { RoutineDispatchContext } from './context/RoutineDispatchContext';
 import Home from './pages/home';
 import RoutineEditor from './components/routineEditor';
 import Routine from './pages/routine';
-import RoutineList from './components/routineList';
 
 const App = () => {
   const [data, setData] = useState<IRoutineState>([]);
   const [onAdd, setOnAdd] = useState(false);
-
   const dataId = useRef(0);
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   const routineToggle = () => {
     setOnAdd((onAdd) => !onAdd);
@@ -43,10 +43,12 @@ const App = () => {
       >
         <BrowserRouter>
           <div className="App">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/edit" element={<RoutineEditor />} />
-              <Route path="/routine/:id" element={<Routine />} />
+            <Routes location={!background || location}>
+              <Route path="/" element={<Home />}>
+                {background && (
+                  <Route path="/routine/:id" element={<Routine />} />
+                )}
+              </Route>
             </Routes>
           </div>
         </BrowserRouter>
