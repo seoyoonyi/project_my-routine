@@ -58,9 +58,7 @@ const RoutineEditor = () => {
       <br />
       <div>
         <Btn onClick={dateToggle} text={'오늘'} />
-        {onDate ? (
-          <input type="date" name="date" defaultValue={routine.date} />
-        ) : null}
+        {onDate ? <input type="date" name="date" value={routine.date} /> : null}
         <Btn onClick={handleSubmit} text={'루틴저장'} />
       </div>
     </>
