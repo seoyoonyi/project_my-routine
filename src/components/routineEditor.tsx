@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { RoutineDispatchContext } from '../context/RoutineDispatchContext';
+import { RoutineDispatchContext } from '../context/routineDispatchContext';
 import Btn from './btn';
 
 export const getStringDate = (date: Date) => {

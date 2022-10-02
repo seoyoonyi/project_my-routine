@@ -1,18 +1,18 @@
 import React, { useState, useRef } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
 import {
   RoutineStateContext,
   IRoutineState,
-} from './context/RoutineStateContext';
-import { RoutineDispatchContext } from './context/RoutineDispatchContext';
+} from './context/routineStateContext';
+import { RoutineDispatchContext } from './context/routineDispatchContext';
 import Home from './pages/home';
 import RoutineEditor from './components/routineEditor';
-import Routine from './pages/routine';
-import RoutineList from './components/routineList';
 
 const App = () => {
   const [data, setData] = useState<IRoutineState>([]);
   const [onAdd, setOnAdd] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   const dataId = useRef(0);
 
@@ -46,7 +46,6 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/edit" element={<RoutineEditor />} />
-              <Route path="/routine/:id" element={<Routine />} />
             </Routes>
           </div>
         </BrowserRouter>

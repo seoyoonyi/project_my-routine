@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { RoutineDispatchContext } from '../context/RoutineDispatchContext';
+import { RoutineDispatchContext } from '../context/routineDispatchContext';
 import Btn from '../components/btn';
 import RoutineEditor from '../components/routineEditor';
 import RoutineList from '../components/routineList';
@@ -15,9 +15,7 @@ const Home = () => {
         {onAdd ? (
           <RoutineEditor></RoutineEditor>
         ) : (
-          <>
-            <Btn onClick={routineToggle} text={'루틴추가하기'} />
-          </>
+          <Btn onClick={routineToggle} text={'루틴추가하기'} />
         )}
         <RoutineList />
       </div>

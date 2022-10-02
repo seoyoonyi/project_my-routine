@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
+import ReactDom from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import Btn from '../components/btn';
 
-import { IDataType, RoutineStateContext } from '../context/RoutineStateContext';
+import { IDataType, RoutineStateContext } from '../context/routineStateContext';
 
-const Routine = () => {
+const Routine = ({ onClose, isOpen }: any) => {
   let { id } = useParams();
   const routineList = useContext(RoutineStateContext);
   const navigate = useNavigate();
@@ -19,28 +20,28 @@ const Routine = () => {
       if (targetRoutine) {
         setData(targetRoutine);
       } else {
-        alert('없는 루틴입니다.');
         navigate('/', { replace: true });
+        throw new Error('없는 루틴입니다.');
       }
     }
-  }, [id, routineList]);
-
-  const closeRoutine = () => {
-    navigate('/', { replace: true });
-  };
+  }, [id, routineList, navigate, isOpen]);
 
   if (!data) {
-    return <div>로딩중입니다...</div>;
-  } else {
-    return (
-      <div>
-        <h3>{data.title}</h3>
-        <p>{data.content}</p>
-        <p>{data.date}</p>
-        <Btn onClick={closeRoutine} text={'X'} />
-      </div>
-    );
+    return null;
   }
+  if (!isOpen) {
+    return null;
+  }
+
+  return ReactDom.createPortal(
+    <div>
+      <h3>{data.title}</h3>
+      <p>{data.content}</p>
+      <p>{data.date}</p>
+      <Btn text={'X'} onClick={onClose} />
+    </div>,
+    document.getElementById('modal-root') as HTMLElement,
+  );
 };
 
 export default Routine;

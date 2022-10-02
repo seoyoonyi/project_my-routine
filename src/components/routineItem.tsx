@@ -1,18 +1,22 @@
-import { useNavigate } from 'react-router-dom';
-import { IDataType } from '../context/RoutineStateContext';
+import { useContext } from 'react';
+import { RoutineDispatchContext } from '../context/routineDispatchContext';
+import { IDataType, RoutineStateContext } from '../context/routineStateContext';
 
-const RoutineItem = ({ id, title, content, date }: IDataType) => {
-  const navigate = useNavigate();
+interface IRoutineItem extends IDataType {
+  showModal: (item: IDataType) => void;
+}
 
+const RoutineItem = ({ id, title, content, date, showModal }: IRoutineItem) => {
   const strDate = new Date(date).toLocaleDateString();
-
-  const openRoutine = () => {
-    navigate(`/routine/${id}`);
-  };
 
   return (
     <>
-      <div className="routineItem" onClick={openRoutine}>
+      <div
+        className="routineItem"
+        onClick={() => {
+          showModal({ id, title, content, date });
+        }}
+      >
         <h3>{title}</h3>
         <p>{content}</p>
         <p>{strDate}</p>
