@@ -1,19 +1,23 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IDataType } from '../context/RoutineStateContext';
 
 const RoutineItem = ({ id, title, content, date }: IDataType) => {
-  const location = useLocation();
+  const navigate = useNavigate();
+
   const strDate = new Date(date).toLocaleDateString();
 
+  const openRoutine = () => {
+    navigate(`/routine/${id}`);
+  };
+
   return (
-    <Link to="/routine" state={{ background: location }}>
-      <div className="routineItem">
+    <>
+      <div className="routineItem" onClick={openRoutine}>
         <h3>{title}</h3>
         <p>{content}</p>
         <p>{strDate}</p>
       </div>
-      <Outlet />
-    </Link>
+    </>
   );
 };
 

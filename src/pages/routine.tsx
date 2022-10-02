@@ -1,18 +1,10 @@
-import React, {
-  useState,
-  useContext,
-  useEffect,
-  PropsWithChildren,
-} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Btn from '../components/btn';
 
 import { IDataType, RoutineStateContext } from '../context/RoutineStateContext';
-interface IRoutineProps {
-  closeRoutine?: () => void;
-}
 
-const Routine = ({ closeRoutine }: PropsWithChildren<IRoutineProps>) => {
+const Routine = () => {
   let { id } = useParams();
   const routineList = useContext(RoutineStateContext);
   const navigate = useNavigate();
@@ -32,6 +24,10 @@ const Routine = ({ closeRoutine }: PropsWithChildren<IRoutineProps>) => {
       }
     }
   }, [id, routineList]);
+
+  const closeRoutine = () => {
+    navigate('/', { replace: true });
+  };
 
   if (!data) {
     return <div>로딩중입니다...</div>;
