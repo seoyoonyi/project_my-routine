@@ -1,6 +1,4 @@
-import { useContext } from 'react';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import { IDataType, RoutineStateContext } from '../context/routineStateContext';
+import { IDataType } from '../context/routineStateContext';
 
 interface IRoutineItem extends IDataType {
   showModal: (item: IDataType) => void;

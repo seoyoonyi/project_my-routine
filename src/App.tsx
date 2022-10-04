@@ -31,6 +31,10 @@ const App = () => {
     setData((data) => [newItem, ...data]);
   };
 
+  const onRemove = (targetId: number) => {
+    return data.filter((it) => it.id !== targetId);
+  };
+
   return (
     <RoutineStateContext.Provider value={data}>
       <RoutineDispatchContext.Provider
@@ -39,6 +43,7 @@ const App = () => {
           routineToggle,
           onAdd,
           onCreate,
+          onRemove,
         }}
       >
         <BrowserRouter>

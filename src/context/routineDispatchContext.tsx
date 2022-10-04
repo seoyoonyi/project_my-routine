@@ -5,6 +5,7 @@ interface IRoutineDispatch {
   routineToggle: () => void;
   onAdd: boolean;
   onCreate: (title: string, content: string, date: string) => void;
+  onRemove: (targetId: number) => void;
 }
 
 export const RoutineDispatchContext = createContext<IRoutineDispatch>({
@@ -12,4 +13,5 @@ export const RoutineDispatchContext = createContext<IRoutineDispatch>({
   routineToggle() {},
   onAdd: false,
   onCreate() {},
+  onRemove() {},
 });

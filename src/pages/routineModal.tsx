@@ -1,41 +1,78 @@
-import React, { useContext, useState } from 'react';
-import Btn from '../components/btn';
+import { IDataType } from '../context/routineStateContext';
+import { Modal } from 'antd';
+import type { MenuProps } from 'antd';
+import { Dropdown, Menu } from 'antd';
+import { useContext, useState } from 'react';
 import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import { Button, Modal } from 'antd';
 
-const RoutineModal = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface IRoutineModal {
+  isModalOpen: boolean;
+  routineItem: IDataType;
+  handleOk: () => void;
+  handleCancel: () => void;
+}
 
-  const showModal = () => {
-    setIsModalOpen(true);
+const RoutineModal = ({
+  isModalOpen,
+  routineItem,
+  handleOk,
+  handleCancel,
+}: IRoutineModal) => {
+  const { id, title, content, date } = routineItem;
+  const [menuKey, setMenuKey] = useState<string>('');
+  const { onRemove } = useContext(RoutineDispatchContext);
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    const dropDownId = e.key;
+    setMenuKey(dropDownId);
   };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  const menu = (
+    <Menu
+      onClick={handleMenuClick}
+      items={[
+        {
+          label: 'delete',
+          key: '1',
+          onClick: () => {
+            onRemove(id);
+            console.log(id);
+            console.log('삭제');
+          },
+        },
+        {
+          label: '2nd menu item',
+          key: '2',
+        },
+        {
+          label: '3rd menu item',
+          key: '3',
+        },
+      ]}
+    />
+  );
+  const dropDown = (
+    <Dropdown.Button
+      key={menuKey}
+      overlay={menu}
+      trigger={['click']}
+      className="dropdown"
+      type="text"
+    ></Dropdown.Button>
+  );
 
   return (
-    <div>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
+    <>
       <Modal
-        title="Basic Modal"
+        title={[title, dropDown]}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        footer={null}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <p>{content}</p>
+        <p>{date}</p>
       </Modal>
-      {/* <h2>모달</h2>
-      <Btn text={'X'} onClick={closeRoutineModal} /> */}
-    </div>
+    </>
   );
 };
 

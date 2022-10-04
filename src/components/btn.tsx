@@ -1,11 +1,18 @@
 import React from 'react';
+import { Button } from 'antd';
 
 interface IBtnProps {
-  onClick?: () => void;
+  onClick: () => void;
+  type?: 'text' | 'link' | 'ghost' | 'primary' | 'dashed';
   text: string;
 }
-const Btn = ({ onClick, text }: IBtnProps) => {
-  return <button onClick={onClick}>{text}</button>;
+
+const Btn = ({ onClick, type, text }: IBtnProps) => {
+  return (
+    <Button onClick={onClick} type={type}>
+      {text}
+    </Button>
+  );
 };
 
 export default Btn;
