@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useState } from 'react';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import Btn from './btn';
+import React, { useContext, useRef, useState } from "react";
+import { RoutineDispatchContext } from "../context/routineDispatchContext";
+import Btn from "./btn";
 
 export const getStringDate = (date: Date) => {
   return date.toISOString().slice(0, 10);
@@ -8,8 +8,8 @@ export const getStringDate = (date: Date) => {
 
 const RoutineEditor = () => {
   const [routine, setRoutine] = useState({
-    title: '',
-    content: '',
+    title: "",
+    content: "",
     date: getStringDate(new Date()),
   });
   const [onDate, setOnDate] = useState(false);
@@ -24,7 +24,7 @@ const RoutineEditor = () => {
   };
 
   const handleChangeRoutine = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setRoutine({
       ...routine,
@@ -33,8 +33,9 @@ const RoutineEditor = () => {
   };
 
   const handleSubmit = () => {
+    console.log(routine.date);
     onCreate(routine.title, routine.content, routine.date);
-    alert('저장성공');
+    alert("저장성공");
 
     routineSave();
   };
@@ -57,9 +58,11 @@ const RoutineEditor = () => {
       ></textarea>
       <br />
       <div>
-        <Btn onClick={dateToggle} text={'오늘'} />
-        {onDate ? <input type="date" name="date" value={routine.date} /> : null}
-        <Btn onClick={handleSubmit} text={'루틴저장'} />
+        <Btn onClick={dateToggle} text={"오늘"} />
+        {onDate ? (
+          <input type="date" name="date" onChange={handleChangeRoutine} />
+        ) : null}
+        <Btn onClick={handleSubmit} text={"루틴저장"} />
       </div>
     </>
   );
