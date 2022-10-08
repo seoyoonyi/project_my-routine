@@ -8,4 +8,11 @@ export interface IDataType {
 
 export interface IRoutineState extends Array<IDataType> {}
 
-export const RoutineStateContext = createContext<IRoutineState | []>([]);
+export const RoutineStateContext = createContext<IRoutineState>([]);
+
+// export const RoutineStateContext = createContext<IDataType>({
+//   id: 0,
+//   title: '',
+//   content: '',
+//   date: '',
+// });
