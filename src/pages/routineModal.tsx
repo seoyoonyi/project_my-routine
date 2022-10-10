@@ -1,9 +1,9 @@
-import { IDataType } from '../context/routineStateContext';
-import { Modal } from 'antd';
-import type { MenuProps } from 'antd';
-import { Dropdown, Menu } from 'antd';
-import { useContext, useState } from 'react';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
+import { IDataType } from "../context/routineStateContext";
+import { Modal } from "antd";
+import type { MenuProps } from "antd";
+import { Dropdown, Menu } from "antd";
+import { useContext, useState } from "react";
+import { RoutineDispatchContext } from "../context/routineDispatchContext";
 
 interface IRoutineModal {
   isModalOpen: boolean;
@@ -19,10 +19,11 @@ const RoutineModal = ({
   handleCancel,
 }: IRoutineModal) => {
   const { id, title, content, date } = routineItem;
-  const [menuKey, setMenuKey] = useState<string>('');
-  const { onRemove } = useContext(RoutineDispatchContext);
+  const [menuKey, setMenuKey] = useState<string>("");
+  const { memoizedDispatches } = useContext(RoutineDispatchContext);
+  const { onRemove } = memoizedDispatches;
 
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
+  const handleMenuClick: MenuProps["onClick"] = (e) => {
     const dropDownId = e.key;
     setMenuKey(dropDownId);
   };
@@ -31,21 +32,22 @@ const RoutineModal = ({
       onClick={handleMenuClick}
       items={[
         {
-          label: 'delete',
-          key: '1',
+          label: "delete",
+          key: "1",
           onClick: () => {
             onRemove(id);
+            handleCancel();
             console.log(id);
-            console.log('삭제');
+            console.log("삭제");
           },
         },
         {
-          label: '2nd menu item',
-          key: '2',
+          label: "2nd menu item",
+          key: "2",
         },
         {
-          label: '3rd menu item',
-          key: '3',
+          label: "3rd menu item",
+          key: "3",
         },
       ]}
     />
@@ -54,7 +56,7 @@ const RoutineModal = ({
     <Dropdown.Button
       key={menuKey}
       overlay={menu}
-      trigger={['click']}
+      trigger={["click"]}
       className="dropdown"
       type="text"
     ></Dropdown.Button>

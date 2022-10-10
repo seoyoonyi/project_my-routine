@@ -1,44 +1,21 @@
-import { createContext, Dispatch } from 'react';
-import { ReducerAction } from '../App';
+import { createContext } from "react";
 
 export interface IRoutineDispatch {
   routineSave: () => void;
   routineToggle: () => void;
   onAdd: boolean;
-  memoizedDispatches: () => {
-    onCreate: () => void;
-    onRemove: () => void;
+  memoizedDispatches: {
+    onCreate: (title: string, content: string, date: string) => void;
+    onRemove: (targetId: number) => void;
   };
 }
 
 export const RoutineDispatchContext = createContext<IRoutineDispatch>({
-  routineSave() {},
-  routineToggle() {},
+  routineSave: () => {},
+  routineToggle: () => {},
   onAdd: false,
-  memoizedDispatches: () => {
-    return {
-      onCreate() {},
-      onRemove() {},
-    };
+  memoizedDispatches: {
+    onCreate: () => {},
+    onRemove: () => {},
   },
 });
-
-/* 
-
-Dispatch<ReducerAction>
-export interface IRoutineDispatch {
-  routineSave: () => void;
-  routineToggle: () => void;
-  onAdd: boolean;
-  onCreate: (title: string, content: string, date: string) => void;
-  onRemove: (targetId: number) => void;
-}
-
-export const RoutineDispatchContext = createContext<IRoutineDispatch>({
-  routineSave() {},
-  routineToggle() {},
-  onAdd: false,
-  onCreate() {},
-  onRemove() {},
-});
- */

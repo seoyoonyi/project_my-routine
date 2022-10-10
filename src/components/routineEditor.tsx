@@ -1,6 +1,6 @@
-import React, { useContext, useRef, useState } from 'react';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import Btn from './btn';
+import React, { useContext, useRef, useState } from "react";
+import { RoutineDispatchContext } from "../context/routineDispatchContext";
+import Btn from "./btn";
 
 export const getStringDate = (date: Date) => {
   return date.toISOString().slice(0, 10);
@@ -8,22 +8,27 @@ export const getStringDate = (date: Date) => {
 
 const RoutineEditor = () => {
   const [routine, setRoutine] = useState({
-    title: '',
-    content: '',
+    title: "",
+    content: "",
     date: getStringDate(new Date()),
   });
   const [onDate, setOnDate] = useState(false);
   const titleInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
-  //TODO:
+
   //TODO: Error 처리하기
-  const { routineSave, onCreate } = useContext(RoutineDispatchContext);
+  const { routineSave, memoizedDispatches } = useContext(
+    RoutineDispatchContext
+  );
+  const { onCreate } = memoizedDispatches;
 
   const dateToggle = () => {
     setOnDate((onDate) => !onDate);
   };
 
-  const handleChangeRoutine = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangeRoutine = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setRoutine({
       ...routine,
       [e.target.name]: e.target.value,
@@ -31,24 +36,40 @@ const RoutineEditor = () => {
   };
 
   const handleSubmit = () => {
-    console.log(routine.date);
     onCreate(routine.title, routine.content, routine.date);
-    alert('저장성공');
+    alert("저장성공");
 
     routineSave();
   };
 
   return (
     <>
-      <input ref={titleInput} name="title" value={routine.title} onChange={handleChangeRoutine} />
+      <input
+        ref={titleInput}
+        name="title"
+        value={routine.title}
+        onChange={handleChangeRoutine}
+      />
       <br />
 
-      <textarea ref={contentInput} name="content" value={routine.content} onChange={handleChangeRoutine}></textarea>
+      <textarea
+        ref={contentInput}
+        name="content"
+        value={routine.content}
+        onChange={handleChangeRoutine}
+      ></textarea>
       <br />
       <div>
-        <Btn onClick={dateToggle} text={'오늘'} />
-        {onDate ? <input type="date" name="date" onChange={handleChangeRoutine} /> : null}
-        <Btn onClick={handleSubmit} text={'루틴저장'} />
+        <Btn onClick={dateToggle} text={"오늘"} />
+        {onDate ? (
+          <input
+            type="date"
+            name="date"
+            onChange={handleChangeRoutine}
+            value={routine.date}
+          />
+        ) : null}
+        <Btn onClick={handleSubmit} text={"루틴저장"} />
       </div>
     </>
   );

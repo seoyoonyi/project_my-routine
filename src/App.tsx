@@ -1,11 +1,11 @@
-import React, { useState, useRef, useReducer, useMemo } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
-import { RoutineStateContext } from './context/routineStateContext';
-import { RoutineDispatchContext } from './context/routineDispatchContext';
-import Home from './pages/home';
-import RoutineEditor from './components/routineEditor';
-import { useCallback } from 'react';
+import React, { useState, useRef, useReducer, useMemo, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import { RoutineStateContext } from "./context/routineStateContext";
+import { RoutineDispatchContext } from "./context/routineDispatchContext";
+import Home from "./pages/home";
+import RoutineEditor from "./components/routineEditor";
+import { useCallback } from "react";
 
 interface ReducerState {
   id: number;
@@ -16,8 +16,8 @@ interface ReducerState {
 
 const initialState: ReducerState[] = [];
 
-export const SET_CREATE = 'SET_CREATE' as const;
-export const SET_REMOVE = 'SET_REMOVE' as const;
+export const SET_CREATE = "SET_CREATE" as const;
+export const SET_REMOVE = "SET_REMOVE" as const;
 
 interface ICreateAction {
   type: typeof SET_CREATE;
@@ -36,14 +36,22 @@ interface IRemoveAction {
 
 export type ReducerAction = ICreateAction | IRemoveAction;
 
-const setCreate = (id: number, title: string, content: string, date: string): ICreateAction => {
+const setCreate = (
+  id: number,
+  title: string,
+  content: string,
+  date: string
+): ICreateAction => {
   return { type: SET_CREATE, data: { id, title, content, date } };
 };
 const setRemove = (targetId: number): IRemoveAction => {
   return { type: SET_REMOVE, targetId };
 };
 
-const reducer = (state: ReducerState[] = initialState, action: ReducerAction) => {
+const reducer = (
+  state: ReducerState[] = initialState,
+  action: ReducerAction
+) => {
   switch (action.type) {
     case SET_CREATE: {
       const created_date = new Date().getTime();
@@ -60,7 +68,9 @@ const reducer = (state: ReducerState[] = initialState, action: ReducerAction) =>
 
 const App = () => {
   const [onAdd, setOnAdd] = useState(false);
-  const [data, dispatch] = useReducer<React.Reducer<ReducerState[], ReducerAction>>(reducer, initialState);
+  const [data, dispatch] = useReducer<
+    React.Reducer<ReducerState[], ReducerAction>
+  >(reducer, initialState);
   const dataId = useRef(0);
 
   const routineToggle = () => {
@@ -68,13 +78,16 @@ const App = () => {
   };
   const routineSave = () => routineToggle();
 
-  const onCreate = useCallback(() => {
-    dispatch(setCreate(dataId.current, '', '', ''));
-    dataId.current += 1;
-  }, []);
+  const onCreate = useCallback(
+    (title: string, content: string, date: string) => {
+      dispatch(setCreate(dataId.current, title, content, date));
+      dataId.current += 1;
+    },
+    []
+  );
 
-  const onRemove = useCallback(() => {
-    dispatch(setRemove(0));
+  const onRemove = useCallback((targetId: number) => {
+    dispatch(setRemove(targetId));
   }, []);
 
   const memoizedDispatches = useMemo(() => {
@@ -83,7 +96,9 @@ const App = () => {
 
   return (
     <RoutineStateContext.Provider value={data}>
-      <RoutineDispatchContext.Provider value={{ memoizedDispatches, routineSave, routineToggle, onAdd }}>
+      <RoutineDispatchContext.Provider
+        value={{ memoizedDispatches, routineSave, routineToggle, onAdd }}
+      >
         <BrowserRouter>
           <div className="App">
             <Routes>
