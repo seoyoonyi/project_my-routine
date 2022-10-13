@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 export interface IRoutineDispatch {
   routineSave: () => void;
@@ -7,6 +7,7 @@ export interface IRoutineDispatch {
   memoizedDispatches: {
     onCreate: (title: string, content: string, date: string) => void;
     onRemove: (targetId: number) => void;
+    onEdit: (id: number, title: string, content: string, date: string) => void;
   };
 }
 
@@ -17,5 +18,6 @@ export const RoutineDispatchContext = createContext<IRoutineDispatch>({
   memoizedDispatches: {
     onCreate: () => {},
     onRemove: () => {},
+    onEdit: () => {},
   },
 });

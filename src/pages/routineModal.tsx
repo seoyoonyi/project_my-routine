@@ -1,9 +1,9 @@
-import { IDataType } from "../context/routineStateContext";
-import { Modal } from "antd";
-import type { MenuProps } from "antd";
-import { Dropdown, Menu } from "antd";
-import { useContext, useState } from "react";
-import { RoutineDispatchContext } from "../context/routineDispatchContext";
+import { IDataType } from '../context/routineStateContext';
+import { Modal, Dropdown, Menu, Input } from 'antd';
+import type { MenuProps } from 'antd';
+import { useContext, useRef, useState } from 'react';
+import { RoutineDispatchContext } from '../context/routineDispatchContext';
+import Btn from '../components/btn';
 
 interface IRoutineModal {
   isModalOpen: boolean;
@@ -12,18 +12,45 @@ interface IRoutineModal {
   handleCancel: () => void;
 }
 
-const RoutineModal = ({
-  isModalOpen,
-  routineItem,
-  handleOk,
-  handleCancel,
-}: IRoutineModal) => {
+const RoutineModal = ({ isModalOpen, routineItem, handleOk, handleCancel }: IRoutineModal) => {
   const { id, title, content, date } = routineItem;
-  const [menuKey, setMenuKey] = useState<string>("");
+  const [menuKey, setMenuKey] = useState<string>('');
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isEditDate, setIsEditDate] = useState<boolean>(false);
+  const [originData, setOriginData] = useState(routineItem);
+  const titleInput = useRef<HTMLInputElement>(null);
+  const contentInput = useRef<HTMLTextAreaElement>(null);
   const { memoizedDispatches } = useContext(RoutineDispatchContext);
-  const { onRemove } = memoizedDispatches;
+  const { onRemove, onEdit } = memoizedDispatches;
+  const toggleIsEdit = () => setIsEdit(!isEdit);
+  const toggleIsEditDate = () => setIsEditDate(!isEditDate);
+  const handleQuitEidt = () => {
+    setIsEdit(false);
+    setOriginData(routineItem);
+  };
+  const handleEdit = () => {
+    onEdit(id, originData.title, originData.content, originData.date);
+    toggleIsEdit();
+  };
 
-  const handleMenuClick: MenuProps["onClick"] = (e) => {
+  const handleChangeEdit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setOriginData({
+      id: id,
+      title: e.target.value,
+      content: e.target.value,
+      date: date,
+    });
+  };
+  const handleChangeEditDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOriginData({
+      id: id,
+      title: title,
+      content: content,
+      date: e.target.value,
+    });
+  };
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
     const dropDownId = e.key;
     setMenuKey(dropDownId);
   };
@@ -32,47 +59,49 @@ const RoutineModal = ({
       onClick={handleMenuClick}
       items={[
         {
-          label: "delete",
-          key: "1",
+          label: 'delete',
+          key: '1',
           onClick: () => {
             onRemove(id);
             handleCancel();
             console.log(id);
-            console.log("삭제");
+            console.log('삭제');
           },
         },
         {
-          label: "2nd menu item",
-          key: "2",
+          label: '2nd menu item',
+          key: '2',
         },
         {
-          label: "3rd menu item",
-          key: "3",
+          label: '3rd menu item',
+          key: '3',
         },
       ]}
     />
   );
-  const dropDown = (
-    <Dropdown.Button
-      key={menuKey}
-      overlay={menu}
-      trigger={["click"]}
-      className="dropdown"
-      type="text"
-    ></Dropdown.Button>
-  );
+  const dropDown = <Dropdown.Button key={menuKey} overlay={menu} trigger={['click']} className="dropdown" type="text"></Dropdown.Button>;
 
   return (
     <>
-      <Modal
-        title={[title, dropDown]}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <p>{content}</p>
-        <p>{date}</p>
+      <Modal title={[dropDown]} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
+        {isEdit ? (
+          <>
+            <input ref={titleInput} name="title" defaultValue={title} onChange={handleChangeEdit} />
+            <br />
+            <textarea ref={contentInput} name="content" defaultValue={content} onChange={handleChangeEdit}></textarea>
+            <br />
+            <Btn onClick={handleQuitEidt} text={'취소'} />
+            <Btn onClick={handleEdit} text={'저장'} />
+          </>
+        ) : (
+          <>
+            <h2 onClick={toggleIsEdit}>{originData.title}</h2>
+            <p onClick={toggleIsEdit}>{originData.content}</p>
+          </>
+        )}
+        <br />
+        {isEditDate ? <input type="date" name="date" onChange={handleChangeEditDate} defaultValue={date} /> : <p onClick={toggleIsEditDate}>{originData.date}</p>}
+        <br />
       </Modal>
     </>
   );
