@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { IDataType } from "../context/routineStateContext";
+import { IDataType } from '../context/routineStateContext';
 
 interface IRoutineItem extends IDataType {
   showModal: (item: IDataType) => void;

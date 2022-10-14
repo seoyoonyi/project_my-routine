@@ -1,5 +1,5 @@
 import { IDataType } from '../context/routineStateContext';
-import { Modal, Dropdown, Menu, Input } from 'antd';
+import { Modal, Dropdown, Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import { useContext, useRef, useState } from 'react';
 import { RoutineDispatchContext } from '../context/routineDispatchContext';
@@ -33,20 +33,15 @@ const RoutineModal = ({ isModalOpen, routineItem, handleOk, handleCancel }: IRou
     toggleIsEdit();
   };
 
+  const handleEditDate = () => {
+    onEdit(id, originData.title, originData.content, originData.date);
+    toggleIsEditDate();
+  };
+
   const handleChangeEdit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setOriginData({
-      id: id,
-      title: e.target.value,
-      content: e.target.value,
-      date: date,
-    });
-  };
-  const handleChangeEditDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOriginData({
-      id: id,
-      title: title,
-      content: content,
-      date: e.target.value,
+      ...originData,
+      [e.currentTarget.name]: e.currentTarget.value,
     });
   };
 
@@ -100,7 +95,14 @@ const RoutineModal = ({ isModalOpen, routineItem, handleOk, handleCancel }: IRou
           </>
         )}
         <br />
-        {isEditDate ? <input type="date" name="date" onChange={handleChangeEditDate} defaultValue={date} /> : <p onClick={toggleIsEditDate}>{originData.date}</p>}
+        {isEditDate ? (
+          <>
+            <input type="date" name="date" onChange={handleChangeEdit} defaultValue={date} />
+            <Btn onClick={handleEditDate} text={'저장'} />
+          </>
+        ) : (
+          <p onClick={toggleIsEditDate}>{originData.date}</p>
+        )}
         <br />
       </Modal>
     </>
