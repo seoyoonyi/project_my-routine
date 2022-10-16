@@ -1,6 +1,5 @@
 {
   "name": "project_my-routine",
-<<<<<<< HEAD
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -50,25 +49,5 @@
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.6"
-=======
-  "version": "1.0.0",
-  "description": "마이루틴",
-  "main": "index.js",
-  "scripts": {
-    "start": "concurrently \"cd client && npm run start\" \"cd server && npm run start:dev\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/seoyoonyi/project_my-routine.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/seoyoonyi/project_my-routine/issues"
-  },
-  "homepage": "https://github.com/seoyoonyi/project_my-routine#readme",
-  "dependencies": {
-    "concurrently": "^7.4.0"
->>>>>>> 0ca31e64f3dc52393390308ce17f801147daf562
   }
 }

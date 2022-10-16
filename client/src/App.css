@@ -1,0 +1,14 @@
+@import "~antd/dist/antd.css";
+.ant-modal-header {
+  height: 54px;
+}
+.dropdown {
+  position: absolute;
+  top: 0;
+  right: 54px;
+  display: block;
+  width: 54px;
+  height: 54px;
+  text-align: center;
+  line-height: 54px;
+}
