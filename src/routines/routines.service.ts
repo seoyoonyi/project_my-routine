@@ -15,15 +15,15 @@ export class RoutinesService {
     return this.repo.findAll();
   }
 
-  async findOne(id: number) {
-    return this.repo.findOne(id);
+  async findOneBy(id: number) {
+    return this.repo.findOneBy(id);
   }
 
   async update(id: number, updateRoutineDto: UpdateRoutineDto) {
     return this.repo.update(id, updateRoutineDto);
   }
 
-  async remove(id: number) {
-    return this.repo.remove(id);
+  async delete(id: number) {
+    return this.repo.delete(id);
   }
 }

@@ -20,15 +20,15 @@ export class RoutinesRepository {
     return this.repo.find();
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} routine`;
+  async findOneBy(id: number) {
+    return this.repo.findOneBy({ id });
   }
 
   async update(id: number, updateRoutineDto: UpdateRoutineDto) {
-    return `This action updates a #${id} routine`;
+    return this.repo.update(id, updateRoutineDto);
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} routine`;
+  async delete(id: number) {
+    return this.repo.delete(id);
   }
 }
