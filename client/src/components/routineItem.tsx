@@ -1,23 +1,27 @@
-import { IDataType } from "../context/routineStateContext";
+import { IRoutine } from "../pages/Main";
+import { IRoutineListProps } from "./RoutineList";
 
-interface IRoutineItem extends IDataType {
-  showModal: (item: IDataType) => void;
+interface IRoutineItemProps extends IRoutineListProps {
+  showModal: () => void;
 }
 
-const RoutineItem = ({ id, title, content, date, showModal }: IRoutineItem) => {
-  const strDate = new Date(date).toLocaleDateString();
-
+const RoutineItem = ({
+  title,
+  content,
+  date,
+  showModal,
+}: IRoutineItemProps) => {
   return (
     <>
       <div
         className="routineItem w-9/12 h-12 bg-[#e0ebff] rounded-[7px] flex justify-start items-center px-3"
         onClick={() => {
-          showModal({ id, title, content, date });
+          showModal();
         }}
       >
         <h3>{title}</h3>
         <p>{content}</p>
-        <p>{strDate}</p>
+        <p>{date}</p>
       </div>
     </>
   );

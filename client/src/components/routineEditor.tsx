@@ -1,54 +1,89 @@
-import React, { useContext, useRef, useState } from 'react';
-import { RoutineDispatchContext } from '../context/routineDispatchContext';
-import Btn from './btn';
+import React, { useRef, useState } from "react";
+import Btn from "./Btn";
+import axios from "axios";
+import { IRoutineListProps } from "./RoutineList";
+import { IRoutine } from "../pages/Main";
 
 export const getStringDate = (date: Date) => {
   return date.toISOString().slice(0, 10);
 };
-
-const RoutineEditor = () => {
-  const [routine, setRoutine] = useState({
-    title: '',
-    content: '',
-    date: getStringDate(new Date()),
+interface IRoutineEditorProps {
+  setRoutines: React.Dispatch<React.SetStateAction<IRoutine[]>>;
+  getRoutines: () => Promise<void>;
+}
+const RoutineEditor = ({ setRoutines, getRoutines }: IRoutineEditorProps) => {
+  const [routine, setRoutine] = useState<IRoutineListProps>({
+    title: "",
+    content: "",
+    date: "",
   });
   const [onDate, setOnDate] = useState(false);
   const titleInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
 
-  //TODO: Error 처리하기
-  const { routineSave, memoizedDispatches } = useContext(RoutineDispatchContext);
-  const { onCreate } = memoizedDispatches;
-
   const dateToggle = () => {
     setOnDate((onDate) => !onDate);
   };
 
-  const handleChangeRoutine = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangeRoutine = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setRoutine({
       ...routine,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = () => {
-    onCreate(routine.title, routine.content, routine.date);
-    alert('저장성공');
+  const addRoutine = async (title: string, content: string, date: string) => {
+    try {
+      await axios.post("http://localhost:8000/routines", {
+        title,
+        content,
+        date,
+      });
+      setRoutine({
+        title: "",
+        content: "",
+        date: "",
+      });
+      getRoutines();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    routineSave();
+  const handleSubmit = () => {
+    addRoutine(routine.title, routine.content, routine.date);
   };
 
   return (
     <>
-      <input ref={titleInput} name="title" value={routine.title} onChange={handleChangeRoutine} />
+      <input
+        ref={titleInput}
+        name="title"
+        value={routine.title}
+        onChange={handleChangeRoutine}
+      />
       <br />
 
-      <textarea ref={contentInput} name="content" value={routine.content} onChange={handleChangeRoutine}></textarea>
+      <textarea
+        ref={contentInput}
+        name="content"
+        value={routine.content}
+        onChange={handleChangeRoutine}
+      ></textarea>
       <br />
       <div>
-        <Btn onClick={dateToggle} text={'오늘'} />
-        {onDate ? <input type="date" name="date" onChange={handleChangeRoutine} value={routine.date} /> : null}
-        <Btn onClick={handleSubmit} text={'루틴저장'} />
+        <Btn onClick={dateToggle} text={"오늘"} />
+        {onDate ? (
+          <input
+            type="date"
+            name="date"
+            onChange={handleChangeRoutine}
+            value={routine.date}
+          />
+        ) : null}
+        <Btn onClick={handleSubmit} text={"루틴저장"} />
       </div>
     </>
   );

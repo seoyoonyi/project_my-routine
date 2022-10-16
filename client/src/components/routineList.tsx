@@ -1,26 +1,18 @@
-import { useContext, useState } from "react";
-import RoutineItem from "./routineItem";
-import { RoutineStateContext, IDataType } from "../context/routineStateContext";
-import RoutineModal from "../pages/routineModal";
+import { useState } from "react";
+import RoutineModal from "./RoutineModal";
+import RoutineItem from "./RoutineItem";
 
-const RoutineList = () => {
-  const routinelist = useContext(RoutineStateContext);
+export interface IRoutineListProps {
+  title: string;
+  content: string;
+  date: string;
+}
 
+const RoutineList = (routine: IRoutineListProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [routineItem, setRoutineItem] = useState<IDataType>({
-    id: 0,
-    title: "",
-    content: "",
-    date: "",
-  });
 
-  const showModal = (item: IDataType) => {
+  const showModal = () => {
     setIsModalOpen(true);
-    setRoutineItem(item);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -29,15 +21,12 @@ const RoutineList = () => {
 
   return (
     <>
-      {routinelist.map((it: IDataType) => {
-        return <RoutineItem key={it.id} {...it} showModal={showModal} />;
-      })}
+      <RoutineItem {...routine} showModal={showModal} />
 
       {isModalOpen && (
         <RoutineModal
           isModalOpen={isModalOpen}
-          routineItem={routineItem}
-          handleOk={handleOk}
+          routineItem={routine}
           handleCancel={handleCancel}
         />
       )}
