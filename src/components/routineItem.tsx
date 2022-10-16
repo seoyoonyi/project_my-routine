@@ -1,4 +1,4 @@
-import { IDataType } from '../context/routineStateContext';
+import { IDataType } from "../context/routineStateContext";
 
 interface IRoutineItem extends IDataType {
   showModal: (item: IDataType) => void;
@@ -10,7 +10,7 @@ const RoutineItem = ({ id, title, content, date, showModal }: IRoutineItem) => {
   return (
     <>
       <div
-        className="routineItem"
+        className="routineItem w-9/12 h-12 bg-[#e0ebff] rounded-[7px] flex justify-start items-center px-3"
         onClick={() => {
           showModal({ id, title, content, date });
         }}

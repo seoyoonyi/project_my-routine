@@ -1,11 +1,11 @@
-import React, { useState, useRef, useReducer, useMemo, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
-import { RoutineStateContext } from './context/routineStateContext';
-import { RoutineDispatchContext } from './context/routineDispatchContext';
-import Home from './pages/home';
-import RoutineEditor from './components/routineEditor';
-import { useCallback } from 'react';
+import React, { useState, useRef, useReducer, useMemo, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import { RoutineStateContext } from "./context/routineStateContext";
+import { RoutineDispatchContext } from "./context/routineDispatchContext";
+import Home from "./pages/home";
+import RoutineEditor from "./components/routineEditor";
+import { useCallback } from "react";
 
 interface ReducerState {
   id: number;
@@ -16,9 +16,9 @@ interface ReducerState {
 
 const initialState: ReducerState[] = [];
 
-export const SET_CREATE = 'SET_CREATE' as const;
-export const SET_REMOVE = 'SET_REMOVE' as const;
-export const SET_EDIT = 'SET_EDIT' as const;
+export const SET_CREATE = "SET_CREATE" as const;
+export const SET_REMOVE = "SET_REMOVE" as const;
+export const SET_EDIT = "SET_EDIT" as const;
 
 interface ICreateAction {
   type: typeof SET_CREATE;
@@ -47,18 +47,31 @@ interface IEditAction {
 
 export type ReducerAction = ICreateAction | IRemoveAction | IEditAction;
 
-const setCreate = (id: number, title: string, content: string, date: string): ICreateAction => {
+const setCreate = (
+  id: number,
+  title: string,
+  content: string,
+  date: string
+): ICreateAction => {
   return { type: SET_CREATE, data: { id, title, content, date } };
 };
 const setRemove = (targetId: number): IRemoveAction => {
   return { type: SET_REMOVE, targetId };
 };
 
-const setEdit = (targetId: number, title: string, content: string, date: string): IEditAction => {
+const setEdit = (
+  targetId: number,
+  title: string,
+  content: string,
+  date: string
+): IEditAction => {
   return { type: SET_EDIT, targetId, data: { title, content, date } };
 };
 
-const reducer = (state: ReducerState[] = initialState, action: ReducerAction) => {
+const reducer = (
+  state: ReducerState[] = initialState,
+  action: ReducerAction
+) => {
   switch (action.type) {
     case SET_CREATE: {
       const created_date = new Date().getTime();
@@ -69,7 +82,16 @@ const reducer = (state: ReducerState[] = initialState, action: ReducerAction) =>
       return state.filter((it) => it.id !== action.targetId);
     }
     case SET_EDIT: {
-      return state.map((it) => (it.id === action.targetId ? { ...it, title: action.data.title, content: action.data.content, date: action.data.date } : it));
+      return state.map((it) =>
+        it.id === action.targetId
+          ? {
+              ...it,
+              title: action.data.title,
+              content: action.data.content,
+              date: action.data.date,
+            }
+          : it
+      );
     }
     default:
       return state;
@@ -78,7 +100,9 @@ const reducer = (state: ReducerState[] = initialState, action: ReducerAction) =>
 
 const App = () => {
   const [onAdd, setOnAdd] = useState(false);
-  const [data, dispatch] = useReducer<React.Reducer<ReducerState[], ReducerAction>>(reducer, initialState);
+  const [data, dispatch] = useReducer<
+    React.Reducer<ReducerState[], ReducerAction>
+  >(reducer, initialState);
   const dataId = useRef(0);
 
   const routineToggle = () => {
@@ -86,18 +110,24 @@ const App = () => {
   };
   const routineSave = () => routineToggle();
 
-  const onCreate = useCallback((title: string, content: string, date: string) => {
-    dispatch(setCreate(dataId.current, title, content, date));
-    dataId.current += 1;
-  }, []);
+  const onCreate = useCallback(
+    (title: string, content: string, date: string) => {
+      dispatch(setCreate(dataId.current, title, content, date));
+      dataId.current += 1;
+    },
+    []
+  );
 
   const onRemove = useCallback((targetId: number) => {
     dispatch(setRemove(targetId));
   }, []);
 
-  const onEdit = useCallback((targetId: number, title: string, content: string, date: string) => {
-    dispatch(setEdit(targetId, title, content, date));
-  }, []);
+  const onEdit = useCallback(
+    (targetId: number, title: string, content: string, date: string) => {
+      dispatch(setEdit(targetId, title, content, date));
+    },
+    []
+  );
 
   const memoizedDispatches = useMemo(() => {
     return { onCreate, onRemove, onEdit };
@@ -105,9 +135,11 @@ const App = () => {
 
   return (
     <RoutineStateContext.Provider value={data}>
-      <RoutineDispatchContext.Provider value={{ memoizedDispatches, routineSave, routineToggle, onAdd }}>
+      <RoutineDispatchContext.Provider
+        value={{ memoizedDispatches, routineSave, routineToggle, onAdd }}
+      >
         <BrowserRouter>
-          <div className="App">
+          <div className="App flex justify-center items-center min-h-screen bg-[#cbd7e3]">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/edit" element={<RoutineEditor />} />
