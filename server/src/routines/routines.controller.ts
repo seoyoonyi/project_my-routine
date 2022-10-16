@@ -30,7 +30,7 @@ export class RoutineController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.routineService.findOne(+id);
+    return this.routineService.findOneBy(+id);
   }
 
   @Patch(':id')
@@ -39,7 +39,7 @@ export class RoutineController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.routineService.remove(+id);
+  delete(@Param('id') id: string) {
+    return this.routineService.delete(+id);
   }
 }

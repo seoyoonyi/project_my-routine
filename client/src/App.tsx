@@ -6,6 +6,7 @@ import { RoutineDispatchContext } from "./context/routineDispatchContext";
 import Home from "./pages/home";
 import RoutineEditor from "./components/routineEditor";
 import { useCallback } from "react";
+import axios from "axios";
 
 interface ReducerState {
   id: number;
@@ -16,9 +17,15 @@ interface ReducerState {
 
 const initialState: ReducerState[] = [];
 
+export const SET_READ = "SET_READ" as const;
 export const SET_CREATE = "SET_CREATE" as const;
 export const SET_REMOVE = "SET_REMOVE" as const;
 export const SET_EDIT = "SET_EDIT" as const;
+
+interface IReadAction {
+  type: typeof SET_READ;
+  data: any;
+}
 
 interface ICreateAction {
   type: typeof SET_CREATE;
@@ -45,7 +52,11 @@ interface IEditAction {
   };
 }
 
-export type ReducerAction = ICreateAction | IRemoveAction | IEditAction;
+export type ReducerAction =
+  | IReadAction
+  | ICreateAction
+  | IRemoveAction
+  | IEditAction;
 
 const setCreate = (
   id: number,
@@ -73,6 +84,9 @@ const reducer = (
   action: ReducerAction
 ) => {
   switch (action.type) {
+    case SET_READ: {
+      return action.data;
+    }
     case SET_CREATE: {
       const created_date = new Date().getTime();
       const newItem = { ...action.data, created_date };
@@ -98,17 +112,37 @@ const reducer = (
   }
 };
 
+interface IRoutine {
+  id: number;
+  title: string;
+  content: string;
+  date: string;
+}
+
 const App = () => {
   const [onAdd, setOnAdd] = useState(false);
   const [data, dispatch] = useReducer<
     React.Reducer<ReducerState[], ReducerAction>
   >(reducer, initialState);
+  const [routines, setRoutines] = useState<IRoutine[]>([]);
   const dataId = useRef(0);
 
   const routineToggle = () => {
     setOnAdd((onAdd) => !onAdd);
   };
   const routineSave = () => routineToggle();
+
+  const fetchRoutine = async () => {
+    try {
+      const { data } = (await axios("http://localhost:8000/routines")).data;
+      dispatch({ type: SET_READ, data: data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchRoutine();
+  }, []);
 
   const onCreate = useCallback(
     (title: string, content: string, date: string) => {
