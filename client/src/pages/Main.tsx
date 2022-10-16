@@ -38,7 +38,7 @@ const Home = () => {
     <>
       <h1 className="text-xl font-semibold mt-2 text-[#063c76]">마이루틴</h1>
       {onAdd ? (
-        <RoutineEditor setRoutines={setRoutines} getRoutines={getRoutines} />
+        <RoutineEditor getRoutines={getRoutines} />
       ) : (
         <Btn onClick={routineToggle} text={"루틴추가하기"} />
       )}

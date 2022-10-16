@@ -2,16 +2,14 @@ import React, { useRef, useState } from "react";
 import Btn from "./Btn";
 import axios from "axios";
 import { IRoutineListProps } from "./RoutineList";
-import { IRoutine } from "../pages/Main";
 
 export const getStringDate = (date: Date) => {
   return date.toISOString().slice(0, 10);
 };
 interface IRoutineEditorProps {
-  setRoutines: React.Dispatch<React.SetStateAction<IRoutine[]>>;
   getRoutines: () => Promise<void>;
 }
-const RoutineEditor = ({ setRoutines, getRoutines }: IRoutineEditorProps) => {
+const RoutineEditor = ({ getRoutines }: IRoutineEditorProps) => {
   const [routine, setRoutine] = useState<IRoutineListProps>({
     title: "",
     content: "",
@@ -40,11 +38,6 @@ const RoutineEditor = ({ setRoutines, getRoutines }: IRoutineEditorProps) => {
         title,
         content,
         date,
-      });
-      setRoutine({
-        title: "",
-        content: "",
-        date: "",
       });
       getRoutines();
     } catch (error) {
