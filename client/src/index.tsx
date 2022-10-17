@@ -11,8 +11,4 @@ const httpClient = axios.create({
 
 const routine = new RoutineClient(httpClient);
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  <React.StrictMode>
-    <App routine={routine} />
-  </React.StrictMode>,
-);
+root.render(<App routine={routine} />);

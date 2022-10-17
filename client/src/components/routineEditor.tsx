@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import Btn from './Btn';
-import { IRoutineListProps } from './RoutineList';
 import RoutineClient from '../service/routine-client';
 import { getStringDate } from '../common/utils';
 
@@ -9,8 +8,15 @@ interface IRoutineEditorProps {
   routineToggle: () => void;
   routine: RoutineClient;
 }
+
+export interface IRoutineDataType {
+  title: string;
+  content: string;
+  date: string;
+}
+
 const RoutineEditor = ({ getRoutinesData, routineToggle, routine }: IRoutineEditorProps) => {
-  const [routineData, setRoutineData] = useState<IRoutineListProps>({
+  const [routineData, setRoutineData] = useState<IRoutineDataType>({
     title: '',
     content: '',
     date: getStringDate(new Date()),

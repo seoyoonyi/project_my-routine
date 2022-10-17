@@ -32,6 +32,19 @@ class RoutineClient {
       throw new Error(err.message);
     }
   }
+
+  async removeRoutine(id: number) {
+    try {
+      const response = await this.routineClient.delete('routines/' + id);
+
+      if (response.data.success) {
+        return response.data;
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      throw new Error(err.message);
+    }
+  }
 }
 
 export default RoutineClient;

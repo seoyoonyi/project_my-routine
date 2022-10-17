@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import RoutineModal from './RoutineModal';
 import RoutineItem from './RoutineItem';
+import RoutineClient from '../service/routine-client';
 
 export interface IRoutineListProps {
+  id: number;
   title: string;
   content: string;
   date: string;
+  routine: RoutineClient;
 }
 
-const RoutineList = (routine: IRoutineListProps) => {
+const RoutineList = (routineItem: IRoutineListProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const showModal = () => {
@@ -21,9 +24,9 @@ const RoutineList = (routine: IRoutineListProps) => {
 
   return (
     <>
-      <RoutineItem {...routine} showModal={showModal} />
+      <RoutineItem {...routineItem} showModal={showModal} />
 
-      {isModalOpen && <RoutineModal isModalOpen={isModalOpen} routineItem={routine} handleCancel={handleCancel} />}
+      {isModalOpen && <RoutineModal isModalOpen={isModalOpen} routineItem={routineItem} handleCancel={handleCancel} />}
     </>
   );
 };

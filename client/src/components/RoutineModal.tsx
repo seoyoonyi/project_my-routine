@@ -2,7 +2,6 @@ import { Modal, Dropdown, Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import { useState } from 'react';
 import { IRoutineListProps } from './RoutineList';
-import { getStringDate } from '../common/utils';
 
 interface IRoutineModal {
   isModalOpen: boolean;
@@ -11,13 +10,18 @@ interface IRoutineModal {
 }
 
 const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal) => {
-  const { title, content, date } = routineItem;
+  const { id, title, content, date, routine } = routineItem;
   const [menuKey, setMenuKey] = useState<string>('');
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     const dropDownId = e.key;
     setMenuKey(dropDownId);
   };
+
+  const removeRoutineData = async () => {
+    await routine.removeRoutine(id);
+  };
+
   const menu = (
     <Menu
       onClick={handleMenuClick}
@@ -26,7 +30,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
           label: 'delete',
           key: '1',
           onClick: () => {
-            handleCancel();
+            removeRoutineData();
           },
         },
         {

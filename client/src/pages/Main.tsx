@@ -12,7 +12,7 @@ export interface IRoutine {
 }
 
 const Main = ({ routine }: IAppProps) => {
-  const [routines, setRoutines] = useState<IRoutine[]>([]);
+  const [routineList, setRoutineList] = useState<IRoutine[]>([]);
   const [onAdd, setOnAdd] = useState(false);
 
   const routineToggle = () => {
@@ -21,7 +21,7 @@ const Main = ({ routine }: IAppProps) => {
 
   const getRoutinesData = useCallback(async () => {
     const response = await routine.getRoutines();
-    setRoutines(response.data);
+    setRoutineList(response.data);
   }, [routine]);
 
   useEffect(() => {
@@ -33,9 +33,9 @@ const Main = ({ routine }: IAppProps) => {
       <h1 className="text-xl font-semibold mt-2 text-[#063c76]">마이루틴</h1>
       {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routine={routine} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
 
-      {routines
-        .map((routine: IRoutine) => {
-          return <RoutineList key={routine.id} {...routine} />;
+      {routineList
+        .map((it: IRoutine) => {
+          return <RoutineList key={it.id} {...it} routine={routine} />;
         })
         .reverse()}
     </>
