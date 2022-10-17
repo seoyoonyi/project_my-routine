@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import RoutineList from '../components/RoutineList';
-
 import Btn from '../components/Btn';
 import RoutineEditor from '../components/RoutineEditor';
-import { useCallback } from 'react';
 import { IAppProps } from '../App';
 
 export interface IRoutine {
@@ -21,23 +19,6 @@ const Main = ({ routine }: IAppProps) => {
     setOnAdd((onAdd) => !onAdd);
   };
 
-  // const getRoutinesData = useCallback(async () => {
-  //   const response = await routine.getRoutines();
-  //   console.log('response', response);
-  //   // routineData
-  //   //   .getRoutines() //
-  //   //   .then((routines: any) => setRoutines(routines))
-  // }, [routine]);
-
-  // const getRoutines = async () => {
-  //   try {
-  //     const { data } = (await axios('http://localhost:8000/routines')).data
-  //     setRoutines(data)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
   const getRoutinesData = useCallback(async () => {
     const response = await routine.getRoutines();
     setRoutines(response.data);
@@ -50,7 +31,7 @@ const Main = ({ routine }: IAppProps) => {
   return (
     <>
       <h1 className="text-xl font-semibold mt-2 text-[#063c76]">마이루틴</h1>
-      {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
+      {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routine={routine} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
 
       {routines.map((routine: IRoutine) => {
         return <RoutineList key={routine.id} {...routine} />;

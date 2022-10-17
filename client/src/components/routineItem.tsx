@@ -1,16 +1,10 @@
-import { IRoutine } from "../pages/Main";
-import { IRoutineListProps } from "./RoutineList";
+import { IRoutineListProps } from './RoutineList';
 
 interface IRoutineItemProps extends IRoutineListProps {
   showModal: () => void;
 }
 
-const RoutineItem = ({
-  title,
-  content,
-  date,
-  showModal,
-}: IRoutineItemProps) => {
+const RoutineItem = ({ title, content, date, showModal }: IRoutineItemProps) => {
   return (
     <>
       <div

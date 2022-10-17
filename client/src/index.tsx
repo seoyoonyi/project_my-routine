@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import axios from 'axios';
-import RoutineClient from './service/routineClient';
+import RoutineClient from './service/routine-client';
 
 const httpClient = axios.create({
   baseURL: 'http://localhost:8000/',

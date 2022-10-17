@@ -1,6 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Btn from '../components/Btn'
+import { Link } from 'react-router-dom';
+import Btn from '../components/Btn';
 
 const Intro = () => {
   return (
@@ -10,7 +9,7 @@ const Intro = () => {
         <Link to="/main">시작하기</Link>
       </Btn>
     </>
-  )
-}
+  );
+};
 
-export default Intro
+export default Intro;

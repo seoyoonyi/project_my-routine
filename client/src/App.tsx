@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Intro from './pages/Intro';
 import Main from './pages/Main';
-import RoutineClient from './service/routineClient';
+import RoutineClient from './service/routine-client';
 
 export interface IAppProps {
   routine: RoutineClient;
