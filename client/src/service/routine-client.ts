@@ -33,6 +33,23 @@ class RoutineClient {
     }
   }
 
+  async editRoutine(id: number, title: string, content: string, date: string) {
+    try {
+      const response = await this.routineClient.patch('routines/' + id, {
+        title,
+        content,
+        date,
+      });
+
+      if (response.data.success) {
+        return response.data;
+      }
+    } catch (error) {
+      const err = error as AxiosError;
+      throw new Error(err.message);
+    }
+  }
+
   async removeRoutine(id: number) {
     try {
       const response = await this.routineClient.delete('routines/' + id);

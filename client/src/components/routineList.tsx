@@ -8,7 +8,8 @@ export interface IRoutineListProps {
   title: string;
   content: string;
   date: string;
-  routine: RoutineClient;
+  routineController: RoutineClient;
+  getRoutinesData: () => void;
 }
 
 const RoutineList = (routineItem: IRoutineListProps) => {

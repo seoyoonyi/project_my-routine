@@ -10,7 +10,7 @@ interface IRoutineModal {
 }
 
 const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal) => {
-  const { id, title, content, date, routine } = routineItem;
+  const { id, title, content, date, routineController, getRoutinesData } = routineItem;
   const [menuKey, setMenuKey] = useState<string>('');
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
@@ -19,7 +19,9 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
   };
 
   const removeRoutineData = async () => {
-    await routine.removeRoutine(id);
+    await routineController.removeRoutine(id);
+    handleCancel();
+    getRoutinesData();
   };
 
   const menu = (

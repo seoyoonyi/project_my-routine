@@ -9,6 +9,6 @@ const httpClient = axios.create({
   baseURL: 'http://localhost:8000/',
 });
 
-const routine = new RoutineClient(httpClient);
+const routineController = new RoutineClient(httpClient);
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(<App routine={routine} />);
+root.render(<App routineController={routineController} />);

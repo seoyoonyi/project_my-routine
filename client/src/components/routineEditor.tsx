@@ -6,7 +6,7 @@ import { getStringDate } from '../common/utils';
 interface IRoutineEditorProps {
   getRoutinesData: () => void;
   routineToggle: () => void;
-  routine: RoutineClient;
+  routineController: RoutineClient;
 }
 
 export interface IRoutineDataType {
@@ -15,7 +15,7 @@ export interface IRoutineDataType {
   date: string;
 }
 
-const RoutineEditor = ({ getRoutinesData, routineToggle, routine }: IRoutineEditorProps) => {
+const RoutineEditor = ({ getRoutinesData, routineToggle, routineController }: IRoutineEditorProps) => {
   const [routineData, setRoutineData] = useState<IRoutineDataType>({
     title: '',
     content: '',
@@ -39,7 +39,7 @@ const RoutineEditor = ({ getRoutinesData, routineToggle, routine }: IRoutineEdit
   };
 
   const addRoutineData = async () => {
-    await routine.addRoutine(routineData.title, routineData.content, routineData.date);
+    await routineController.addRoutine(routineData.title, routineData.content, routineData.date);
     getRoutinesData();
   };
 

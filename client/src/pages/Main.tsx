@@ -11,7 +11,7 @@ export interface IRoutine {
   date: string;
 }
 
-const Main = ({ routine }: IAppProps) => {
+const Main = ({ routineController }: IAppProps) => {
   const [routineList, setRoutineList] = useState<IRoutine[]>([]);
   const [onAdd, setOnAdd] = useState(false);
 
@@ -20,9 +20,9 @@ const Main = ({ routine }: IAppProps) => {
   };
 
   const getRoutinesData = useCallback(async () => {
-    const response = await routine.getRoutines();
+    const response = await routineController.getRoutines();
     setRoutineList(response.data);
-  }, [routine]);
+  }, [routineController]);
 
   useEffect(() => {
     getRoutinesData();
@@ -31,11 +31,11 @@ const Main = ({ routine }: IAppProps) => {
   return (
     <>
       <h1 className="text-xl font-semibold mt-2 text-[#063c76]">마이루틴</h1>
-      {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routine={routine} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
+      {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routineController={routineController} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
 
       {routineList
         .map((it: IRoutine) => {
-          return <RoutineList key={it.id} {...it} routine={routine} />;
+          return <RoutineList key={it.id} {...it} routineController={routineController} getRoutinesData={getRoutinesData} />;
         })
         .reverse()}
     </>
