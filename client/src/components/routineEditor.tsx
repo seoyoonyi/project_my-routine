@@ -2,10 +2,8 @@ import React, { useRef, useState } from 'react';
 import Btn from './Btn';
 import { IRoutineListProps } from './RoutineList';
 import RoutineClient from '../service/routine-client';
+import { getStringDate } from '../common/utils';
 
-export const getStringDate = (date: Date) => {
-  return date.toISOString().slice(0, 10);
-};
 interface IRoutineEditorProps {
   getRoutinesData: () => void;
   routineToggle: () => void;
@@ -58,6 +56,7 @@ const RoutineEditor = ({ getRoutinesData, routineToggle, routine }: IRoutineEdit
       <br />
       <div>
         <Btn onClick={dateToggle}>오늘</Btn>
+
         {onDate ? <input type="date" name="date" onChange={handleChangeRoutine} value={routineData.date} /> : null}
         <Btn onClick={handleSubmit}>루틴저장</Btn>
       </div>

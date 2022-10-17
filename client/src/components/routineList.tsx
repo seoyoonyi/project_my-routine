@@ -1,6 +1,6 @@
-import { useState } from "react";
-import RoutineModal from "./RoutineModal";
-import RoutineItem from "./RoutineItem";
+import { useState } from 'react';
+import RoutineModal from './RoutineModal';
+import RoutineItem from './RoutineItem';
 
 export interface IRoutineListProps {
   title: string;
@@ -23,13 +23,7 @@ const RoutineList = (routine: IRoutineListProps) => {
     <>
       <RoutineItem {...routine} showModal={showModal} />
 
-      {isModalOpen && (
-        <RoutineModal
-          isModalOpen={isModalOpen}
-          routineItem={routine}
-          handleCancel={handleCancel}
-        />
-      )}
+      {isModalOpen && <RoutineModal isModalOpen={isModalOpen} routineItem={routine} handleCancel={handleCancel} />}
     </>
   );
 };
