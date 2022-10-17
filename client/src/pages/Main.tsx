@@ -33,9 +33,11 @@ const Main = ({ routine }: IAppProps) => {
       <h1 className="text-xl font-semibold mt-2 text-[#063c76]">마이루틴</h1>
       {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routine={routine} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
 
-      {routines.map((routine: IRoutine) => {
-        return <RoutineList key={routine.id} {...routine} />;
-      })}
+      {routines
+        .map((routine: IRoutine) => {
+          return <RoutineList key={routine.id} {...routine} />;
+        })
+        .reverse()}
     </>
   );
 };
