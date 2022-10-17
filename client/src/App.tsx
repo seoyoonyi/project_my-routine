@@ -1,12 +1,18 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
-import Main from "./pages/Main";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
+import Intro from './pages/Intro';
+import Main from './pages/Main';
+import RoutineClient from './service/routineClient';
 
-const App = () => {
+export interface IAppProps {
+  routine: RoutineClient;
+}
+const App = ({ routine }: IAppProps) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Intro />} />
+        <Route path="/main" element={<Main routine={routine} />} />
       </Routes>
     </BrowserRouter>
   );
