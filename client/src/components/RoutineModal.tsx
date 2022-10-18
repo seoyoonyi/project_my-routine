@@ -16,7 +16,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
   const [originData, setOriginData] = useState({ title, content, date });
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isEditDate, setIsEditDate] = useState<boolean>(false);
-  //TODO: 수정기능 오빠한테 물어보기
+
   //수정 기능 - 공통
   const handleChangeEdit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.currentTarget;
@@ -33,16 +33,10 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
   };
   const EditRoutineData = async () => {
     await routineController.editRoutine(id, originData.title, originData.content, originData.date);
-    toggleIsEdit();
     getRoutinesData();
   };
   //수정기능 - 날짜
   const toggleIsEditDate = () => setIsEditDate(!isEditDate);
-  const EditRoutineDateData = async () => {
-    await routineController.editRoutine(id, originData.title, originData.content, originData.date);
-    toggleIsEditDate();
-    getRoutinesData();
-  };
 
   //삭제 기능
   const removeRoutineData = async () => {
@@ -89,7 +83,14 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
             <textarea name="content" defaultValue={content} onChange={handleChangeEdit}></textarea>
             <br />
             <Btn onClick={handleQuitEdit}>취소</Btn>
-            <Btn onClick={EditRoutineData}>저장</Btn>
+            <Btn
+              onClick={() => {
+                EditRoutineData();
+                toggleIsEdit();
+              }}
+            >
+              저장
+            </Btn>
           </>
         ) : (
           <>
@@ -100,7 +101,14 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
         {isEditDate ? (
           <>
             <input type="date" name="date" onChange={handleChangeEdit} defaultValue={date} />
-            <Btn onClick={EditRoutineDateData}>저장</Btn>
+            <Btn
+              onClick={() => {
+                EditRoutineData();
+                toggleIsEditDate();
+              }}
+            >
+              저장
+            </Btn>
           </>
         ) : (
           <p onClick={toggleIsEditDate}>{originData.date}</p>

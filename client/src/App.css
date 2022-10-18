@@ -1,4 +1,16 @@
-@import "~antd/dist/antd.css";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-std.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '~antd/dist/antd.css';
+
+body {
+  font-family: 'Pretendard Std Variable', 'Pretendard Std', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
+  font-size: initial;
+}
 .ant-modal-header {
   height: 54px;
 }
