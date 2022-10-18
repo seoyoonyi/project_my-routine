@@ -11,6 +11,6 @@ export class Routine {
   @Column()
   content: string;
 
-  @Column('date')
-  date: Date;
+  @Column()
+  date: string;
 }

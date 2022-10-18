@@ -8,5 +8,5 @@ export class CreateRoutineDto {
   content: string;
 
   @IsDateString()
-  date: Date;
+  date: string;
 }
