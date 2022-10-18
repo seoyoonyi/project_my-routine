@@ -3,6 +3,8 @@ import RoutineList from '../components/RoutineList';
 import Btn from '../components/Btn';
 import RoutineEditor from '../components/RoutineEditor';
 import { IAppProps } from '../App';
+import Header from '../components/Header';
+import { getCurrentWeekByLocal, getCurrentWeekByDate } from '../common/utils';
 
 export interface IRoutine {
   id: number;
@@ -28,16 +30,43 @@ const Main = ({ routineController }: IAppProps) => {
     getRoutinesData();
   }, [getRoutinesData]);
 
+  const getRoutinesByDateData = useCallback(
+    async (date?: string) => {
+      // let response;
+      // response = date ? await routineController.getRoutinesByDate(date) : getRoutinesData();
+      const response = await routineController.getRoutinesByDate(date);
+      console.log(response);
+    },
+    [routineController],
+  );
+
+  useEffect(() => {
+    getRoutinesByDateData();
+  }, [getRoutinesByDateData]);
+
   return (
     <>
-      <h1 className="text-xl font-semibold mt-2 text-[#063c76]">마이루틴</h1>
-      {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routineController={routineController} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
+      <Header />
+      <ul>
+        {getCurrentWeekByLocal().map((it: string, index) => {
+          return (
+            <li data-day={getCurrentWeekByDate()[index]} key={it}>
+              {it}
+            </li>
+          );
+        })}
+      </ul>
+      <div className="max-w-6xl px-4 mx-auto sm:px-6">
+        <div className="pt-40 pb-12 md:pt-40 md:pb-20">
+          {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routineController={routineController} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
 
-      {routineList
-        .map((it: IRoutine) => {
-          return <RoutineList key={it.id} {...it} routineController={routineController} getRoutinesData={getRoutinesData} />;
-        })
-        .reverse()}
+          {routineList
+            .map((it: IRoutine) => {
+              return <RoutineList key={it.id} {...it} routineController={routineController} getRoutinesData={getRoutinesData} />;
+            })
+            .reverse()}
+        </div>
+      </div>
     </>
   );
 };

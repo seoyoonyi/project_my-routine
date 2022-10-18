@@ -20,7 +20,7 @@ const Header = () => {
           <div className="flex-shrink-0 mr-4">
             {/* Logo */}
             <Link to="/">
-              <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 ">EGO ROUTINE</h1>
+              <h1 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 ">EGO ROUTINE</h1>
             </Link>
           </div>
 
