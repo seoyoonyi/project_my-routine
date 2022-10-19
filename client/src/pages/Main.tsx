@@ -32,10 +32,12 @@ const Main = ({ routineController }: IAppProps) => {
 
   const getRoutinesByDateData = useCallback(
     async (date?: string) => {
-      // let response;
-      // response = date ? await routineController.getRoutinesByDate(date) : getRoutinesData();
+      if (!date) {
+        return;
+      }
       const response = await routineController.getRoutinesByDate(date);
-      console.log(response);
+
+      setRoutineList(response.data);
     },
     [routineController],
   );
@@ -49,7 +51,8 @@ const Main = ({ routineController }: IAppProps) => {
       <Header />
       <div className="max-w-6xl px-4 mx-auto sm:px-6">
         <div className="pt-40 pb-12 md:pt-40 md:pb-20">
-          <CurrentWeek />
+          <Btn onClick={getRoutinesData}>모든 요일의 루틴보기</Btn>
+          <CurrentWeek getRoutinesByDateData={getRoutinesByDateData} />
           {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routineController={routineController} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
           {routineList
             .map((it: IRoutine) => {

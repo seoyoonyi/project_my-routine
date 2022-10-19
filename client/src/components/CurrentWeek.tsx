@@ -1,26 +1,31 @@
-import React from 'react';
 import { getCurrentWeekByDate, getCurrentWeekByLocal } from '../common/utils';
 
-const CurrentWeek = () => {
+interface ICurrentWeekProps {
+  getRoutinesByDateData: (date?: string) => void;
+}
+
+const CurrentWeek = ({ getRoutinesByDateData }: ICurrentWeekProps) => {
+  const handleClickDay = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const {
+      currentTarget: {
+        dataset: { day },
+      },
+    } = e;
+    getRoutinesByDateData(day);
+  };
+
+  const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
   return (
     <div className="w-3/4 mx-auto">
-      <ul className="flex items-center justify-between currentWeek">
+      <ul className="flex flex-wrap items-center justify-between text-center currentWeek">
         {getCurrentWeekByLocal().map((it: string, index) => {
           return (
-            <li data-day={getCurrentWeekByDate()[index]} key={it}>
-              {it}
+            <li className="px-5 py-2 hover:bg-sky-500/50 " data-day={getCurrentWeekByDate()[index]} key={it} onClick={handleClickDay}>
+              <div>{it}</div>
+              <div>{dayArr[index]}</div>
             </li>
           );
         })}
-      </ul>
-      <ul className="flex items-center justify-between px-[15px] dayList">
-        <li>월</li>
-        <li>화</li>
-        <li>수</li>
-        <li>목</li>
-        <li>금</li>
-        <li>토</li>
-        <li>일</li>
       </ul>
     </div>
   );

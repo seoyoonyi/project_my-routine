@@ -4,7 +4,7 @@ export const getStringDate = (date: Date) => {
 
 export const getCurrentWeekByDate = () => {
   const day = new Date();
-  const monday = day.getTime() - day.getDay() - 86400000;
+  const monday = day.getTime() - day.getDay() - 86400000 * 2;
 
   day.setTime(monday);
 
