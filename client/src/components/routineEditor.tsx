@@ -3,6 +3,7 @@ import Btn from './Btn';
 import RoutineClient from '../service/routine-client';
 import { getStringDate } from '../common/utils';
 import { CalendarOutlined } from '@ant-design/icons';
+import Input from 'antd/lib/input/Input';
 
 interface IRoutineEditorProps {
 	getRoutinesData: () => void;
@@ -80,14 +81,12 @@ const RoutineEditor = ({
 
 				{onDate ? (
 					<>
-						{/* TODO: 앧트디자인 컴포넌트 가져다 쓰기 */}
-						{/* <Input
+						<Input
 							type="date"
 							name="date"
 							onChange={handleChangeRoutine}
 							value={routineData.date}
-						/> */}
-						<CalendarOutlined />
+						/>
 					</>
 				) : null}
 				<Btn onClick={handleSubmit}>루틴저장</Btn>
