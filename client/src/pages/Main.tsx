@@ -4,7 +4,7 @@ import Btn from '../components/Btn';
 import RoutineEditor from '../components/RoutineEditor';
 import { IAppProps } from '../App';
 import Header from '../components/Header';
-import { getCurrentWeekByLocal, getCurrentWeekByDate } from '../common/utils';
+import CurrentWeek from '../components/CurrentWeek';
 
 export interface IRoutine {
   id: number;
@@ -47,19 +47,10 @@ const Main = ({ routineController }: IAppProps) => {
   return (
     <>
       <Header />
-      <ul>
-        {getCurrentWeekByLocal().map((it: string, index) => {
-          return (
-            <li data-day={getCurrentWeekByDate()[index]} key={it}>
-              {it}
-            </li>
-          );
-        })}
-      </ul>
       <div className="max-w-6xl px-4 mx-auto sm:px-6">
         <div className="pt-40 pb-12 md:pt-40 md:pb-20">
+          <CurrentWeek />
           {onAdd ? <RoutineEditor getRoutinesData={getRoutinesData} routineToggle={routineToggle} routineController={routineController} /> : <Btn onClick={routineToggle}>루틴추가하기</Btn>}
-
           {routineList
             .map((it: IRoutine) => {
               return <RoutineList key={it.id} {...it} routineController={routineController} getRoutinesData={getRoutinesData} />;
