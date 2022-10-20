@@ -1,7 +1,7 @@
 {
 	"extends": ["react-app", "plugin:prettier/recommended"],
 	"rules": {
-		"usTabs": false,
+		// "usTabs": false,
 		"no-var": "warn", // var 금지
 		"no-console": "warn", // console.log() 경고
 		"eqeqeq": "warn", // 일치 연산자 사용 필수

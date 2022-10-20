@@ -2,9 +2,18 @@ import { getCurrentWeekByDate, getCurrentWeekByLocal } from '../common/utils';
 
 interface ICurrentWeekProps {
 	getRoutinesByDateData: (date?: string) => void;
+	active: number;
+	moveDistance: number;
+	handleClickTab: (index: number) => void;
 }
 
-const CurrentWeek = ({ getRoutinesByDateData }: ICurrentWeekProps) => {
+const CurrentWeek = ({
+	getRoutinesByDateData,
+	active,
+	moveDistance,
+	handleClickTab,
+}: ICurrentWeekProps) => {
+	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
 	const handleClickDay = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
 		const {
 			currentTarget: {
@@ -14,23 +23,34 @@ const CurrentWeek = ({ getRoutinesByDateData }: ICurrentWeekProps) => {
 		getRoutinesByDateData(day);
 	};
 
-	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
 	return (
-		<div className="w-3/4 mx-auto border-gray-400 border-solid border-y-2 ">
-			<ul className="flex flex-wrap items-center justify-between text-center currentWeek">
+		<div className="w-3/4 pt-10 mx-auto border-b-2 border-gray-100 border-solid ">
+			<ul className="relative flex flex-wrap items-center text-center currentWeek">
 				{getCurrentWeekByLocal().map((it: string, index) => {
 					return (
 						<li
-							className="px-5 py-2 hover:bg-sky-500/50 "
+							className={`px-5 py-2 w-[14.285%] hover:bg-gray-200 ${
+								active === index ? 'day dayActiveBtn' : 'day'
+							}`}
 							data-day={getCurrentWeekByDate()[index]}
 							key={it}
-							onClick={handleClickDay}
+							onClick={e => {
+								handleClickDay(e);
+								handleClickTab(index);
+							}}
 						>
-							<div>{it}</div>
-							<div>{dayArr[index]}</div>
+							<div className="text-sm text-gray-400">{dayArr[index]}</div>
+							<div className="font-medium">{it}</div>
 						</li>
 					);
 				})}
+				<span
+					className="border"
+					style={{
+						transform: `translateX(${moveDistance}%)`,
+						transition: '.5s',
+					}}
+				/>
 			</ul>
 		</div>
 	);

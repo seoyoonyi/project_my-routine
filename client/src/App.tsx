@@ -6,18 +6,18 @@ import NotFound from './pages/NotFound';
 import RoutineClient from './service/routine-client';
 
 export interface IAppProps {
-  routineController: RoutineClient;
+	routineController: RoutineClient;
 }
 const App = ({ routineController }: IAppProps) => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/main" element={<Main routineController={routineController} />} />
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Intro />} />
+				<Route path="/main" element={<Main routineController={routineController} />} />
+				<Route path="/*" element={<NotFound />} />
+			</Routes>
+		</BrowserRouter>
+	);
 };
 
 export default App;

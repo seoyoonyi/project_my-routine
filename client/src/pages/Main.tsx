@@ -5,6 +5,7 @@ import RoutineEditor from '../components/RoutineEditor';
 import { IAppProps } from '../App';
 import Header from '../components/Header';
 import CurrentWeek from '../components/CurrentWeek';
+import { getCurrentWeekByDate, getStringDate } from '../common/utils';
 
 export interface IRoutine {
 	id: number;
@@ -14,8 +15,13 @@ export interface IRoutine {
 }
 
 const Main = ({ routineController }: IAppProps) => {
+	const today = getStringDate(new Date());
+	const numIndex = getCurrentWeekByDate().findIndex((it: string) => it === today);
+	const [active, setActive] = useState<number>(numIndex);
+	const [moveDistance, setMoveDistance] = useState(0);
 	const [routineList, setRoutineList] = useState<IRoutine[]>([]);
 	const [onAdd, setOnAdd] = useState(false);
+	const [viewAll, setViewAll] = useState(false);
 
 	const routineToggle = () => {
 		setOnAdd(onAdd => !onAdd);
@@ -25,10 +31,6 @@ const Main = ({ routineController }: IAppProps) => {
 		const response = await routineController.getRoutines();
 		setRoutineList(response.data);
 	}, [routineController]);
-
-	useEffect(() => {
-		getRoutinesData();
-	}, [getRoutinesData]);
 
 	const getRoutinesByDateData = useCallback(
 		async (date?: string) => {
@@ -42,38 +44,70 @@ const Main = ({ routineController }: IAppProps) => {
 		[routineController],
 	);
 
+	const borderActive = (index: number) => {
+		setMoveDistance(100 * index);
+	};
+
+	const handleClickTab = (index: number) => {
+		setActive(index);
+		borderActive(index);
+	};
+
+	const viewAllToggle = () => {
+		setViewAll(viewAll => !viewAll);
+		!viewAll ? getRoutinesData() : getRoutinesByDateData(today);
+		borderActive(numIndex);
+		setActive(numIndex);
+	};
+
 	useEffect(() => {
-		getRoutinesByDateData();
-	}, [getRoutinesByDateData]);
+		getRoutinesByDateData(today);
+		borderActive(numIndex);
+	}, [getRoutinesByDateData, numIndex, today]);
 
 	return (
 		<>
 			<Header />
 			<div className="max-w-6xl px-4 mx-auto sm:px-6">
 				<div className="pt-40 pb-12 md:pt-40 md:pb-20">
-					<Btn onClick={getRoutinesData}>모든 요일의 루틴보기</Btn>
-					<CurrentWeek getRoutinesByDateData={getRoutinesByDateData} />
-					{onAdd ? (
-						<RoutineEditor
-							getRoutinesData={getRoutinesData}
-							routineToggle={routineToggle}
-							routineController={routineController}
-						/>
-					) : (
-						<Btn onClick={routineToggle}>루틴추가하기</Btn>
-					)}
-					{routineList
-						.map((it: IRoutine) => {
-							return (
-								<RoutineList
-									key={it.id}
-									{...it}
-									routineController={routineController}
-									getRoutinesData={getRoutinesData}
-								/>
-							);
-						})
-						.reverse()}
+					<div className="w-3/4 pt-10 mx-auto">
+						<Btn
+							className={viewAll ? 'viewAll viewAllAcitveBtn' : 'viewAll'}
+							onClick={viewAllToggle}
+						>
+							모든 요일의 루틴보기
+						</Btn>
+						{onAdd ? (
+							<RoutineEditor
+								getRoutinesData={getRoutinesData}
+								routineToggle={routineToggle}
+								routineController={routineController}
+							/>
+						) : (
+							<Btn onClick={routineToggle}>루틴추가하기</Btn>
+						)}
+					</div>
+					<CurrentWeek
+						getRoutinesByDateData={getRoutinesByDateData}
+						active={active}
+						moveDistance={moveDistance}
+						handleClickTab={handleClickTab}
+					/>
+
+					<div className="w-3/4 pt-10 mx-auto ">
+						{routineList
+							.map((it: IRoutine) => {
+								return (
+									<RoutineList
+										key={it.id}
+										{...it}
+										routineController={routineController}
+										getRoutinesData={getRoutinesData}
+									/>
+								);
+							})
+							.reverse()}
+					</div>
 				</div>
 			</div>
 		</>

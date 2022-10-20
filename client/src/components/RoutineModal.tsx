@@ -79,7 +79,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 			trigger={['click']}
 			className="dropdown"
 			type="text"
-		></Dropdown.Button>
+		/>
 	);
 
 	return (
@@ -89,7 +89,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 					<>
 						<input name="title" defaultValue={title} onChange={handleChangeEdit} />
 						<br />
-						<textarea name="content" defaultValue={content} onChange={handleChangeEdit}></textarea>
+						<textarea name="content" defaultValue={content} onChange={handleChangeEdit} />
 						<br />
 						<Btn onClick={handleQuitEdit}>취소</Btn>
 						<Btn

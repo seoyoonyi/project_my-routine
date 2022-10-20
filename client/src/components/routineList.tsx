@@ -4,32 +4,38 @@ import RoutineItem from './RoutineItem';
 import RoutineClient from '../service/routine-client';
 
 export interface IRoutineListProps {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-  routineController: RoutineClient;
-  getRoutinesData: () => void;
+	id: number;
+	title: string;
+	content: string;
+	date: string;
+	routineController: RoutineClient;
+	getRoutinesData: () => void;
 }
 
 const RoutineList = (routineItem: IRoutineListProps) => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+	const showModal = () => {
+		setIsModalOpen(true);
+	};
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+	const handleCancel = () => {
+		setIsModalOpen(false);
+	};
 
-  return (
-    <>
-      <RoutineItem {...routineItem} showModal={showModal} />
+	return (
+		<>
+			<RoutineItem {...routineItem} showModal={showModal} />
 
-      {isModalOpen && <RoutineModal isModalOpen={isModalOpen} routineItem={routineItem} handleCancel={handleCancel} />}
-    </>
-  );
+			{isModalOpen && (
+				<RoutineModal
+					isModalOpen={isModalOpen}
+					routineItem={routineItem}
+					handleCancel={handleCancel}
+				/>
+			)}
+		</>
+	);
 };
 
 export default RoutineList;
