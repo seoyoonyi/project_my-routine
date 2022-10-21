@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const IntroMain = () => {
-	const [videoModalOpen, setVideoModalOpen] = useState(false);
-
 	return (
 		<section className="relative">
 			<div
@@ -120,7 +118,6 @@ const IntroMain = () => {
 								onClick={e => {
 									e.preventDefault();
 									e.stopPropagation();
-									setVideoModalOpen(true);
 								}}
 								aria-controls="modal"
 							>
