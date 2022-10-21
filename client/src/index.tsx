@@ -3,7 +3,6 @@ import './index.css';
 import App from './App';
 import axios from 'axios';
 import RoutineClient from './service/routine-client';
-import React from 'react';
 
 const httpClient = axios.create({
 	baseURL: 'http://localhost:8000/',

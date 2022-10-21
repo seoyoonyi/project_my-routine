@@ -18,7 +18,6 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [isEditDate, setIsEditDate] = useState<boolean>(false);
 
-	//수정 기능 - 공통
 	const handleChangeEdit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.currentTarget;
 		setOriginData({
@@ -26,7 +25,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 			[name]: value,
 		});
 	};
-	//수정 기능 - 타이틀, 콘텐츠
+
 	const toggleIsEdit = () => setIsEdit(!isEdit);
 	const handleQuitEdit = () => {
 		setIsEdit(false);
@@ -36,10 +35,9 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 		await routineController.editRoutine(id, originData.title, originData.content, originData.date);
 		getRoutinesData();
 	};
-	//수정기능 - 날짜
+
 	const toggleIsEditDate = () => setIsEditDate(!isEditDate);
 
-	//삭제 기능
 	const removeRoutineData = async () => {
 		await routineController.removeRoutine(id);
 		handleCancel();

@@ -6,7 +6,6 @@ const IntroMain = () => {
 
 	return (
 		<section className="relative">
-			{/* Illustration behind hero content */}
 			<div
 				className="absolute bottom-0 transform -translate-x-1/2 pointer-events-none left-1/2"
 				aria-hidden="true"
@@ -27,9 +26,7 @@ const IntroMain = () => {
 			</div>
 
 			<div className="max-w-6xl px-4 mx-auto sm:px-6">
-				{/* Hero content */}
 				<div className="pt-40 pb-12 md:pt-40 md:pb-20">
-					{/* Section header */}
 					<div className="pb-12 text-center md:pb-16">
 						<h1 className="mb-4 font-extrabold leading-[1.1] tracking-tight text-7xl ">
 							새로운 나를 만드는 습관
@@ -65,7 +62,6 @@ const IntroMain = () => {
 						</div>
 					</div>
 
-					{/* Hero image */}
 					<div>
 						<div className="relative flex justify-center mb-8">
 							<div className="flex flex-col justify-center">

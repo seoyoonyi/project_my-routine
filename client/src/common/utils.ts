@@ -29,8 +29,6 @@ export const getCurrentWeekByLocal = () => {
 	for (let i = 1; i < 8; i++) {
 		day.setTime(day.getTime() + 86400000);
 
-		/*    result.push(day.getFullYear() + '년 ' + (day.getMonth() + 1) + '월 ' + day.getDate() + '일'); */
-
 		result.push(day.getMonth() + 1 + '/' + day.getDate());
 	}
 	result.shift();

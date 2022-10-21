@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import Btn from './Btn';
 import RoutineClient from '../service/routine-client';
 import { getStringDate } from '../common/utils';
-import { CalendarOutlined } from '@ant-design/icons';
 import Input from 'antd/lib/input/Input';
 
 interface IRoutineEditorProps {

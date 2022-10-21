@@ -1,30 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 const FeaturesHome = () => {
 	const [tab, setTab] = useState(1);
 
 	const tabs = useRef(null);
 
-	/*   const heightFix = () => {
-    if (tabs.current.children[tab]) {
-      tabs.current.style.height = tabs.current.children[tab - 1].offsetHeight + 'px'
-    }
-  } */
-
-	// useEffect(() => {
-	//   heightFix()
-	//   // eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [tab])
-
 	return (
 		<section className="relative">
-			{/* Section background (needs .relative class on parent and next sibling elements) */}
 			<div className="absolute inset-0 mb-16 bg-gray-100 pointer-events-none" aria-hidden="true" />
 			<div className="absolute left-0 right-0 w-px h-20 p-px m-auto transform -translate-y-1/2 bg-gray-200" />
 
 			<div className="relative max-w-6xl px-4 mx-auto sm:px-6">
 				<div className="pt-12 md:pt-20">
-					{/* Section header */}
 					<div className="max-w-3xl pb-12 mx-auto text-center md:pb-16">
 						<h1 className="mb-4 h2">Explore the solutions</h1>
 						<p className="text-xl text-gray-600">
@@ -33,9 +20,7 @@ const FeaturesHome = () => {
 						</p>
 					</div>
 
-					{/* Section content */}
 					<div className="md:grid md:grid-cols-12 md:gap-6">
-						{/* Content */}
 						<div
 							className="max-w-xl mx-auto md:max-w-none md:w-full md:col-span-7 lg:col-span-6 md:mt-6"
 							data-aos="fade-right"
@@ -47,7 +32,6 @@ const FeaturesHome = () => {
 									pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa.
 								</p>
 							</div>
-							{/* Tabs buttons */}
 							<div className="mb-8 md:mb-0">
 								<a
 									className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
@@ -152,7 +136,6 @@ const FeaturesHome = () => {
 							</div>
 						</div>
 
-						{/* Tabs items */}
 						<div
 							className="max-w-xl mx-auto mb-8 md:max-w-none md:w-full md:col-span-5 lg:col-span-6 md:mb-0 md:order-1"
 							data-aos="zoom-y-out"
