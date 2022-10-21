@@ -161,31 +161,6 @@ body {
 	line-height: 54px;
 }
 
-//input type=date css
-input[type='date']::-webkit-calendar-picker-indicator,
-input[type='date']::-webkit-inner-spin-button {
-	display: none;
-	appearance: none;
-}
-input[type='date']::-webkit-calendar-picker-indicator {
-	background: transparent;
-	bottom: 0;
-	color: transparent;
-	cursor: pointer;
-	height: auto;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: auto;
-}
-
-input[type='date'] {
-	padding: 3px 5px;
-	width: 190px;
-	background: url(/public/images/calendar-icon.svg) 97% 50% no-repeat;
-	background-size: 8%;
-}
 .day.dayActiveBtn {
 	color: #37e2d5;
 }
