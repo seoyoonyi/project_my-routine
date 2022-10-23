@@ -2,9 +2,10 @@ import { getCurrentWeekByDate, getCurrentWeekByLocal } from '../common/utils';
 
 interface ICurrentWeekProps {
 	getRoutinesByDateData: (date?: string) => void;
-	active: number;
-	moveDistance: number;
+	active: number | null;
+	moveDistance: number | null;
 	handleClickTab: (index: number) => void;
+	onBorder: boolean;
 }
 
 const CurrentWeek = ({
@@ -12,6 +13,7 @@ const CurrentWeek = ({
 	active,
 	moveDistance,
 	handleClickTab,
+	onBorder,
 }: ICurrentWeekProps) => {
 	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
 	const handleClickDay = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
@@ -45,7 +47,7 @@ const CurrentWeek = ({
 					);
 				})}
 				<span
-					className="border"
+					className={onBorder ? '' : 'border'}
 					style={{
 						transform: `translateX(${moveDistance}%)`,
 						transition: '.5s',

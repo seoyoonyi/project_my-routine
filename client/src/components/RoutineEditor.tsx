@@ -2,12 +2,13 @@ import React, { useRef, useState } from 'react';
 import Btn from './Btn';
 import RoutineClient from '../service/routine-client';
 import { getStringDate } from '../common/utils';
-import Input from 'antd/lib/input/Input';
+import { Modal, Input } from 'antd';
 
 interface IRoutineEditorProps {
 	getRoutinesData: () => void;
 	routineToggle: () => void;
 	routineController: RoutineClient;
+	onAdd: boolean;
 }
 
 export interface IRoutineDataType {
@@ -20,6 +21,7 @@ const RoutineEditor = ({
 	getRoutinesData,
 	routineToggle,
 	routineController,
+	onAdd,
 }: IRoutineEditorProps) => {
 	const [routineData, setRoutineData] = useState<IRoutineDataType>({
 		title: '',
@@ -59,7 +61,7 @@ const RoutineEditor = ({
 	};
 
 	return (
-		<>
+		<Modal open={onAdd} onCancel={routineToggle} footer={null}>
 			<input
 				ref={titleInput}
 				name="title"
@@ -90,7 +92,7 @@ const RoutineEditor = ({
 				) : null}
 				<Btn onClick={handleSubmit}>루틴저장</Btn>
 			</div>
-		</>
+		</Modal>
 	);
 };
 

@@ -17,11 +17,12 @@ export interface IRoutine {
 const Main = ({ routineController }: IAppProps) => {
 	const today = getStringDate(new Date());
 	const numIndex = getCurrentWeekByDate().findIndex((it: string) => it === today);
-	const [active, setActive] = useState<number>(numIndex);
-	const [moveDistance, setMoveDistance] = useState(0);
+	const [active, setActive] = useState<number | null>(numIndex);
+	const [moveDistance, setMoveDistance] = useState<number>(0);
 	const [routineList, setRoutineList] = useState<IRoutine[]>([]);
-	const [onAdd, setOnAdd] = useState(false);
-	const [viewAll, setViewAll] = useState(false);
+	const [onAdd, setOnAdd] = useState<boolean>(false);
+	const [viewAll, setViewAll] = useState<boolean>(false);
+	const [onBorder, setOnBorder] = useState<boolean>(false);
 
 	const routineToggle = () => {
 		setOnAdd(onAdd => !onAdd);
@@ -55,9 +56,16 @@ const Main = ({ routineController }: IAppProps) => {
 
 	const viewAllToggle = () => {
 		setViewAll(viewAll => !viewAll);
-		!viewAll ? getRoutinesData() : getRoutinesByDateData(today);
-		borderActive(numIndex);
-		setActive(numIndex);
+		if (!viewAll) {
+			getRoutinesData();
+			setActive(null);
+			setOnBorder(!onBorder);
+		} else {
+			getRoutinesByDateData(today);
+			borderActive(numIndex);
+			setActive(numIndex);
+			setOnBorder(!onBorder);
+		}
 	};
 
 	useEffect(() => {
@@ -70,28 +78,32 @@ const Main = ({ routineController }: IAppProps) => {
 			<Header />
 			<div className="max-w-6xl px-4 mx-auto sm:px-6">
 				<div className="pt-40 pb-12 md:pt-40 md:pb-20">
-					<div className="w-3/4 pt-10 mx-auto">
-						<Btn
-							className={viewAll ? 'viewAll viewAllAcitveBtn' : 'viewAll'}
-							onClick={viewAllToggle}
-						>
-							모든 요일의 루틴보기
+					<div className="flex justify-between w-3/4 pt-10 mx-auto">
+						<Btn onClick={routineToggle} size="large" className="rounded-md">
+							루틴추가하기
 						</Btn>
-						{onAdd ? (
+						{onAdd && (
 							<RoutineEditor
 								getRoutinesData={getRoutinesData}
 								routineToggle={routineToggle}
+								onAdd={onAdd}
 								routineController={routineController}
 							/>
-						) : (
-							<Btn onClick={routineToggle}>루틴추가하기</Btn>
 						)}
+						<Btn
+							className={`rounded-md ${viewAll ? 'viewAll viewAllAcitveBtn' : 'viewAll'}`}
+							onClick={viewAllToggle}
+							size="large"
+						>
+							모든 요일의 루틴보기
+						</Btn>
 					</div>
 					<CurrentWeek
 						getRoutinesByDateData={getRoutinesByDateData}
 						active={active}
 						moveDistance={moveDistance}
 						handleClickTab={handleClickTab}
+						onBorder={onBorder}
 					/>
 
 					<div className="w-3/4 pt-10 mx-auto ">

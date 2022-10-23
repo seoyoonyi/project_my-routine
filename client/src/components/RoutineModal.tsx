@@ -1,9 +1,8 @@
-import { Modal, Dropdown, Menu } from 'antd';
+import { Modal, Dropdown, Menu, Input } from 'antd';
 import type { MenuProps } from 'antd';
 import { useState } from 'react';
 import { IRoutineListProps } from './RoutineList';
 import Btn from './Btn';
-import Input from 'antd/lib/input/Input';
 
 interface IRoutineModal {
 	isModalOpen: boolean;
