@@ -1,32 +1,34 @@
-type FormatType = 'dash' | 'hyphen';
+type FormatType = "dash" | "hyphen";
 
-const day = new Date();
+const setDefaultDate = (type: FormatType) => {
+  const day = new Date();
+  const sunday = day.getTime() - 86400000 * day.getDay();
 
-const setDefaultDate = (option: { type: FormatType; index: number }) => {
-	const monday = day.getTime() - 86400000 * (day.getDay() + 6);
+  day.setTime(sunday);
+  const result = [];
+  for (let i = 1; i < 8; i++) {
+    day.setTime(day.getTime() + 86400000);
+    const optType = type;
 
-	day.setTime(monday);
-	const result = [day.toISOString().slice(0, 10)];
-	for (let i = 1; i < option.index; i++) {
-		day.setTime(day.getTime() + 86400000);
-		const optType = option.type;
-		const dashResult = day.toISOString().slice(0, 10);
-		const hyphenResult = day.getMonth() + 1 + '/' + (day.getDate() - 1);
-		optType === 'dash' ? result.push(dashResult) : result.push(hyphenResult);
-	}
-	return result;
+    const formatByDash = day.toISOString().slice(0, 10);
+    const formatByHyphen = day.getMonth() + 1 + "/" + day.getDate();
+
+    optType === "dash"
+      ? result.push(formatByDash)
+      : result.push(formatByHyphen);
+  }
+
+  return result;
 };
 
 export const getStringDate = (date: Date) => {
-	return date.toISOString().slice(0, 10);
+  return date.toISOString().slice(0, 10);
 };
 
 export const getCurrentWeekByDash = () => {
-	return setDefaultDate({ type: 'dash', index: 7 });
+  return setDefaultDate("dash");
 };
 
 export const getCurrentWeekByHyphen = () => {
-	const result = setDefaultDate({ type: 'hyphen', index: 8 });
-	result.shift();
-	return result;
+  return setDefaultDate("hyphen");
 };
