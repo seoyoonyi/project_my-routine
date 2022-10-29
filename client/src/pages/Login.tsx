@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import MainContainer from "../components/MainContainer";
 import Btn from "../components/Btn";
 import Header from "../components/Header";
+import styles from "./Login.module.css";
 
 const Login = () => {
   return (
@@ -12,18 +13,18 @@ const Login = () => {
       <Header />
 
       <MainContainer className="bg-gray-100">
-        <div className="w-1/2 mx-auto ">
+        <div className="w-[400px] md:w-[350px] sm:w-[300px] mx-auto ">
           <Form>
             <Form.Item name="id">
               <Input
-                className="login-box"
+                className={styles.loginBox}
                 placeholder="아이디"
                 prefix={<UserOutlined />}
               />
             </Form.Item>
             <Form.Item name="pw">
               <Input.Password
-                className="login-box"
+                className={styles.loginBox}
                 placeholder="비밀번호"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />

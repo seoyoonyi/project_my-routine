@@ -34,7 +34,15 @@ body {
   height: 54px;
 }
 
-// FIXME: npm run build 했을 시 input[type='date'] 부분 에러
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper:focus-within,
+.ant-input-affix-wrapper:hover {
+  border-color: #37e2d5;
+  box-shadow: 0 0 0 2px rgb(55 226 213 / 20%);
+}
+
+/* FIXME: npm run build 했을 시 input[type='date'] 부분 에러 */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="date"]::-webkit-inner-spin-button {
   display: none;

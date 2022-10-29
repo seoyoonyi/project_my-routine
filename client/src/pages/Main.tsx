@@ -51,7 +51,7 @@ const Main = ({ routineController }: IAppProps) => {
       borderActive(getRoutineDateIndex);
       setActive(getRoutineDateIndex);
     },
-    [routineController]
+    [routineController, currentWeek]
   );
 
   const borderActive = (index: number) => {
@@ -101,7 +101,9 @@ const Main = ({ routineController }: IAppProps) => {
           )}
 
           <Btn
-            className={`rounded-md ${viewAll ? styles.viewAllAcitveBtn : ""}`}
+            className={
+              viewAll ? `rounded-md ${styles.viewAllAcitveBtn} ` : "rounded-md"
+            }
             onClick={viewAllToggle}
             size="large"
           >
