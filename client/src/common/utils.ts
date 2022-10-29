@@ -1,34 +1,40 @@
-type FormatType = "dash" | "hyphen";
+type FormatType = 'dash' | 'hyphen';
 
 const setDefaultDate = (type: FormatType) => {
-  const day = new Date();
-  const sunday = day.getTime() - 86400000 * day.getDay();
+	const day = new Date();
 
-  day.setTime(sunday);
-  const result = [];
-  for (let i = 1; i < 8; i++) {
-    day.setTime(day.getTime() + 86400000);
-    const optType = type;
+	let dayOfWeek = day.getDay();
+	if (day.getDay() === 0) {
+		// 현재 날짜를 기준으로 이번주 시작일 조정
+		dayOfWeek = day.getDay() + 6;
+	}
 
-    const formatByDash = day.toISOString().slice(0, 10);
-    const formatByHyphen = day.getMonth() + 1 + "/" + day.getDate();
+	const sunday = day.getTime() - 86400000 * dayOfWeek;
+	day.setTime(sunday);
 
-    optType === "dash"
-      ? result.push(formatByDash)
-      : result.push(formatByHyphen);
-  }
+	const result = [];
+	for (let i = 1; i < 8; i++) {
+		day.setTime(day.getTime() + 86400000);
+		const optType = type;
 
-  return result;
+		const formatByDash = day.toISOString().slice(0, 10);
+		const splittedDay = day.toISOString().slice(0, 10).split('-');
+		const formatByHyphen = splittedDay[1] + '/' + splittedDay[2];
+
+		optType === 'dash' ? result.push(formatByDash) : result.push(formatByHyphen);
+	}
+
+	return result;
 };
 
 export const getStringDate = (date: Date) => {
-  return date.toISOString().slice(0, 10);
+	return date.toISOString().slice(0, 10);
 };
 
 export const getCurrentWeekByDash = () => {
-  return setDefaultDate("dash");
+	return setDefaultDate('dash');
 };
 
 export const getCurrentWeekByHyphen = () => {
-  return setDefaultDate("hyphen");
+	return setDefaultDate('hyphen');
 };

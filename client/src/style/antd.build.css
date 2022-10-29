@@ -1,0 +1,45 @@
+@keyframes loadingCircle {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+html {
+	--antd-wave-shadow-color: #37e2d5;
+	--scroll-bar: 0;
+}
+
+[ant-click-animating='true'],
+[ant-click-animating-without-extra-node='true'] {
+	position: relative;
+}
+
+[ant-click-animating-without-extra-node='true']::after,
+.ant-click-animating-node {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	border-radius: inherit;
+	box-shadow: 0 0 0 0 #37e2d5;
+	box-shadow: 0 0 0 0 var(--antd-wave-shadow-color);
+	opacity: 0.2;
+	animation: fadeEffect 1s cubic-bezier(0, 0, 1, 1), waveEffect 0.4s cubic-bezier(0, 0, 1, 1);
+	animation-fill-mode: forwards;
+	content: '';
+	pointer-events: none;
+}
+
+@keyframes waveEffect {
+	100% {
+		box-shadow: 0 0 0 #37e2d5;
+		box-shadow: 0 0 0 6px var(--antd-wave-shadow-color);
+	}
+}
+
+@keyframes fadeEffect {
+	100% {
+		opacity: 0;
+	}
+}
