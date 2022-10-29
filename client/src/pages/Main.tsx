@@ -6,7 +6,8 @@ import { IAppProps } from "../App";
 import Header from "../components/Header";
 import CurrentWeekTap from "../components/CurrentWeekTap";
 import { getCurrentWeekByDash, getStringDate } from "../common/utils";
-import style from "./Main.module.css";
+import styles from "./Main.module.css";
+import MainContainer from "../components/MainContainer";
 
 export interface IRoutine {
   id: number;
@@ -84,56 +85,53 @@ const Main = ({ routineController }: IAppProps) => {
   return (
     <>
       <Header />
-      <div className="max-w-6xl px-4 mx-auto sm:px-6">
-        <div className="pt-40 pb-12 md:pt-40 md:pb-20">
-          <div className="flex justify-between w-3/4 pt-10 mx-auto">
-            <Btn onClick={routineToggle} size="large" className="rounded-md">
-              루틴 추가하기
-            </Btn>
-            {onAdd && (
-              <RoutineEditor
-                getRoutine={getRoutine}
-                routineToggle={routineToggle}
-                onAdd={onAdd}
-                routineController={routineController}
-                setActive={setActive}
-              />
-            )}
-            <Btn
-              className={`rounded-md ${
-                viewAll ? `viewAll viewAllAcitveBtn` : "viewAll"
-              }`}
-              onClick={viewAllToggle}
-              size="large"
-            >
-              모든 요일의 루틴보기
-            </Btn>
-          </div>
-          <CurrentWeekTap
-            dayIndex={currentWeek}
-            getRoutine={getRoutine}
-            active={active}
-            moveDistance={moveDistance}
-            handleClickTab={handleClickTab}
-            onBorder={onBorder}
-          />
+      <MainContainer>
+        <div className="flex justify-between pt-10 mx-auto">
+          <Btn onClick={routineToggle} size="large" className="rounded-md">
+            루틴 추가하기
+          </Btn>
+          {onAdd && (
+            <RoutineEditor
+              getRoutine={getRoutine}
+              routineToggle={routineToggle}
+              onAdd={onAdd}
+              routineController={routineController}
+              setActive={setActive}
+            />
+          )}
 
-          <div className="w-3/4 pt-10 mx-auto ">
-            {routineList
-              .map((it: IRoutine) => {
-                return (
-                  <RoutineList
-                    key={it.id}
-                    {...it}
-                    routineController={routineController}
-                    getAllRoutines={getAllRoutines} // RoutineModal까지 내려줌
-                  />
-                );
-              })
-              .reverse()}
-          </div>
+          <Btn
+            className={`rounded-md ${viewAll ? styles.viewAllAcitveBtn : ""}`}
+            onClick={viewAllToggle}
+            size="large"
+          >
+            모든 요일의 루틴보기
+          </Btn>
         </div>
-      </div>
+        <CurrentWeekTap
+          dayIndex={currentWeek}
+          getRoutine={getRoutine}
+          active={active}
+          moveDistance={moveDistance}
+          handleClickTab={handleClickTab}
+          onBorder={onBorder}
+        />
+
+        <div className="pt-10 mx-auto ">
+          {routineList
+            .map((it: IRoutine) => {
+              return (
+                <RoutineList
+                  key={it.id}
+                  {...it}
+                  routineController={routineController}
+                  getAllRoutines={getAllRoutines} // RoutineModal까지 내려줌
+                />
+              );
+            })
+            .reverse()}
+        </div>
+      </MainContainer>
     </>
   );
 };
