@@ -1,31 +1,33 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { CreateRoutineDto } from "./dto/create-routine.dto";
-import { UpdateRoutineDto } from "./dto/update-routine.dto";
-import { Routine } from "./entitles/routine.entity";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { User } from "./entities/user.entity";
 
 @Injectable()
-export class RoutinesService {
+export class UserService {
   constructor(
-    @InjectRepository(Routine) private readonly repo: Repository<Routine>
+    @InjectRepository(User) private readonly repo: Repository<User>
   ) {}
 
-  async create(createRoutineDto: CreateRoutineDto): Promise<Routine> {
-    const routine = this.repo.create(createRoutineDto);
-    return this.repo.save(routine);
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = this.repo.create(createUserDto);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...rest } = await this.repo.save(user);
+    return this.repo.save(rest);
   }
 
   async findAll() {
     return this.repo.find();
   }
 
-  async findBy(date: string) {
-    return this.repo.find({ where: { date: date } });
+  async findBy(id: number) {
+    return this.repo.find({ where: { id: id } });
   }
 
-  async update(id: number, updateRoutineDto: UpdateRoutineDto) {
-    return this.repo.update(id, updateRoutineDto);
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return this.repo.update(id, updateUserDto);
   }
 
   // sqlite에서 삭제된 데이터의 시퀀스가 남아있어 AUTO_INCREMENT 사용시 인덱스가 초기화가 안되는 문제 해결
