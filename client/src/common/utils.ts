@@ -1,12 +1,13 @@
 type FormatType = 'dash' | 'hyphen';
 
 const setDefaultDate = (type: FormatType) => {
-	const day = new Date();
+	const offset = 1000 * 60 * 60 * 9; // 한국시간
+	const day = new Date(new Date().getTime() + offset);
 
 	let dayOfWeek = day.getDay();
 	if (day.getDay() === 0) {
 		// 현재 날짜를 기준으로 이번주 시작일 조정
-		dayOfWeek = day.getDay() + 6;
+		dayOfWeek = day.getDay() + 7;
 	}
 
 	const sunday = day.getTime() - 86400000 * dayOfWeek;
