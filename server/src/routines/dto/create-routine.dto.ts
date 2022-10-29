@@ -1,12 +1,4 @@
-import { IsString, IsDateString } from 'class-validator';
+import { OmitType } from "@nestjs/swagger";
+import { Routine } from "./../entitles/routine.entity";
 
-export class CreateRoutineDto {
-  @IsString()
-  title: string;
-
-  @IsString()
-  content: string;
-
-  @IsDateString()
-  date: string;
-}
+export class CreateRoutineDto extends OmitType(Routine, ["id"] as const) {}

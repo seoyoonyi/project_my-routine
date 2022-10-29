@@ -1,36 +1,61 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors } from '@nestjs/common';
-import { RoutinesService } from './routines.service';
-import { CreateRoutineDto } from './dto/create-routine.dto';
-import { UpdateRoutineDto } from './dto/update-routine.dto';
-import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from "@nestjs/common";
+import { RoutinesService } from "./routines.service";
+import { CreateRoutineDto } from "./dto/create-routine.dto";
+import { UpdateRoutineDto } from "./dto/update-routine.dto";
+import { ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { ReadOnlyRoutineDto } from "./dto/routine.dto";
 
-@Controller('routines')
-@UseInterceptors(SuccessInterceptor)
+@Controller("routines")
 export class RoutineController {
   constructor(private readonly routineService: RoutinesService) {}
 
+  @ApiOperation({ summary: "루틴 등록" })
+  @ApiResponse({
+    status: 500,
+    description: "Server Error...",
+  })
+  @ApiResponse({
+    status: 201,
+    description: "성공!",
+    type: ReadOnlyRoutineDto,
+  })
   @Post()
-  create(@Body() createRoutineDto: CreateRoutineDto) {
+  async create(@Body() createRoutineDto: CreateRoutineDto) {
     return this.routineService.create(createRoutineDto);
   }
 
+  @ApiOperation({ summary: "전체 루틴 조회" })
   @Get()
-  findAll() {
+  async findAll() {
     return this.routineService.findAll();
   }
 
-  @Get(':date')
-  findBy(@Param('date') date: string) {
+  @ApiOperation({ summary: "특정 날짜 루틴 조회" })
+  @Get(":date")
+  async findBy(@Param("date") date: string) {
     return this.routineService.findBy(date);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoutineDto: UpdateRoutineDto) {
+  @ApiOperation({ summary: "루틴 변경" })
+  @Patch(":id")
+  async update(
+    @Param("id") id: number,
+    @Body() updateRoutineDto: UpdateRoutineDto
+  ) {
     return this.routineService.update(+id, updateRoutineDto);
   }
 
-  @Delete(':id')
-  delete(@Param('id') id: string) {
+  @ApiOperation({ summary: "루틴 삭제" })
+  @Delete(":id")
+  async delete(@Param("id") id: number) {
     return this.routineService.delete(+id);
   }
 }
