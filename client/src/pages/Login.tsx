@@ -2,9 +2,9 @@ import { Input, Form, Checkbox } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
 import MainContainer from "../components/MainContainer";
 import Btn from "../components/Btn";
+import Header from "../components/Header";
 
 const Login = () => {
   return (
@@ -36,7 +36,9 @@ const Login = () => {
 
             {/* button에서 앤트디자인 버튼으로 바꿔서 호버시 버튼색상 꺠지니 scss 조절해주세요 */}
 
-            <Btn className="w-full rounded-md">로그인</Btn>
+            <Btn type="primary" className="w-full rounded-md">
+              로그인
+            </Btn>
             <ul className="login-sub-menu">
               <li>
                 <Link to="/">비밀번호 찾기</Link>

@@ -6,12 +6,20 @@ interface IBtnProps {
   type?: "text" | "link" | "ghost" | "primary" | "dashed";
   size?: "large";
   children: React.ReactNode;
+  htmlType?: "button" | "submit" | "reset";
 }
 
-const Btn = ({ className, onClick, type, children, size }: IBtnProps) => {
+const Btn = ({
+  className,
+  onClick,
+  type,
+  children,
+  size,
+  htmlType,
+}: IBtnProps) => {
   return (
     <Button
-      htmlType="submit"
+      htmlType={htmlType}
       className={className}
       onClick={onClick}
       type={type}
