@@ -51,7 +51,7 @@ const CurrentWeekTap = ({
           );
         })}
         <span
-          className={onBorder ? "" : "border"}
+          className={onBorder ? undefined : "dayBorder"}
           style={{
             transform: `translateX(${moveDistance}%)`,
             transition: ".5s",

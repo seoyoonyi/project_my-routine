@@ -1,3 +1,7 @@
+.loginFormItem {
+  margin-bottom: 5px;
+}
+
 .loginBox {
   display: flex;
   height: 50px;

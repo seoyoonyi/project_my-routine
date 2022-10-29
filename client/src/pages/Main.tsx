@@ -102,7 +102,7 @@ const Main = ({ routineController }: IAppProps) => {
 
           <Btn
             className={
-              viewAll ? `rounded-md ${styles.viewAllAcitveBtn} ` : "rounded-md"
+              "rounded-md" + (viewAll ? ` ${styles.viewAllAcitveBtn}` : "")
             }
             onClick={viewAllToggle}
             size="large"

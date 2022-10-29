@@ -12,10 +12,10 @@ const Login = () => {
     <>
       <Header />
 
-      <MainContainer className="bg-gray-100">
+      <MainContainer className="h-screen bg-gray-100">
         <div className="w-[400px] md:w-[350px] sm:w-[300px] mx-auto ">
           <Form>
-            <Form.Item name="id">
+            <Form.Item name="id" className={styles.loginFormItem}>
               <Input
                 className={styles.loginBox}
                 placeholder="아이디"
