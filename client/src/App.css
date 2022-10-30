@@ -14,11 +14,15 @@ body {
 	font-size: initial;
 	color: #555;
 }
+
 .ant-btn-primary {
 	background-color: #37e2d5;
 	border-color: #37e2d5;
 }
-.ant-btn-primary:hover {
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+	background-color: rgba(55, 226, 213, 0.7);
+	border-color: #37e2d5;
 }
 
 .ant-btn-default:hover {

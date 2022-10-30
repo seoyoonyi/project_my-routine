@@ -1,8 +1,70 @@
+.loginContainer {
+	@apply h-screen bg-gray-100;
+}
+.loginForm {
+	@apply w-[400px] md:w-[350px] sm:w-[300px] mx-auto;
+}
+
 .loginFormItem {
-  margin-bottom: 5px;
+	margin-bottom: 5px;
+}
+
+.loginFormItem + .loginFormItem {
+	margin-bottom: 15px;
+}
+
+/* .loginFormItem + .loginFormItem .loginBox .ant-input {
+	order: 2;
+	padding-bottom: 2px;
+} */
+/* .loginFormItem + .loginFormItem .loginBox .ant-input-suffix {
+	margin-left: 0;
+	margin-right: 4px;
+} */
+.loginFormItem input {
+	order: 2;
+	padding-bottom: 2px;
+}
+
+.loginFormItem span {
+	margin-left: 0;
+	margin-right: 4px;
 }
 
 .loginBox {
-  display: flex;
-  height: 50px;
+	display: flex;
+	height: 50px;
+}
+
+.autoLogin {
+	margin-bottom: 15px;
+}
+
+.autoLogin span {
+	@apply text-gray-500;
+}
+
+.loginSubMenu {
+	@apply flex pt-[15px] justify-center text-gray-500;
+}
+
+.loginSubMenu li + li {
+	margin-left: 28px;
+	position: relative;
+}
+
+.loginSubMenu li + li::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: -14px;
+	width: 2px;
+	height: 70%;
+	transform: translate(-50%, -50%);
+	background-color: #dedede;
+}
+
+.loginSubMenu li a:hover {
+	@apply text-gray-700;
 }
