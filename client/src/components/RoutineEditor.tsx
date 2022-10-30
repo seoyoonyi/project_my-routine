@@ -9,7 +9,6 @@ interface IRoutineEditorProps {
 	routineToggle: () => void;
 	routineController: RoutineClient;
 	onAdd: boolean;
-	setActive: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface IRoutineDataType {
@@ -23,19 +22,18 @@ const RoutineEditor = ({
 	routineToggle,
 	routineController,
 	onAdd,
-	setActive,
 }: IRoutineEditorProps) => {
 	const [routineData, setRoutineData] = useState<IRoutineDataType>({
 		title: '',
 		content: '',
-		date: getStringDate(new Date()),
+		date: getStringDate(),
 	});
 	const [onDate, setOnDate] = useState(false);
 	const titleInput = useRef<HTMLInputElement>(null);
 	const contentInput = useRef<HTMLTextAreaElement>(null);
 
 	const dateToggle = () => {
-		setOnDate(onDate => !onDate);
+		setOnDate((onDate) => !onDate);
 	};
 
 	const routineSave = () => routineToggle();
@@ -50,7 +48,6 @@ const RoutineEditor = ({
 	const addRoutineData = async () => {
 		await routineController.addRoutine(routineData.title, routineData.content, routineData.date);
 		getRoutine(routineData.date);
-		// setActive()
 	};
 
 	const handleSubmit = () => {
@@ -58,13 +55,11 @@ const RoutineEditor = ({
 		setRoutineData({
 			title: '',
 			content: '',
-			date: getStringDate(new Date()),
+			date: getStringDate(),
 		});
 		routineSave();
 	};
-	useEffect(() => {
-		console.log(routineData.date);
-	}, []);
+
 	return (
 		<Modal open={onAdd} onCancel={routineToggle} footer={null}>
 			<input

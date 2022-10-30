@@ -17,7 +17,7 @@ export interface IRoutine {
 }
 
 const Main = ({ routineController }: IAppProps) => {
-	const today = getStringDate(new Date());
+	const today = getStringDate();
 	const currentWeek = useMemo(() => getCurrentWeekByDash(), []);
 	const dayIndex = currentWeek.findIndex((it: string) => it === today);
 	const [active, setActive] = useState<number>(dayIndex || 0);
@@ -49,7 +49,7 @@ const Main = ({ routineController }: IAppProps) => {
 			borderActive(getRoutineDateIndex);
 			setActive(getRoutineDateIndex);
 		},
-		[routineController, currentWeek]
+		[routineController, currentWeek],
 	);
 
 	const borderActive = (index: number) => {
@@ -94,7 +94,6 @@ const Main = ({ routineController }: IAppProps) => {
 							routineToggle={routineToggle}
 							onAdd={onAdd}
 							routineController={routineController}
-							setActive={setActive}
 						/>
 					)}
 

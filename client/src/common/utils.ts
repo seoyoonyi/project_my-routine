@@ -1,8 +1,7 @@
 type FormatType = 'dash' | 'hyphen';
 
 const setDefaultDate = (type: FormatType) => {
-	const offset = 1000 * 60 * 60 * 9; // 한국시간
-	const day = new Date(new Date().getTime() + offset);
+	const day = getToday();
 
 	let dayOfWeek = day.getDay();
 	if (day.getDay() === 0) {
@@ -28,8 +27,8 @@ const setDefaultDate = (type: FormatType) => {
 	return result;
 };
 
-export const getStringDate = (date: Date) => {
-	return date.toISOString().slice(0, 10);
+export const getStringDate = () => {
+	return getToday().toISOString().slice(0, 10);
 };
 
 export const getCurrentWeekByDash = () => {
@@ -38,4 +37,9 @@ export const getCurrentWeekByDash = () => {
 
 export const getCurrentWeekByHyphen = () => {
 	return setDefaultDate('hyphen');
+};
+
+export const getToday = () => {
+	const offset = 1000 * 60 * 60 * 9; // 한국시간
+	return new Date(new Date().getTime() + offset);
 };
