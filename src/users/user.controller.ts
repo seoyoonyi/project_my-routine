@@ -23,6 +23,10 @@ export class UserController {
     description: "Server Error...",
   })
   @ApiResponse({
+    status: 409,
+    description: "이미 존재하는 이메일 입니다.",
+  })
+  @ApiResponse({
     status: 201,
     description: "성공!",
     type: ReadOnlyUserDto,
@@ -57,12 +61,20 @@ export class UserController {
   }
 
   @ApiOperation({ summary: "회원 정보 변경" })
+  @ApiResponse({
+    status: 400,
+    description: "변경할 대상이 존재하지 않습니다.",
+  })
   @Patch(":id")
   async update(@Param("id") id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }
 
   @ApiOperation({ summary: "회원탈퇴" })
+  @ApiResponse({
+    status: 400,
+    description: "삭제할 대상이 존재하지 않습니다.",
+  })
   @Delete(":id")
   async delete(@Param("id") id: number) {
     return this.userService.delete(+id);
