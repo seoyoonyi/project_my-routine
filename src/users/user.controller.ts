@@ -1,3 +1,4 @@
+import { AuthService } from "./../auth/auth.service";
 import {
   Controller,
   Get,
@@ -12,10 +13,14 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { ReadOnlyUserDto } from "./dto/user.dto";
+import { LoginRequestDto } from "src/auth/dto/login.request.dto";
 
 @Controller("user")
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService
+  ) {}
 
   @ApiOperation({ summary: "회원가입" })
   @ApiResponse({
@@ -32,14 +37,14 @@ export class UserController {
     type: ReadOnlyUserDto,
   })
   @Post("signup")
-  async signUp(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async signUp(@Body() body: CreateUserDto) {
+    return this.userService.create(body);
   }
 
   @ApiOperation({ summary: "로그인" })
   @Post("login")
-  async logIn() {
-    return "login";
+  async logIn(@Body() data: LoginRequestDto) {
+    return this.authService.jwtLogin(data);
   }
 
   @ApiOperation({ summary: "로그아웃" })
