@@ -8,6 +8,7 @@ import { RoutineModule } from "./routines/routines.module";
 import { Routine } from "./routines/entitles/routine.entity";
 import { UserModule } from "./users/user.module";
 import { User } from "./users/entities/user.entity";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { User } from "./users/entities/user.entity";
     }),
     RoutineModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

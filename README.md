@@ -28,3 +28,7 @@
 9. 루틴 에디터 페이지 css
 
 ## TODO - Server
+
+1. routine에 title, content, date외에 status 추가
+
+type Status = "DO" | "DONE"

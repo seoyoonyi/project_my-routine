@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User } from "./entities/user.entity";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService {
@@ -11,22 +12,24 @@ export class UserService {
     @InjectRepository(User) private readonly repo: Repository<User>
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.repo.create(createUserDto);
+  async create(body: CreateUserDto): Promise<Omit<User, "password" | "id">> {
+    const { email, name, password } = body;
+    const isUserExist = await this.repo.findOne({ where: { email } });
 
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...rest } = await this.repo.save(user);
-      return this.repo.save(rest);
-    } catch (error) {
-      if (error.errno === 19) {
-        throw new ConflictException("이미 존재하는 이메일 입니다");
-      } else {
-        // eslint-disable-next-line no-console
-        console.log("error", error);
-      }
+    if (isUserExist) {
+      throw new ConflictException("이미 존재하는 이메일 입니다");
     }
-    return null;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await this.repo.save({
+      email,
+      name,
+      password: hashedPassword,
+    });
+
+    const readonlyUserDto = { name: user.name, email: user.email };
+    return readonlyUserDto;
   }
 
   async findAll() {

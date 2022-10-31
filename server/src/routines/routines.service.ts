@@ -12,8 +12,7 @@ export class RoutinesService {
   ) {}
 
   async create(createRoutineDto: CreateRoutineDto): Promise<Routine> {
-    const routine = this.repo.create(createRoutineDto);
-    return this.repo.save(routine);
+    return this.repo.save(createRoutineDto);
   }
 
   async findAll() {
