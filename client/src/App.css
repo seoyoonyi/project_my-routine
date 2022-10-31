@@ -37,7 +37,9 @@ body {
 .ant-modal-header {
 	height: 54px;
 }
-
+.ant-input:hover,
+.ant-input:focus,
+.ant-input-focused,
 .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
 .ant-input-affix-wrapper:focus,
 .ant-input-affix-wrapper:focus-within,

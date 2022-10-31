@@ -1,0 +1,37 @@
+.signUpContainer {
+	@apply h-screen bg-gray-100;
+}
+.signUpForm {
+	@apply w-[400px] md:w-[350px] sm:w-[300px] mx-auto;
+}
+.signUpForm fieldset legend {
+	@apply font-bold text-gray-500;
+}
+.signUpForm fieldset ul li p {
+	@apply font-bold text-gray-700;
+}
+.signUpForm fieldset ul li span.smallTxt {
+	@apply text-sm text-gray-500;
+}
+.signUpFormItem {
+	margin-bottom: 25px;
+}
+.signUpBox {
+	height: 40px;
+}
+.nextBtn {
+	@apply w-full rounded-md;
+	margin-bottom: 20px;
+}
+
+.loginLink {
+	@apply flex justify-center  text-sm  text-gray-500;
+}
+
+.loginLink a {
+	@apply text-gray-700 font-bold  underline transition-opacity;
+}
+
+.loginLink a:hover {
+	@apply opacity-70;
+}

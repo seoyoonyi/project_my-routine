@@ -13,14 +13,6 @@
 	margin-bottom: 15px;
 }
 
-/* .loginFormItem + .loginFormItem .loginBox .ant-input {
-	order: 2;
-	padding-bottom: 2px;
-} */
-/* .loginFormItem + .loginFormItem .loginBox .ant-input-suffix {
-	margin-left: 0;
-	margin-right: 4px;
-} */
 .loginFormItem input {
 	order: 2;
 	padding-bottom: 2px;
@@ -32,7 +24,6 @@
 }
 
 .loginBox {
-	display: flex;
 	height: 50px;
 }
 
@@ -42,6 +33,10 @@
 
 .autoLogin span {
 	@apply text-gray-500;
+}
+
+.loginBtn {
+	@apply w-full rounded-md;
 }
 
 .loginSubMenu {

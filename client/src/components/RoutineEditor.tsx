@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Btn from './Btn';
 import RoutineClient from '../service/routine-client';
 import { getStringDate } from '../common/utils';
