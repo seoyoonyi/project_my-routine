@@ -1,7 +1,7 @@
-import { childrenType } from '../common/childrenType';
+import { IChildrenType } from '../common/children-type';
 import Column from './Column';
 
-const MainContainer = ({ children, className }: childrenType) => {
+const MainContainer = ({ children, className }: IChildrenType) => {
 	return (
 		<div className={className}>
 			<Column>
