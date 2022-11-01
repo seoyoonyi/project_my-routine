@@ -27,12 +27,26 @@
 8. 루틴 리스트 페이지 css
 9. 루틴 에디터 페이지 css
 
+client/src/service/routine-client.ts
+client/src/pages/Main.tsx
+client/src/components/RoutineModal.tsx
+client/src/components/RoutineList.tsx
+client/src/components/RoutineItem.tsx
+client/src/components/RoutineEditor.tsx
+status 추가해주기
+type Status = "DO" | "DONE"
+
+api 경로 user -> users로 변경됨
+
 ## TODO - Server
 
 1. routine에 title, content, date외에 status 추가
 
-type Status = "DO" | "DONE"
+2. 유저와 루틴 컨트롤러에
+   @UseGuards(JwtAuthGuard)
+   적용
 
-2.  유저와 루틴 컨트롤러에
-    @UseGuards(JwtAuthGuard)
-    적용
+3. user -> users로 바꾸기
+
+@Unique(["email"]) =>
+@Column({ unique: true })로 대체가능한지 확인

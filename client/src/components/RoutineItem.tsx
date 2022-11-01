@@ -1,4 +1,4 @@
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined } from "@ant-design/icons"; // 안쓰는?
 import { IRoutineListProps } from "./RoutineList";
 
 interface IRoutineItemProps extends IRoutineListProps {
