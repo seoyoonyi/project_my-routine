@@ -12,6 +12,11 @@ export class UserService {
     @InjectRepository(User) private readonly repo: Repository<User>
   ) {}
 
+  async findUserByWithoutPassword(userId: number): Promise<User | null> {
+    const user = await this.repo.preload({ id: userId });
+    return user;
+  }
+
   async create(body: CreateUserDto): Promise<Omit<User, "password" | "id">> {
     const { email, name, password } = body;
     const isUserExist = await this.repo.findOne({ where: { email } });

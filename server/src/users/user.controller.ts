@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from "./../auth/jwt/jwt.guard";
 import { AuthService } from "./../auth/auth.service";
 import {
   Controller,
@@ -7,6 +8,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -14,6 +16,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { ReadOnlyUserDto } from "./dto/user.dto";
 import { LoginRequestDto } from "src/auth/dto/login.request.dto";
+import { CurrentUser } from "src/common/decorators/user.decorator";
 
 @Controller("user")
 export class UserController {
@@ -51,6 +54,13 @@ export class UserController {
   @Post("logout")
   async logOut() {
     return "logout";
+  }
+
+  @ApiOperation({ summary: "로그인한 회원 정보 조회" })
+  @Get("profile")
+  @UseGuards(JwtAuthGuard)
+  async findCurrentUser(@CurrentUser() user) {
+    return user;
   }
 
   @ApiOperation({ summary: "전체 회원 조회" })

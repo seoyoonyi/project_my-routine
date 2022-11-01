@@ -32,3 +32,7 @@
 1. routine에 title, content, date외에 status 추가
 
 type Status = "DO" | "DONE"
+
+2.  유저와 루틴 컨트롤러에
+    @UseGuards(JwtAuthGuard)
+    적용
