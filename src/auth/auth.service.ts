@@ -18,7 +18,7 @@ export class AuthService {
 
     const user = await this.repo.findOne({
       where: { email },
-      select: ["password"],
+      select: ["password", "id"],
       // user.entity.ts에  password가 @Column({ select: false }) 되있어서 password가 반환이 안됨
       // select 옵션을 넣어줘야 password가 반환됨
     });
