@@ -1,7 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { IsString, IsDateString, IsNumber, IsNotEmpty } from "class-validator";
+import {
+  IsString,
+  IsDateString,
+  IsNumber,
+  IsNotEmpty,
+  IsEnum,
+} from "class-validator";
 
+export enum Status {
+  DONE = "DONE",
+  DO = "DO",
+}
 @Entity()
 export class Routine {
   @ApiProperty({
@@ -41,4 +51,14 @@ export class Routine {
   @IsNotEmpty()
   @Column()
   date: string;
+
+  @ApiProperty({
+    example: "DO",
+    description: "status",
+    required: true,
+  })
+  @IsEnum(Status)
+  @IsNotEmpty()
+  @Column()
+  status: Status;
 }

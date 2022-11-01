@@ -18,7 +18,7 @@ import { ReadOnlyUserDto } from "./dto/user.dto";
 import { LoginRequestDto } from "src/auth/dto/login.request.dto";
 import { CurrentUser } from "src/common/decorators/user.decorator";
 
-@Controller("user")
+@Controller("users")
 export class UserController {
   constructor(
     private readonly userService: UserService,
