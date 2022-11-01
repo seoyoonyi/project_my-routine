@@ -1,30 +1,30 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import {
   IsString,
   IsDateString,
   IsNumber,
   IsNotEmpty,
   IsEnum,
-} from "class-validator";
+} from 'class-validator';
 
 export enum Status {
-  DONE = "DONE",
-  DO = "DO",
+  DONE = 'DONE',
+  DO = 'DO',
 }
 @Entity()
 export class Routine {
   @ApiProperty({
     example: 1,
-    description: "id",
+    description: 'id',
   })
   @IsNumber()
   @PrimaryGeneratedColumn()
   id: number;
 
   @ApiProperty({
-    example: "운동가기",
-    description: "title",
+    example: '운동가기',
+    description: 'title',
     required: true,
   })
   @IsString()
@@ -33,8 +33,8 @@ export class Routine {
   title: string;
 
   @ApiProperty({
-    example: "매일매일 가벼운 운동으로 건강 챙기기",
-    description: "content",
+    example: '매일매일 가벼운 운동으로 건강 챙기기',
+    description: 'content',
     required: true,
   })
   @IsString()
@@ -43,8 +43,8 @@ export class Routine {
   content: string;
 
   @ApiProperty({
-    example: "2022-10-22",
-    description: "date",
+    example: '2022-10-22',
+    description: 'date',
     required: true,
   })
   @IsDateString()
@@ -53,8 +53,8 @@ export class Routine {
   date: string;
 
   @ApiProperty({
-    example: "DO",
-    description: "status",
+    example: 'DO',
+    description: 'status',
     required: true,
   })
   @IsEnum(Status)
