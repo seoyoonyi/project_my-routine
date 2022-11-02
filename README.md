@@ -25,6 +25,7 @@
 6. 루틴 완료 기능
 7. 루틴 리스트 페이지 css
 8. 루틴 에디터 페이지 css
+9. do done이용해서 그것만 검색되게 하는거 만들기
 
 client/src/service/routine-client.ts
 client/src/pages/Main.tsx

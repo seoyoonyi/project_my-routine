@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-export const validateID = (_useCallback: any) => {
+//아이디
+/*  export const validateID = (_useCallback: any) => {
 	return _useCallback(({ _, value }: any) => {
 		if (!value) {
 			return Promise.reject(new Error('아이디를 입력해주세요.'));
@@ -15,6 +15,27 @@ export const validateID = (_useCallback: any) => {
 		const regExp = /[^a-zA-Z0-9]/;
 		if (regExp.test(value)) {
 			return Promise.reject(new Error('닉네임은 영문과 숫자만 사용할 수 있습니다.'));
+		}
+		return Promise.resolve();
+	}, []);
+}; */
+
+//이메일
+export const validateEmail = (_useCallback: any) => {
+	return _useCallback(({ _, value }: any) => {
+		if (!value) {
+			return Promise.reject(new Error('이메일을 입력해주세요.'));
+		}
+		if (/\s/.test(value)) {
+			return Promise.reject(new Error('이메일은 공백을 포함 할 수 없습니다.'));
+		}
+		if (value.length > 20) {
+			return Promise.reject(new Error('이메일은 20자 이하로 입력해주세요.'));
+		}
+		const regExp =
+			/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		if (!regExp.test(value)) {
+			return Promise.reject(new Error('이메일 형식이 아닙니다.'));
 		}
 		return Promise.resolve();
 	}, []);
@@ -78,20 +99,25 @@ export const validateName = (value: any) => {
 	return Promise.resolve();
 };
  */
-export const validateEmail = ({ value }: any) => {
-	const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-	if (!value) {
-		return Promise.reject(new Error('이메일을 입력해주세요.'));
-	}
-	if (/\s/.test(value)) {
-		return Promise.reject(new Error('이메일은 공백을 포함 할 수 없습니다.'));
-	}
-	if (value.length > 20) {
-		return Promise.reject(new Error('이메일은 20자 이하로 입력해주세요.'));
-	}
 
-	if (!regExp.test(value)) {
-		return Promise.reject(new Error('이메일 형식이 아닙니다.'));
-	}
-	return Promise.resolve();
+//아이디
+/* export const validateID = (_useCallback: any) => {
+	return _useCallback(({ _, value }: any) => {
+		if (!value) {
+			return Promise.reject(new Error('아이디를 입력해주세요.'));
+		}
+		if (/\s/.test(value)) {
+			return Promise.reject(new Error('아이디는 공백을 포함 할 수 없습니다.'));
+		}
+
+		if (value.length < 5 || value.length > 10) {
+			return Promise.reject(new Error('아이디는 5 ~ 10자 입니다.'));
+		}
+		const regExp = /[^a-zA-Z0-9]/;
+		if (regExp.test(value)) {
+			return Promise.reject(new Error('닉네임은 영문과 숫자만 사용할 수 있습니다.'));
+		}
+		return Promise.resolve();
+	}, []);
 };
+ */
