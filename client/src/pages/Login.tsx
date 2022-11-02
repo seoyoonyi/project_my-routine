@@ -7,7 +7,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import { validateEmail, validatePW } from '../common/validate-check';
-// import alertInfo, { timer } from '../common/alert';
+import alertInfo, { timer } from '../common/alert';
 import TokenStorage from '../common/token';
 import MainContainer from '../components/MainContainer';
 import useInput from '../common/useInput';
@@ -17,44 +17,40 @@ import Header from '../components/Header';
 import styles from './Login.module.css';
 
 const Login = () => {
-	const [email, handleEmail] = useInput<string>('');
-	const [password, handlePassword] = useInput<string>('');
 	const tokenStorage = new TokenStorage();
 
-	const handleLogin = useCallback(async () => {
+	const onFinish = async (values: any) => {
+		const loginForm = {
+			email: values.email,
+			password: values.pw,
+		};
+
 		try {
-			const response = await axios.post(`${api.users}/login`, {
-				email,
-				password,
-			});
+			const response = await axios.post(`${api.users}/login`, loginForm);
 
 			if (response.data.success === true) {
 				// 브라우저 종료 후에도 로그인 유지하기 위함
 				tokenStorage.saveToken(response.data.data.token);
-				console.log('성공');
 			}
-			/* else {
-					alertInfo(e.message, null, 'warning');
-				} */
 		} catch (error) {
-			const err = error as AxiosError;
-			throw new Error(err.message);
+			//TODO: any 대신에 쓸수있는 타입
+			const err = error as any;
+
+			alertInfo(err.response.data.message, null, 'warning');
 		}
-	}, [email, password, tokenStorage]);
+	};
 
 	return (
 		<>
 			<Header />
 			<MainContainer className={styles.loginContainer}>
-				<Form className={styles.loginForm}>
+				<Form className={styles.loginForm} onFinish={onFinish}>
 					<Form.Item
 						name="email"
 						rules={[{ validator: validateEmail(useCallback) }]}
 						className={styles.loginFormItem}
 					>
 						<Input
-							value={email}
-							onChange={handleEmail}
 							className={styles.loginBox}
 							placeholder="이메일"
 							prefix={<UserOutlined />}
@@ -67,8 +63,6 @@ const Login = () => {
 						className={styles.loginFormItem}
 					>
 						<Input.Password
-							value={password}
-							onChange={handlePassword}
 							className={styles.loginBox}
 							placeholder="비밀번호"
 							iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
@@ -78,13 +72,7 @@ const Login = () => {
 					<div className={styles.autoLogin}>
 						<Checkbox>로그인 상태 유지</Checkbox>
 					</div>
-					<Btn
-						type="primary"
-						size="large"
-						className={styles.loginBtn}
-						htmlType="submit"
-						onClick={handleLogin}
-					>
+					<Btn type="primary" size="large" className={styles.loginBtn} htmlType="submit">
 						로그인
 					</Btn>
 					<ul className={styles.loginSubMenu}>
