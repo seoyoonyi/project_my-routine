@@ -16,7 +16,7 @@ import Btn from '../components/Btn';
 import Header from '../components/Header';
 import styles from './Login.module.css';
 
-type ErrorResponse = AxiosError & {
+type ErrorResponse = {
 	message: string;
 };
 
@@ -36,8 +36,11 @@ const Login = () => {
 				// 브라우저 종료 후에도 로그인 유지하기 위함
 				tokenStorage.saveToken(response.data.data.token);
 			}
-		} catch (error: ErrorResponse) {
-			alertInfo(error.response.data.message, null, 'warning');
+		} catch (error) {
+			//TODO: implement 통해서 알아보기
+			const err = error as AxiosError;
+
+			alertInfo((err.response?.data as ErrorResponse).message, null, 'warning');
 		}
 	};
 
