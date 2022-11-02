@@ -40,13 +40,15 @@ api 경로 user -> users로 변경됨
 
 ## TODO - Server
 
-1. routine에 title, content, date외에 status 추가
-
-2. 유저와 루틴 컨트롤러에
+1. 유저와 루틴 컨트롤러에
    @UseGuards(JwtAuthGuard)
    적용
 
-3. user -> users로 바꾸기
+2. api 일괄 삭제
+
+- 사용자가 누를 수 있는 루틴 삭제 => 사용자의 id를 파라미터로 넘기
 
 @Unique(["email"]) =>
 @Column({ unique: true })로 대체가능한지 확인
+
+- 사용자가 루틴 status 넘기면 해당 staus만 필터링 되는 루틴 조회하기
