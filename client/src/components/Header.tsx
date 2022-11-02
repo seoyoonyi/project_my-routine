@@ -1,9 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../common/auth';
 import Column from './Column';
 
 const Header = () => {
 	const [top, setTop] = useState(true);
+	const auth = useAuth();
+	const navigate = useNavigate();
+
+	const onLoginOut = (e: any) => {
+		e && e.preventDefault();
+		auth.logout();
+		navigate('/');
+	};
 
 	useEffect(() => {
 		const scrollHandler = () => {
@@ -52,12 +62,22 @@ const Header = () => {
 									</Link>
 								</li>
 								<li>
-									<Link
-										to="/login"
-										className="flex items-center px-5 py-3 font-medium text-gray-600 transition duration-150 ease-in-out hover:text-gray-900"
-									>
-										로그인
-									</Link>
+									{auth.user ? (
+										<Link
+											to="/login"
+											className="flex items-center px-5 py-3 font-medium text-gray-600 transition duration-150 ease-in-out hover:text-gray-900"
+											onClick={(e) => onLoginOut(e)}
+										>
+											로그아웃
+										</Link>
+									) : (
+										<Link
+											to="/login"
+											className="flex items-center px-5 py-3 font-medium text-gray-600 transition duration-150 ease-in-out hover:text-gray-900"
+										>
+											로그인
+										</Link>
+									)}
 								</li>
 							</ul>
 							<li>

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { AuthProvider } from './common/auth';
 import Intro from './pages/Intro';
 import Login from './pages/Login';
 import Main from './pages/Main';
@@ -13,13 +14,15 @@ export interface IAppProps {
 const App = ({ routineController }: IAppProps) => {
 	return (
 		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Intro />} />
-				<Route path="/main" element={<Main routineController={routineController} />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/signup" element={<SignUp />} />
-				<Route path="/*" element={<NotFound />} />
-			</Routes>
+			<AuthProvider>
+				<Routes>
+					<Route path="/" element={<Intro />} />
+					<Route path="/main" element={<Main routineController={routineController} />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<SignUp />} />
+					<Route path="/*" element={<NotFound />} />
+				</Routes>
+			</AuthProvider>
 		</BrowserRouter>
 	);
 };

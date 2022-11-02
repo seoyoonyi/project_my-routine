@@ -17,4 +17,7 @@ export default class TokenStorage {
 	removeToken() {
 		localStorage && localStorage.removeItem(SAVEINFO);
 	}
+	clearToken() {
+		localStorage && localStorage.removeItem(SAVEINFO);
+	}
 }

@@ -1,16 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Input, Form, Checkbox } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import { validateEmail, validatePW } from '../common/validate-check';
-import alertInfo, { timer } from '../common/alert';
-import TokenStorage from '../common/token';
+import { useAuth } from '../common/auth';
+import alertInfo from '../common/alert';
 import MainContainer from '../components/MainContainer';
-import useInput from '../common/useInput';
 import api from '../service/api';
 import Btn from '../components/Btn';
 import Header from '../components/Header';
@@ -21,8 +20,9 @@ type ErrorResponse = {
 };
 
 const Login = () => {
+	const [user, setUser] = useState('');
+	const { login } = useAuth();
 	const navigate = useNavigate();
-	const tokenStorage = new TokenStorage();
 
 	const onFinish = async (values: any) => {
 		const loginForm = {
@@ -35,8 +35,8 @@ const Login = () => {
 
 			if (response.data.success === true) {
 				// 브라우저 종료 후에도 로그인 유지하기 위함
-				tokenStorage.saveToken(response.data.data.token);
-				navigate('/', { replace: true });
+				login(response.data.data.token);
+				navigate('/');
 			}
 		} catch (error) {
 			const err = error as AxiosError;
