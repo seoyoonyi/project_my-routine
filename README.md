@@ -38,6 +38,9 @@ type Status = "DO" | "DONE"
 
 api 경로 user -> users로 변경됨
 
+10. 루틴에디터에 '도전루틴' 만들기
+11. 로그인 할때 비활성화 버튼 만들기
+
 ## TODO - Server
 
 1. 유저와 루틴 컨트롤러에
