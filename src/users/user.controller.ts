@@ -50,12 +50,6 @@ export class UserController {
     return this.authService.jwtLogin(data);
   }
 
-  @ApiOperation({ summary: "로그아웃" })
-  @Post("logout")
-  async logOut() {
-    return "logout";
-  }
-
   @ApiOperation({ summary: "로그인한 회원 정보 조회" })
   @Get("profile")
   @UseGuards(JwtAuthGuard)
