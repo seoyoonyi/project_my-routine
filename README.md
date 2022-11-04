@@ -22,19 +22,10 @@
 3. 사용자 가이드 페이지 제작
 4. 좌우버튼 추가후 '주'단위로 루틴 변경
 5. 전체보기 클릭시, 해당하는 '주' 보여주기
-6. 루틴 완료 기능
+6. 루틴 완료 기능(status 추가해주기) type Status = "DO" | "DONE"
 7. 루틴 리스트 페이지 css
 8. 루틴 에디터 페이지 css
 9. do done이용해서 그것만 검색되게 하는거 만들기
-
-client/src/service/routine-client.ts
-client/src/pages/Main.tsx
-client/src/components/RoutineModal.tsx
-client/src/components/RoutineList.tsx
-client/src/components/RoutineItem.tsx
-client/src/components/RoutineEditor.tsx
-status 추가해주기
-type Status = "DO" | "DONE"
 
 api 경로 user -> users로 변경됨
 

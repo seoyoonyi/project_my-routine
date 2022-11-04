@@ -11,9 +11,9 @@ interface IRoutineModal {
 }
 
 const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal) => {
-	const { id, title, content, date, routineController, getAllRoutines } = routineItem;
+	const { id, title, content, date, status, routineController, getAllRoutines } = routineItem;
 	const [menuKey, setMenuKey] = useState<string>('');
-	const [originData, setOriginData] = useState({ title, content, date });
+	const [originData, setOriginData] = useState({ title, content, date, status });
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [isEditDate, setIsEditDate] = useState<boolean>(false);
 
@@ -28,10 +28,16 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 	const toggleIsEdit = () => setIsEdit(!isEdit);
 	const handleQuitEdit = () => {
 		setIsEdit(false);
-		setOriginData({ title, content, date });
+		setOriginData({ title, content, date, status });
 	};
 	const EditRoutineData = async () => {
-		await routineController.editRoutine(id, originData.title, originData.content, originData.date);
+		await routineController.editRoutine(
+			id,
+			originData.title,
+			originData.content,
+			originData.date,
+			originData.status,
+		);
 		getAllRoutines();
 	};
 
@@ -42,7 +48,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 		handleCancel();
 		getAllRoutines();
 	};
-	const handleMenuClick: MenuProps['onClick'] = e => {
+	const handleMenuClick: MenuProps['onClick'] = (e) => {
 		const dropDownId = e.key;
 		setMenuKey(dropDownId);
 	};
@@ -100,6 +106,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 					</>
 				) : (
 					<>
+						<p>{status}</p>
 						<h2 onClick={toggleIsEdit}>{title}</h2>
 						<p onClick={toggleIsEdit}>{content}</p>
 					</>

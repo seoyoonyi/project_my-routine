@@ -1,4 +1,5 @@
 import { AxiosError, AxiosInstance } from 'axios';
+import { StatusType } from '../common/type/type';
 
 class RoutineClient {
 	routineClient;
@@ -29,12 +30,13 @@ class RoutineClient {
 		}
 	}
 
-	async addRoutine(title: string, content: string, date: string) {
+	async addRoutine(title: string, content: string, date: string, status: StatusType) {
 		try {
 			const response = await this.routineClient.post('routines', {
 				title,
 				content,
 				date,
+				status,
 			});
 			if (response.data.success) {
 				return response.data;
@@ -45,12 +47,13 @@ class RoutineClient {
 		}
 	}
 
-	async editRoutine(id: number, title: string, content: string, date: string) {
+	async editRoutine(id: number, title: string, content: string, date: string, status: StatusType) {
 		try {
 			const response = await this.routineClient.patch('routines/' + id, {
 				title,
 				content,
 				date,
+				status,
 			});
 
 			if (response.data.success) {

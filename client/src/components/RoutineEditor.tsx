@@ -3,6 +3,7 @@ import Btn from './Btn';
 import RoutineClient from '../service/routine-client';
 import { getStringDate } from '../common/utils';
 import { Modal, Input } from 'antd';
+import { StatusType } from '../common/type/type';
 
 interface IRoutineEditorProps {
 	getRoutine: (date: string) => void;
@@ -15,6 +16,7 @@ export interface IRoutineDataType {
 	title: string;
 	content: string;
 	date: string;
+	status: StatusType;
 }
 
 const RoutineEditor = ({
@@ -27,6 +29,7 @@ const RoutineEditor = ({
 		title: '',
 		content: '',
 		date: getStringDate(),
+		status: 'DO',
 	});
 	const [onDate, setOnDate] = useState(false);
 	const titleInput = useRef<HTMLInputElement>(null);
@@ -46,7 +49,12 @@ const RoutineEditor = ({
 	};
 
 	const addRoutineData = async () => {
-		await routineController.addRoutine(routineData.title, routineData.content, routineData.date);
+		await routineController.addRoutine(
+			routineData.title,
+			routineData.content,
+			routineData.date,
+			routineData.status,
+		);
 		getRoutine(routineData.date);
 	};
 
@@ -56,6 +64,7 @@ const RoutineEditor = ({
 			title: '',
 			content: '',
 			date: getStringDate(),
+			status: 'DO',
 		});
 		routineSave();
 	};

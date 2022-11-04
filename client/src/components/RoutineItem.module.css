@@ -1,0 +1,31 @@
+.routineItem {
+	@apply flex gap-2 border-b-2 border-gray-100 border-solid;
+}
+
+.routineContent {
+	@apply w-9/12 h-12 rounded-[7px] flex justify-start items-center px-4;
+}
+
+.routineStatus {
+	@apply w-6 h-6 rounded-full cursor-pointer flex justify-center items-center shrink-0	overflow-hidden;
+	outline: 1px solid grey;
+}
+.routineStatus:hover {
+	outline: 1px solid #37e2d5;
+	transition: outline 0.3s cubic-bezier(0.44, 0.02, 0.6, 1.01);
+}
+.checkedIcoon {
+	stroke: grey;
+	stroke-width: 30px;
+}
+.checkedIconBg {
+	@apply flex items-center justify-center w-full h-full;
+}
+
+.routineTxt {
+	@apply w-full h-full flex items-center ml-2;
+}
+
+.routineDate {
+	@apply w-1/4 h-12 rounded-[7px] flex justify-center text-sm items-center;
+}

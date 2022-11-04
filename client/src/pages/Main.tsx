@@ -8,12 +8,14 @@ import CurrentWeekTap from '../components/CurrentWeekTap';
 import { getCurrentWeekByDash, getStringDate } from '../common/utils';
 import styles from './Main.module.css';
 import MainContainer from '../components/MainContainer';
+import { StatusType } from '../common/type/type';
 
 export interface IRoutine {
 	id: number;
 	title: string;
 	content: string;
 	date: string;
+	status: StatusType;
 }
 
 const Main = ({ routineController }: IAppProps) => {
