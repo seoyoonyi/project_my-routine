@@ -19,9 +19,9 @@ export class UserService {
 
   async create(body: CreateUserDto): Promise<Omit<User, "password" | "id">> {
     const { email, name, password } = body;
-    const isUserExist = await this.repo.findOne({ where: { email } });
+    const findUserExist = await this.repo.findOne({ where: { email } });
 
-    if (isUserExist) {
+    if (findUserExist) {
       throw new ConflictException("이미 존재하는 이메일 입니다");
     }
 
