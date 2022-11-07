@@ -1,12 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
+import { StatusType } from '../common/type/type';
+import { IRoutineListProps } from './RoutineList';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IRoutineListProps } from './RoutineList';
 import styles from './RoutineItem.module.css';
-import { useState } from 'react';
-import { StatusType } from '../common/type/type';
 
 interface IRoutineItemProps extends IRoutineListProps {
 	showModal: () => void;
+	status: StatusType;
+	setStatus: Dispatch<SetStateAction<StatusType>>;
 }
 
 const RoutineItem = ({
@@ -14,32 +16,28 @@ const RoutineItem = ({
 	title,
 	content,
 	date,
-	status,
 	routineController,
+	status,
+	setStatus,
 	showModal,
 }: IRoutineItemProps) => {
-	const [isDone, setIsDone] = useState(false);
-	const [changeStatus, setChangeStatus] = useState<StatusType>(status);
-
-	const EditRoutineStatus = async () => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		setChangeStatus((changeStatus) => (changeStatus = isDone ? 'DONE' : 'DO'));
-		await routineController.editRoutine(id, title, content, date, changeStatus);
+	const toggleStatus = (routineStatus: StatusType) => {
+		setStatus(routineStatus);
 	};
 
-	const toggleDone = () => {
-		setIsDone((checked) => !checked);
-		EditRoutineStatus();
-		console.log('status :: ' + status);
-		console.log('changeStatus :: ' + changeStatus);
+	const EditRoutineStatus = async () => {
+		const routineStatus = status === 'DO' ? 'DONE' : 'DO';
+		toggleStatus(routineStatus);
+
+		await routineController.editRoutine(id, title, content, date, routineStatus);
 	};
 
 	return (
 		<>
 			<div className={styles.routineItem}>
 				<div className={styles.routineContent}>
-					<span className={styles.routineStatus} onClick={toggleDone}>
-						{isDone && (status = 'DONE') && (
+					<span className={styles.routineStatus} onClick={EditRoutineStatus}>
+						{status === 'DONE' && (
 							<span className={styles.checkedIconBg}>
 								<FontAwesomeIcon icon={faCheck} color="grey" className={styles.checkedIcoon} />
 							</span>

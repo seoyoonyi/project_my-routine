@@ -30,7 +30,7 @@ const Main = ({ routineController }: IAppProps) => {
 	const [onBorder, setOnBorder] = useState<boolean>(false);
 
 	const routineToggle = () => {
-		setOnAdd((onAdd) => !onAdd);
+		setOnAdd((prev) => !prev);
 	};
 
 	const getAllRoutines = useCallback(async () => {
