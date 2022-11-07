@@ -1,48 +1,44 @@
-## EGO ROUTINE
+# 에고루틴
 
-## 1차 개발
+새로운 나를 만드는 습관
 
-### UI개발
+매일매일 달라진 나를
+에고루틴과 함께 만들어보세요!
 
-1. 로그인, 회원가입 페이지
-2. 사용자 가이드 페이지
-3. 요금제 페이지
-4. 루틴 페이지
-5. 메인 인트로 페이지
+### 개발 환경
 
-### 기능개발
+| Type     | Skill                        | Description | Port / Path |
+| -------- | ---------------------------- | ----------- | ----------- |
+| client   | `react.js`                   | 웹 페이지   | 3000        |
+| server   | `nest.js / sqlite / typeorm` | API 서버    | 8000        |
+| API Docs | `swagger`                    | API 문서    | 8000 / docs |
 
-1. 로그인, 회원가입 기능
-2. 루틴 추가, 수정, 삭제, 부분조회, 완료 기능
+사용언어: typescript
+퍼블리싱: antd, css_module, tailwind
 
-## TODO - Client
+### 패키지 설치
 
-1. 로그인, 회원가입 유효성 체크
-2. 요금제 페이지 제작
-3. 사용자 가이드 페이지 제작
-4. 좌우버튼 추가후 '주'단위로 루틴 변경
-5. 전체보기 클릭시, 해당하는 '주' 보여주기
-6. 루틴 완료 기능(status 추가해주기) type Status = "DO" | "DONE"
-7. 루틴 리스트 페이지 css
-8. 루틴 에디터 페이지 css
-9. do done이용해서 그것만 검색되게 하는거 만들기
+```sh
+터미널에서, npm install ✅ #root 경로에서도 모듈 설치 필요
+터미널에서 client 폴더로 이동 후, npm install ✅
+터미널에서 server 폴더로 이동 후, npm install ✅
+```
 
-api 경로 user -> users로 변경됨
+### 명령어 실행
 
-10. 루틴에디터에 '도전루틴' 만들기
-11. 로그인 할때 비활성화 버튼 만들기
+```sh
+터미널 root 경로에서 npm start # client와 server가 동시에 구동됨
+```
 
-## TODO - Server
+### 더미 데이터 삽입
 
-1. 유저와 루틴 컨트롤러에
-   @UseGuards(JwtAuthGuard)
-   적용
+1. npm start 명령어를 이용해서 client와 server 구동.
+1. vscode 확장플러그인에서 SQLite 설치.
+1. server 폴더에 위치한 create-seed.sql 파일을 열고 오른쪽 마우스를 누르면 나타나는 메뉴에서 run Query 클릭.
+1. 상단 팔레트 창에서 server/db.sqlite 선택. (server가 구동중인 상태여야 나타남)
 
-2. api 일괄 삭제
+### API 문서
 
-- 사용자가 누를 수 있는 루틴 삭제 => 사용자의 id를 파라미터로 넘기
-
-@Unique(["email"]) =>
-@Column({ unique: true })로 대체가능한지 확인
-
-- 사용자가 루틴 status 넘기면 해당 staus만 필터링 되는 루틴 조회하기
+- 서버가 켜진 상태에서 http://localhost:8000/docs로 접속
+- 보안처리를 위해 계정입력을 하도록 처리
+- 상용단계가 아니라서 .env 파일을 노출함
