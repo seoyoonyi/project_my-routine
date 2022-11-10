@@ -34,16 +34,16 @@ const Main = () => {
 
 	const getRoutine = useCallback(
 		async (date?: string) => {
-			if (!date) {
-				return;
-			}
-
 			const response = await routineController.getRoutinesByDate(date);
 			const getRoutineDateIndex = currentWeek.findIndex((it: string) => it === date);
 
 			setRoutineContextList(response.data);
 			borderActive(getRoutineDateIndex);
 			setActive(getRoutineDateIndex);
+
+			if (!date) {
+				return;
+			}
 		},
 		[routineController, currentWeek, setRoutineContextList],
 	);
@@ -75,6 +75,10 @@ const Main = () => {
 		}
 	};
 
+	const viewController = { viewAll, setViewAll };
+	const borderController = { onBorder, setOnBorder, borderActive };
+	const routinesAndEtcController = { getRoutine, routineToggle, currentWeek, onAdd };
+
 	useEffect(() => {
 		getRoutine(today);
 		borderActive(dayIndex);
@@ -90,16 +94,9 @@ const Main = () => {
 					</Btn>
 					{onAdd && (
 						<RoutineEditor
-							getRoutine={getRoutine}
-							routineToggle={routineToggle}
-							onAdd={onAdd}
-							routineController={routineController}
-							borderActive={borderActive}
-							currentWeek={currentWeek}
-							viewAll={viewAll}
-							setViewAll={setViewAll}
-							onBorder={onBorder}
-							setOnBorder={setOnBorder}
+							viewController={viewController}
+							borderController={borderController}
+							routinesAndEtcController={routinesAndEtcController}
 						/>
 					)}
 

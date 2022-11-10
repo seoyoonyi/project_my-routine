@@ -1,21 +1,27 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useRef, useState } from 'react';
 import Btn from './Btn';
 import RoutineClient from '../service/routine-client';
 import { getStringDate } from '../common/utils/utils';
 import { Modal, Input } from 'antd';
 import { StatusType } from '../common/type/type';
+import RoutineControllerContext from '../common/context/RoutineControllerContext';
 
 interface IRoutineEditorProps {
-	getRoutine: (date: string) => void;
-	routineToggle: () => void;
-	routineController: RoutineClient;
-	onAdd: boolean;
-	borderActive: (index: number) => void;
-	currentWeek: string[];
-	viewAll: boolean;
-	setViewAll: Dispatch<SetStateAction<boolean>>;
-	onBorder: boolean;
-	setOnBorder: Dispatch<SetStateAction<boolean>>;
+	viewController: {
+		viewAll: boolean;
+		setViewAll: Dispatch<SetStateAction<boolean>>;
+	};
+	borderController: {
+		borderActive: (index: number) => void;
+		onBorder: boolean;
+		setOnBorder: Dispatch<SetStateAction<boolean>>;
+	};
+	routinesAndEtcController: {
+		getRoutine: (date: string) => void;
+		routineToggle: () => void;
+		onAdd: boolean;
+		currentWeek: string[];
+	};
 }
 
 export interface IRoutineDataType {
@@ -26,17 +32,14 @@ export interface IRoutineDataType {
 }
 
 const RoutineEditor = ({
-	getRoutine,
-	routineToggle,
-	routineController,
-	onAdd,
-	borderActive,
-	currentWeek,
-	viewAll,
-	setViewAll,
-	onBorder,
-	setOnBorder,
+	viewController,
+	borderController,
+	routinesAndEtcController,
 }: IRoutineEditorProps) => {
+	const { viewAll, setViewAll } = viewController;
+	const { onBorder, setOnBorder, borderActive } = borderController;
+	const { getRoutine, routineToggle, currentWeek, onAdd } = routinesAndEtcController;
+
 	const [routineData, setRoutineData] = useState<IRoutineDataType>({
 		title: '',
 		content: '',
@@ -47,6 +50,7 @@ const RoutineEditor = ({
 	const titleInput = useRef<HTMLInputElement>(null);
 	const contentInput = useRef<HTMLTextAreaElement>(null);
 	const routineDateIndex = currentWeek.findIndex((it: string) => it === routineData.date);
+	const routineController = useContext(RoutineControllerContext);
 
 	const dateToggle = () => {
 		setOnDate((onDate) => !onDate);
