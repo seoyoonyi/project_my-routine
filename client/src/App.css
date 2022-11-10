@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 @import '~antd/dist/antd.css';
-@import './style/antd.build.css';
+@import './styles/antd.build.css';
 
 body {
 	font-family: 'Pretendard Std Variable', 'Pretendard Std', Pretendard, -apple-system,
@@ -49,11 +49,13 @@ body {
 }
 
 /* FIXME: npm run build 했을 시 input[type='date'] 부분 에러 */
-input[type='date']::-webkit-calendar-picker-indicator,
+
+/* FIXME: 클릭시 에러 */
+/* input[type='date']::-webkit-calendar-picker-indicator,
 input[type='date']::-webkit-inner-spin-button {
 	display: none;
 	appearance: none;
-}
+} */
 input[type='date']::-webkit-calendar-picker-indicator {
 	background: transparent;
 	bottom: 0;

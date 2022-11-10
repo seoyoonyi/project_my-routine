@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../common/auth';
+import { useAuth } from '../common/auth/Auth';
 import Column from './Column';
 
 const Header = () => {

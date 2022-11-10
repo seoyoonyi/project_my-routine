@@ -1,15 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { useState, createContext, useContext } from 'react';
-import TokenStorage from './token';
+import TokenStorage from '../utils/token';
 const tokenStorage = new TokenStorage();
-/* TODO: 유저값 리스트
- export type userType = {
- 	id: string;
- 	email: string;
- 	name: string;
- 	token?: string;
- };
-*/
 
 export type userType = {
 	token: string;

@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Input, Form, Checkbox } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
-import { validateEmail, validatePW } from '../common/validate-check';
-import { useAuth } from '../common/auth';
-import alertInfo from '../common/alert';
+import { validateEmail, validatePW } from '../common/utils/validate-check';
+import { useAuth } from '../common/auth/Auth';
+import alertInfo from '../common/utils/alert';
 import MainContainer from '../components/MainContainer';
 import api from '../service/api';
 import Btn from '../components/Btn';
@@ -20,7 +20,6 @@ type ErrorResponse = {
 };
 
 const Login = () => {
-	const [user, setUser] = useState('');
 	const { login } = useAuth();
 	const navigate = useNavigate();
 

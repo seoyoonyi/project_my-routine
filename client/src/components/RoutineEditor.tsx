@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import Btn from './Btn';
 import RoutineClient from '../service/routine-client';
-import { getStringDate } from '../common/utils';
+import { getStringDate } from '../common/utils/utils';
 import { Modal, Input } from 'antd';
 import { StatusType } from '../common/type/type';
 
@@ -10,6 +10,12 @@ interface IRoutineEditorProps {
 	routineToggle: () => void;
 	routineController: RoutineClient;
 	onAdd: boolean;
+	borderActive: (index: number) => void;
+	currentWeek: string[];
+	viewAll: boolean;
+	setViewAll: Dispatch<SetStateAction<boolean>>;
+	onBorder: boolean;
+	setOnBorder: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface IRoutineDataType {
@@ -24,6 +30,12 @@ const RoutineEditor = ({
 	routineToggle,
 	routineController,
 	onAdd,
+	borderActive,
+	currentWeek,
+	viewAll,
+	setViewAll,
+	onBorder,
+	setOnBorder,
 }: IRoutineEditorProps) => {
 	const [routineData, setRoutineData] = useState<IRoutineDataType>({
 		title: '',
@@ -34,6 +46,7 @@ const RoutineEditor = ({
 	const [onDate, setOnDate] = useState(false);
 	const titleInput = useRef<HTMLInputElement>(null);
 	const contentInput = useRef<HTMLTextAreaElement>(null);
+	const routineDateIndex = currentWeek.findIndex((it: string) => it === routineData.date);
 
 	const dateToggle = () => {
 		setOnDate((onDate) => !onDate);
@@ -67,6 +80,11 @@ const RoutineEditor = ({
 			status: 'DO',
 		});
 		routineSave();
+		if (viewAll === true) {
+			setViewAll(false);
+			borderActive(routineDateIndex);
+			setOnBorder(!onBorder);
+		}
 	};
 
 	return (

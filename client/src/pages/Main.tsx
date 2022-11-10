@@ -2,13 +2,15 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import RoutineList from '../components/RoutineList';
 import Btn from '../components/Btn';
 import RoutineEditor from '../components/RoutineEditor';
-import { IAppProps } from '../App';
 import Header from '../components/Header';
 import CurrentWeekTap from '../components/CurrentWeekTap';
-import { getCurrentWeekByDash, getStringDate } from '../common/utils';
+import { getCurrentWeekByDash, getStringDate } from '../common/utils/utils';
 import styles from './Main.module.css';
 import MainContainer from '../components/MainContainer';
 import { StatusType } from '../common/type/type';
+import { useContext } from 'react';
+import { RoutineContext } from '../common/context/RoutineContext';
+import RoutineControllerContext from '../common/context/RoutineControllerContext';
 
 export interface IRoutine {
 	id: number;
@@ -18,25 +20,17 @@ export interface IRoutine {
 	status: StatusType;
 }
 
-const Main = ({ routineController }: IAppProps) => {
+const Main = () => {
 	const today = getStringDate();
 	const currentWeek = useMemo(() => getCurrentWeekByDash(), []);
 	const dayIndex = currentWeek.findIndex((it: string) => it === today);
 	const [active, setActive] = useState<number>(dayIndex || 0);
 	const [moveDistance, setMoveDistance] = useState<number>(0);
-	const [routineList, setRoutineList] = useState<IRoutine[]>([]);
 	const [onAdd, setOnAdd] = useState<boolean>(false);
 	const [viewAll, setViewAll] = useState<boolean>(false);
 	const [onBorder, setOnBorder] = useState<boolean>(false);
-
-	const routineToggle = () => {
-		setOnAdd((prev) => !prev);
-	};
-
-	const getAllRoutines = useCallback(async () => {
-		const response = await routineController.getRoutines();
-		setRoutineList(response.data);
-	}, [routineController]);
+	const routineController = useContext(RoutineControllerContext);
+	const { routineContextList, setRoutineContextList, getAllRoutines } = useContext(RoutineContext);
 
 	const getRoutine = useCallback(
 		async (date?: string) => {
@@ -47,12 +41,16 @@ const Main = ({ routineController }: IAppProps) => {
 			const response = await routineController.getRoutinesByDate(date);
 			const getRoutineDateIndex = currentWeek.findIndex((it: string) => it === date);
 
-			setRoutineList(response.data);
+			setRoutineContextList(response.data);
 			borderActive(getRoutineDateIndex);
 			setActive(getRoutineDateIndex);
 		},
-		[routineController, currentWeek],
+		[routineController, currentWeek, setRoutineContextList],
 	);
+
+	const routineToggle = () => {
+		setOnAdd((prev) => !prev);
+	};
 
 	const borderActive = (index: number) => {
 		setMoveDistance(100 * index);
@@ -96,6 +94,12 @@ const Main = ({ routineController }: IAppProps) => {
 							routineToggle={routineToggle}
 							onAdd={onAdd}
 							routineController={routineController}
+							borderActive={borderActive}
+							currentWeek={currentWeek}
+							viewAll={viewAll}
+							setViewAll={setViewAll}
+							onBorder={onBorder}
+							setOnBorder={setOnBorder}
 						/>
 					)}
 
@@ -117,7 +121,7 @@ const Main = ({ routineController }: IAppProps) => {
 				/>
 
 				<div className="mx-auto">
-					{routineList
+					{routineContextList
 						.map((it: IRoutine) => {
 							return (
 								<RoutineList

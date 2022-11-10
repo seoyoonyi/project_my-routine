@@ -1,4 +1,4 @@
-import { IChildrenType } from '../common/children-type';
+import { IChildrenType } from '../common/type/type';
 
 const Column = ({ children }: IChildrenType) => {
 	return <div className="max-w-6xl px-4 mx-auto md:max-w-5xl sm:px-6">{children}</div>;

@@ -1,4 +1,4 @@
-import { IChildrenType } from '../common/children-type';
+import { IChildrenType } from '../common/type/type';
 import Column from './Column';
 
 const MainContainer = ({ children, className }: IChildrenType) => {
