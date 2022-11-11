@@ -30,7 +30,7 @@ api 경로 user -> users로 변경됨
 
 10. 루틴에디터에 '도전루틴' 만들기
 11. 로그인 할때 비활성화 버튼 만들기
-12. 루틴에디터 달력 작동하지 않음! 수정하기
+12. getRoutine, view를 context로 빼는게 맞는가 고민
 
 ## TODO - Server
 

@@ -27,10 +27,9 @@ const Main = () => {
 	const [active, setActive] = useState<number>(dayIndex || 0);
 	const [moveDistance, setMoveDistance] = useState<number>(0);
 	const [onAdd, setOnAdd] = useState<boolean>(false);
-	const [viewAll, setViewAll] = useState<boolean>(false);
 	const [onBorder, setOnBorder] = useState<boolean>(false);
 	const routineController = useContext(RoutineControllerContext);
-	const { routineContextList, setRoutineContextList, getAllRoutines } = useContext(RoutineContext);
+	const { routineContextList, setRoutineContextList, viewAll, setViewAll, getAllRoutines } = useContext(RoutineContext);
 
 	const getRoutine = useCallback(
 		async (date?: string) => {
@@ -56,11 +55,6 @@ const Main = () => {
 		setMoveDistance(100 * index);
 	};
 
-	const handleClickTab = (index: number) => {
-		setActive(index);
-		borderActive(index);
-	};
-
 	const viewAllToggle = () => {
 		setViewAll((viewAll) => !viewAll);
 		if (!viewAll) {
@@ -69,68 +63,40 @@ const Main = () => {
 			setOnBorder(!onBorder);
 		} else {
 			getRoutine(today);
-			borderActive(dayIndex);
 			setActive(dayIndex);
 			setOnBorder(!onBorder);
 		}
 	};
 
-	const viewController = { viewAll, setViewAll };
-	const borderController = { onBorder, setOnBorder, borderActive };
-	const routinesAndEtcController = { getRoutine, routineToggle, currentWeek, onAdd };
+	const borderController = { onBorder, setOnBorder };
+	const routinesAndEtcController = { getRoutine, routineToggle, onAdd };
+	const currentWeekController = { currentWeek, getRoutine, active, moveDistance, onBorder, setOnBorder };
 
 	useEffect(() => {
 		getRoutine(today);
-		borderActive(dayIndex);
 	}, [getRoutine, today, dayIndex]);
 
 	return (
 		<>
 			<Header />
 			<MainContainer>
-				<div className="flex justify-between mx-auto">
-					<Btn onClick={routineToggle} size="large" className="rounded-md">
+				<div className={styles.mainBtnGroup}>
+					<Btn onClick={routineToggle} size="large">
 						루틴 추가하기
 					</Btn>
-					{onAdd && (
-						<RoutineEditor
-							viewController={viewController}
-							borderController={borderController}
-							routinesAndEtcController={routinesAndEtcController}
-						/>
-					)}
+					{onAdd && <RoutineEditor borderController={borderController} routinesAndEtcController={routinesAndEtcController} />}
 
-					<Btn
-						className={'rounded-md' + (viewAll ? ` ${styles.viewAllAcitveBtn}` : '')}
-						onClick={viewAllToggle}
-						size="large"
-					>
+					<Btn className={'rounded-md' + (viewAll ? ` ${styles.viewAllAcitveBtn}` : '')} onClick={viewAllToggle} size="large">
 						모든 요일의 루틴보기
 					</Btn>
 				</div>
-				<CurrentWeekTap
-					dayIndex={currentWeek}
-					getRoutine={getRoutine}
-					active={active}
-					moveDistance={moveDistance}
-					handleClickTab={handleClickTab}
-					onBorder={onBorder}
-				/>
+				<CurrentWeekTap currentWeekController={currentWeekController} />
 
-				<div className="mx-auto">
-					{routineContextList
-						.map((it: IRoutine) => {
-							return (
-								<RoutineList
-									key={it.id}
-									{...it}
-									routineController={routineController}
-									getAllRoutines={getAllRoutines} // RoutineModal까지 내려줌
-								/>
-							);
-						})
-						.reverse()}
-				</div>
+				{routineContextList
+					.map((it: IRoutine) => {
+						return <RoutineList key={it.id} {...it} getRoutine={getRoutine} />;
+					})
+					.reverse()}
 			</MainContainer>
 		</>
 	);

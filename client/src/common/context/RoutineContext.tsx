@@ -7,6 +7,8 @@ import RoutineControllerContext from './RoutineControllerContext';
 const defaultValue: IRoutineContextProps = {
 	routineContextList: [],
 	setRoutineContextList: () => {},
+	viewAll: false,
+	setViewAll: () => {},
 	getAllRoutines: () => {},
 };
 
@@ -14,16 +16,8 @@ export const RoutineContext = createContext(defaultValue);
 
 export const RoutineProvider = ({ children }: IChildrenType) => {
 	const [routineContextList, setRoutineContextList] = useState<IRoutine[]>([]);
+	const [viewAll, setViewAll] = useState<boolean>(false);
 	const routineController = useContext(RoutineControllerContext);
-
-	//FIXME :공부하고 주석지우기
-	// const getRoutines = useCallback(async () => {
-	// 	setRoutineList(await routineController.getRoutines());
-	// },[routineController])
-
-	// useEffect(() => {
-	// 	getRoutines();
-	// }, [getRoutines]);
 
 	const getAllRoutines = useCallback(async () => {
 		const response = await routineController.getRoutines();
@@ -33,6 +27,8 @@ export const RoutineProvider = ({ children }: IChildrenType) => {
 	const value = {
 		routineContextList,
 		setRoutineContextList,
+		viewAll,
+		setViewAll,
 		getAllRoutines,
 	};
 

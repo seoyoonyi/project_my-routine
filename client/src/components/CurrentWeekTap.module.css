@@ -1,0 +1,10 @@
+.currentWeek {
+	@apply relative flex flex-wrap items-center text-center pt-10 border-b-2 border-gray-100 border-solid;
+}
+
+.currentWeek .dayTxt {
+	@apply text-sm text-gray-400;
+}
+.currentWeek .dateTxt {
+	@apply font-medium;
+}

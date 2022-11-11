@@ -1,7 +1,10 @@
+.mainBtnGroup {
+	@apply flex justify-between mx-auto;
+}
 .viewAllAcitveBtn {
-  color: #fff;
-  border: 1px solid #37e2d5;
-  background-color: #37e2d5;
+	color: #fff;
+	border: 1px solid #37e2d5;
+	background-color: #37e2d5;
 }
 
 /* TODO: gobal 필터 적용방법 알아보기, @apply 공부하기

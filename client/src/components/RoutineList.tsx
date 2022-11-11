@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { StatusType } from '../common/type/type';
 import RoutineModal from './RoutineModal';
 import RoutineItem from './RoutineItem';
-import RoutineClient from '../service/routine-client';
 
 export interface IRoutineListProps {
 	id: number;
@@ -10,13 +9,14 @@ export interface IRoutineListProps {
 	content: string;
 	date: string;
 	status: StatusType;
-	routineController: RoutineClient;
-	getAllRoutines: () => void;
+	getRoutine: (date?: string) => void;
 }
 
 const RoutineList = (routineItem: IRoutineListProps) => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [status, setStatus] = useState<StatusType>(routineItem.status);
+	const { getRoutine } = routineItem;
+	const statusController = { status, setStatus };
 
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -28,15 +28,9 @@ const RoutineList = (routineItem: IRoutineListProps) => {
 
 	return (
 		<>
-			<RoutineItem {...routineItem} showModal={showModal} status={status} setStatus={setStatus} />
+			<RoutineItem {...routineItem} showModal={showModal} statusController={statusController} />
 
-			{isModalOpen && (
-				<RoutineModal
-					isModalOpen={isModalOpen}
-					routineItem={routineItem}
-					handleCancel={handleCancel}
-				/>
-			)}
+			{isModalOpen && <RoutineModal routineItem={routineItem} isModalOpen={isModalOpen} handleCancel={handleCancel} getRoutine={getRoutine} />}
 		</>
 	);
 };

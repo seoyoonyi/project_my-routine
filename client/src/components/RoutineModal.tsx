@@ -1,21 +1,26 @@
 import { Modal, Dropdown, Menu, Input } from 'antd';
 import type { MenuProps } from 'antd';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { IRoutineListProps } from './RoutineList';
 import Btn from './Btn';
+import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import { RoutineContext } from '../common/context/RoutineContext';
 
 interface IRoutineModal {
 	isModalOpen: boolean;
 	routineItem: IRoutineListProps;
 	handleCancel: () => void;
+	getRoutine: (date?: string) => void;
 }
 
 const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal) => {
-	const { id, title, content, date, status, routineController, getAllRoutines } = routineItem;
+	const { id, title, content, date, status, getRoutine } = routineItem;
 	const [menuKey, setMenuKey] = useState<string>('');
 	const [originData, setOriginData] = useState({ title, content, date, status });
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [isEditDate, setIsEditDate] = useState<boolean>(false);
+	const routineController = useContext(RoutineControllerContext);
+	const { getAllRoutines, viewAll } = useContext(RoutineContext);
 
 	const handleChangeEdit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.currentTarget;
@@ -31,14 +36,12 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 		setOriginData({ title, content, date, status });
 	};
 	const EditRoutineData = async () => {
-		await routineController.editRoutine(
-			id,
-			originData.title,
-			originData.content,
-			originData.date,
-			originData.status,
-		);
-		getAllRoutines();
+		await routineController.editRoutine(id, originData.title, originData.content, originData.date, originData.status);
+		if (viewAll) {
+			getAllRoutines();
+		} else {
+			getRoutine(originData.date);
+		}
 	};
 
 	const toggleIsEditDate = () => setIsEditDate(!isEditDate);
@@ -46,7 +49,11 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 	const removeRoutineData = async () => {
 		await routineController.removeRoutine(id);
 		handleCancel();
-		getAllRoutines();
+		if (viewAll) {
+			getAllRoutines();
+		} else {
+			getRoutine(originData.date);
+		}
 	};
 	const handleMenuClick: MenuProps['onClick'] = (e) => {
 		const dropDownId = e.key;
@@ -64,26 +71,10 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 						removeRoutineData();
 					},
 				},
-				{
-					label: '2nd menu item',
-					key: '2',
-				},
-				{
-					label: '3rd menu item',
-					key: '3',
-				},
 			]}
 		/>
 	);
-	const dropDown = (
-		<Dropdown.Button
-			key={menuKey}
-			overlay={menu}
-			trigger={['click']}
-			className="dropdown"
-			type="text"
-		/>
-	);
+	const dropDown = <Dropdown.Button key={menuKey} overlay={menu} trigger={['click']} className="dropdown" type="text" />;
 
 	return (
 		<>

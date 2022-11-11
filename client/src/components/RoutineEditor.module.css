@@ -1,0 +1,41 @@
+.titleInputBox {
+	margin-top: 32px;
+	border-bottom: 1px solid #eee;
+}
+.titleInput {
+	width: 100%;
+	padding: 10px 9px;
+}
+.titleInput:focus {
+	outline: none;
+}
+
+.contentBox {
+	border-bottom: 1px solid #eee;
+}
+.contentTextArea {
+	width: 100%;
+	padding: 10px 9px;
+	resize: none;
+}
+.contentTextArea:focus {
+	outline: none;
+}
+
+.routineStartBox {
+	@apply flex justify-between items-center;
+	padding: 10px 9px;
+	border-bottom: 1px solid #eee;
+}
+
+.routineStartBox p {
+	@apply text-gray-500 font-medium;
+}
+
+.routineSaveBtnBox {
+	@apply w-full mt-5 mb-7;
+}
+
+.routineSaveBtnBox button {
+	@apply w-full;
+}

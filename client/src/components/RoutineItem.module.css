@@ -1,31 +1,45 @@
 .routineItem {
 	@apply flex gap-2 border-b-2 border-gray-100 border-solid;
 }
-
 .routineContent {
-	@apply w-9/12 h-12 rounded-[7px] flex justify-start items-center px-4;
+	@apply w-full h-full rounded-[7px] flex justify-start px-8 py-2;
 }
-
 .routineStatus {
-	@apply w-6 h-6 rounded-full cursor-pointer flex justify-center items-center shrink-0	overflow-hidden;
+	@apply w-1/12;
+}
+.routineStatusCircle {
+	@apply w-5 h-5 mt-1 rounded-full cursor-pointer flex justify-center items-center shrink-0	overflow-hidden;
 	outline: 1px solid grey;
 }
-.routineStatus:hover {
+.routineStatusCircle.active {
+	outline: 1px solid #37e2d5;
+}
+.routineStatusCircle:hover {
 	outline: 1px solid #37e2d5;
 	transition: outline 0.3s cubic-bezier(0.44, 0.02, 0.6, 1.01);
 }
 .checkedIcoon {
-	stroke: grey;
-	stroke-width: 30px;
+	@apply w-3;
+	stroke: #37e2d5;
+	stroke-width: 20px;
 }
 .checkedIconBg {
 	@apply flex items-center justify-center w-full h-full;
 }
-
-.routineTxt {
-	@apply w-full h-full flex items-center ml-2;
+.routineTxtBox {
+	@apply w-8/12 h-full;
 }
-
-.routineDate {
-	@apply w-1/4 h-12 rounded-[7px] flex justify-center text-sm items-center;
+.titleTxt {
+	@apply text-gray-700;
+}
+.contentTxt {
+	@apply text-sm text-gray-500;
+}
+.timeTxt {
+	@apply text-xs text-gray-500;
+	margin-top: 3.5px;
+}
+.dateTxt {
+	@apply text-xs text-gray-500 self-end;
+	margin-bottom: 3.5px;
 }

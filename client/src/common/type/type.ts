@@ -25,5 +25,7 @@ export interface IRoutine {
 export interface IRoutineContextProps {
 	routineContextList: IRoutine[];
 	setRoutineContextList: Dispatch<SetStateAction<IRoutine[]>>;
+	viewAll: boolean;
+	setViewAll: Dispatch<SetStateAction<boolean>>;
 	getAllRoutines: () => void;
 }
