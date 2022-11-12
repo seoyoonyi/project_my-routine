@@ -6,14 +6,18 @@
 
 ### 개발 환경
 
+#### 프로젝트 구성
+
 | Type     | Skill                        | Description | Port / Path |
 | -------- | ---------------------------- | ----------- | ----------- |
 | client   | `react.js`                   | 웹 페이지   | 3000        |
 | server   | `nest.js / sqlite / typeorm` | API 서버    | 8000        |
 | API Docs | `swagger`                    | API 문서    | 8000 / docs |
 
-사용언어: typescript  
-퍼블리싱: antd, css_module, tailwind
+#### 프로젝트 사용언어 & 퍼블리싱
+
+- 사용언어: typescript
+- 퍼블리싱: antd, css_module, tailwind
 
 ### 패키지 설치
 
