@@ -59,4 +59,19 @@ export class RoutinesService {
 
     return excute;
   }
+
+  async deleteAll() {
+    let excute;
+    try {
+      excute = this.repo.delete({});
+    } catch (error) {
+      throw new HttpException("삭제할 대상이 존재하지 않습니다.", 400);
+    }
+
+    excute.then(() => {
+      this.resetSequence();
+    });
+
+    return excute;
+  }
 }

@@ -57,7 +57,7 @@ export class RoutineController {
     return this.routineService.update(+id, updateRoutineDto);
   }
 
-  @ApiOperation({ summary: "루틴 삭제" })
+  @ApiOperation({ summary: "특정 루틴 삭제" })
   @ApiResponse({
     status: 400,
     description: "삭제할 대상이 존재하지 않습니다.",
@@ -65,5 +65,15 @@ export class RoutineController {
   @Delete(":id")
   async delete(@Param("id") id: number) {
     return this.routineService.delete(+id);
+  }
+
+  @ApiOperation({ summary: "모든 루틴 삭제" })
+  @ApiResponse({
+    status: 400,
+    description: "삭제할 대상이 존재하지 않습니다.",
+  })
+  @Delete()
+  async deleteAll() {
+    return this.routineService.deleteAll();
   }
 }
