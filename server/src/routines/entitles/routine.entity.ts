@@ -15,8 +15,8 @@ export enum ActiveStatus {
 
 export enum TimeStatus {
   MORNING = '아침',
-  AM = '오전',
   PM = '오후',
+  EVENING = '저녁',
 }
 
 @Entity()
