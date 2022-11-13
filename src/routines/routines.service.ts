@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Between, Repository } from "typeorm";
 import { CreateRoutineDto } from "./dto/create-routine.dto";
 import { UpdateRoutineDto } from "./dto/update-routine.dto";
-import { ActiveStatus, Routine } from "./entitles/routine.entity";
+import { ActiveStatus, Routine, TimeStatus } from "./entitles/routine.entity";
 
 @Injectable()
 export class RoutinesService {
@@ -19,12 +19,35 @@ export class RoutinesService {
     return this.repo.find();
   }
 
-  async findByActive(value: string) {
-    if (value in ActiveStatus) {
+  async findByCondition(active: string, time: string) {
+    if (
+      active in ActiveStatus &&
+      Object.values(TimeStatus).includes(time as unknown as TimeStatus)
+    ) {
       return this.repo.find({
-        where: { activeStatus: value as ActiveStatus },
+        where: {
+          timeStatus: time as TimeStatus,
+          activeStatus: active as ActiveStatus,
+        },
       });
     }
+
+    if (active in ActiveStatus) {
+      return this.repo.find({
+        where: {
+          activeStatus: active as ActiveStatus,
+        },
+      });
+    }
+
+    if (Object.values(TimeStatus).includes(time as unknown as TimeStatus)) {
+      return this.repo.find({
+        where: {
+          timeStatus: time as TimeStatus,
+        },
+      });
+    }
+
     throw new HttpException("조회 조건이 적합하지 않습니다.", 400);
   }
 

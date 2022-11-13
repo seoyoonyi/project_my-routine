@@ -11,7 +11,7 @@ import {
 import { RoutinesService } from "./routines.service";
 import { CreateRoutineDto } from "./dto/create-routine.dto";
 import { UpdateRoutineDto } from "./dto/update-routine.dto";
-import { ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { ApiOperation, ApiQuery, ApiResponse } from "@nestjs/swagger";
 import { ReadOnlyRoutineDto } from "./dto/routine.dto";
 
 @Controller("routines")
@@ -39,10 +39,21 @@ export class RoutineController {
     return this.routineService.findAll();
   }
 
-  @ApiOperation({ summary: "활성화 여부를 조건으로 루틴 조회" })
-  @Get("active/:value")
-  async findByActive(@Param("value") value: string) {
-    return this.routineService.findByActive(value);
+  @ApiOperation({ summary: "조건을 기준으로 루틴 조회" })
+  @ApiQuery({
+    name: "active",
+    required: false,
+  })
+  @ApiQuery({
+    name: "time",
+    required: false,
+  })
+  @Get("condition")
+  async findByCondition(
+    @Query("active") active?: string,
+    @Query("time") time?: string
+  ) {
+    return this.routineService.findByCondition(active, time);
   }
 
   @ApiOperation({ summary: "특정 기간의 루틴 조회" })
