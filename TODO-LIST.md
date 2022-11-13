@@ -32,8 +32,9 @@
    @UseGuards(JwtAuthGuard)
    적용
 
-2. api 일괄 삭제
+2. 삭제 api
 
+- 일괄 삭제(완료)
 - 사용자가 누를 수 있는 루틴 삭제 => 사용자의 id를 파라미터로 넘기
 
 @Unique(["email"]) =>

@@ -88,4 +88,14 @@ export class UserController {
   async delete(@Param("id") id: number) {
     return this.userService.delete(+id);
   }
+
+  @ApiOperation({ summary: "모든 회원탈퇴" })
+  @ApiResponse({
+    status: 400,
+    description: "삭제할 대상이 존재하지 않습니다.",
+  })
+  @Delete()
+  async deleteAll() {
+    return this.userService.deleteAll();
+  }
 }
