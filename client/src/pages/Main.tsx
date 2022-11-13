@@ -4,7 +4,7 @@ import Btn from '../components/Btn';
 import RoutineEditor from '../components/RoutineEditor';
 import Header from '../components/Header';
 import CurrentWeekTap from '../components/CurrentWeekTap';
-import { getCurrentWeekByDash, getStringDate } from '../common/utils/utils';
+import { getCurrentWeekByHyphen, getStringDate } from '../common/utils/utils';
 import styles from './Main.module.css';
 import MainContainer from '../components/MainContainer';
 import { StatusType } from '../common/type/type';
@@ -22,7 +22,7 @@ export interface IRoutine {
 
 const Main = () => {
 	const today = getStringDate();
-	const currentWeek = useMemo(() => getCurrentWeekByDash(), []);
+	const currentWeek = useMemo(() => getCurrentWeekByHyphen(), []);
 	const dayIndex = currentWeek.findIndex((it: string) => it === today);
 	const [active, setActive] = useState<number>(dayIndex || 0);
 	const [moveDistance, setMoveDistance] = useState<number>(0);

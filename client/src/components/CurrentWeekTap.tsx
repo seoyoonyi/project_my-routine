@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { useMemo } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
-import { getCurrentWeekByHyphen } from '../common/utils/utils';
+import { getCurrentWeekByDash } from '../common/utils/utils';
 import styles from './CurrentWeekTap.module.css';
 
 interface ICurrentWeekProps {
@@ -18,7 +18,7 @@ interface ICurrentWeekProps {
 const CurrentWeekTap = ({ currentWeekController }: ICurrentWeekProps) => {
 	const { currentWeek, getRoutine, active, moveDistance, onBorder, setOnBorder } = currentWeekController;
 	const { viewAll, setViewAll } = useContext(RoutineContext);
-	const currentWeekbyHyphen = useMemo(() => getCurrentWeekByHyphen(), []);
+	const currentWeekbyDash = useMemo(() => getCurrentWeekByDash(), []);
 	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
 	const handleClickDay = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
 		const {
@@ -35,7 +35,7 @@ const CurrentWeekTap = ({ currentWeekController }: ICurrentWeekProps) => {
 
 	return (
 		<ul className={styles.currentWeek}>
-			{currentWeekbyHyphen.map((it: string, index) => {
+			{currentWeekbyDash.map((it: string, index) => {
 				return (
 					<li
 						className={`px-5 py-2 w-[14.285%] hover:bg-gray-200 ${active === index ? 'day dayActiveBtn' : 'day'}`}

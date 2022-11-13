@@ -17,9 +17,9 @@ const setDefaultDate = (type: FormatType) => {
 		day.setTime(day.getTime() + 86400000);
 		const optType = type;
 
-		const formatByDash = day.toISOString().slice(0, 10);
+		const formatByHyphen = day.toISOString().slice(0, 10);
 		const splittedDay = day.toISOString().slice(0, 10).split('-');
-		const formatByHyphen = splittedDay[1] + '/' + splittedDay[2];
+		const formatByDash = splittedDay[1] + '/' + splittedDay[2];
 
 		optType === 'dash' ? result.push(formatByDash) : result.push(formatByHyphen);
 	}
@@ -39,7 +39,13 @@ export const getCurrentWeekByHyphen = () => {
 	return setDefaultDate('hyphen');
 };
 
+//새로운 함수를 만들고 겟위크 리드바이 함수을 만들어서 담아 1주일에 담기겠지난 pop unshift 리턴
+// export const getCurrentWeekByParam;
+
 export const getToday = () => {
-	const offset = 1000 * 60 * 60 * 9; // 한국시간
-	return new Date(new Date().getTime() + offset);
+	// 한국시간으로 세팅
+	const now = new Date();
+	const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+	const koreaTimeDiff = 9 * 60 * 60 * 1000;
+	return new Date(utcNow + koreaTimeDiff);
 };

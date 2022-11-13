@@ -1,4 +1,8 @@
+/* .editorForm {
+	@apply;
+} */
 .titleInputBox {
+	@apply w-full flex;
 	margin-top: 32px;
 	border-bottom: 1px solid #eee;
 }
@@ -9,8 +13,12 @@
 .titleInput:focus {
 	outline: none;
 }
+.ant-form-inline .ant-form-item {
+	margin-right: 0;
+}
 
 .contentBox {
+	@apply w-full;
 	border-bottom: 1px solid #eee;
 }
 .contentTextArea {
@@ -23,7 +31,7 @@
 }
 
 .routineStartBox {
-	@apply flex justify-between items-center;
+	@apply w-full flex justify-between items-center;
 	padding: 10px 9px;
 	border-bottom: 1px solid #eee;
 }

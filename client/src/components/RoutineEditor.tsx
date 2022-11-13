@@ -122,7 +122,7 @@ const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineE
 				</Btn>
 			</div> */}
 
-			<Form form={form} name="horizontal_login" layout="inline" onFinish={handleSubmit}>
+			<Form form={form} name="horizontal_login" layout="inline" onFinish={handleSubmit} className={styles.editorForm}>
 				<div className={styles.titleInputBox}>
 					<Form.Item name="title" rules={[{ required: true }]}>
 						<Input ref={titleInput} name="title" className={styles.titleInput} placeholder="작업이름" />
@@ -134,10 +134,24 @@ const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineE
 					</Form.Item>
 				</div>
 				<div className={styles.routineStartBox}>
-					<p>언제시작</p>
+					<p>루틴 시작일</p>
 					<Form.Item name="date">
 						<Input type="date" />
 					</Form.Item>
+				</div>
+				<div className={styles.routineStartBox}>
+					<p>언제시작</p>
+					<div>
+						<input type="text" />
+					</div>
+				</div>
+				<div className={styles.routineStartBox}>
+					<p>시간필터</p>
+					<div>
+						<Btn>아침</Btn>
+						<Btn>오후</Btn>
+						<Btn>저녁</Btn>
+					</div>
 				</div>
 				<Form.Item shouldUpdate>
 					{() => (
