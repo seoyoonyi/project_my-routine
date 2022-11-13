@@ -7,17 +7,17 @@ import CurrentWeekTap from '../components/CurrentWeekTap';
 import { getCurrentWeekByHyphen, getStringDate } from '../common/utils/utils';
 import styles from './Main.module.css';
 import MainContainer from '../components/MainContainer';
-import { StatusType } from '../common/type/type';
+import { ActiveStatus, TimeStatus } from '../common/type/type';
 import { useContext } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
-
 export interface IRoutine {
 	id: number;
 	title: string;
 	content: string;
 	date: string;
-	status: StatusType;
+	activeStatus: ActiveStatus;
+	timeStatus: TimeStatus;
 }
 
 const Main = () => {
@@ -68,6 +68,11 @@ const Main = () => {
 		}
 	};
 
+	/* 	const getWeek = (e: any) => {
+		const getWeekNumber = parseInt(e.currentTarget.value);
+		getWeekByNumber(getWeekNumber);
+	}; */
+
 	const borderController = { onBorder, setOnBorder };
 	const routinesAndEtcController = { getRoutine, routineToggle, onAdd };
 	const currentWeekController = { currentWeek, getRoutine, active, moveDistance, onBorder, setOnBorder };
@@ -89,6 +94,24 @@ const Main = () => {
 					<Btn className={'rounded-md' + (viewAll ? ` ${styles.viewAllAcitveBtn}` : '')} onClick={viewAllToggle} size="large">
 						모든 요일의 루틴보기
 					</Btn>
+				</div>
+				<div className="flex justify-between">
+					<h2>2022 1월</h2>
+					<div className="flex justify-between">
+						<div className="mr-3">
+							{/* 			<Btn value="7" onClick={getWeek}>
+								왼쪽
+							</Btn>
+							<Btn value="-7" onClick={getWeek}>
+								왼쪽
+							</Btn> */}
+						</div>
+						<div>
+							<Btn>아침</Btn>
+							<Btn>오전</Btn>
+							<Btn>저녁</Btn>
+						</div>
+					</div>
 				</div>
 				<CurrentWeekTap currentWeekController={currentWeekController} />
 

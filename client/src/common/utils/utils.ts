@@ -45,6 +45,10 @@ export const getCurrentWeekByParam = () => {
 	const to = currentWeek.pop();
 	return { from, to };
 };
+/* 
+export const getWeekByNumber = (num: number) => {
+	return setDefaultDate(num);
+}; */
 
 export const getToday = () => {
 	// 한국시간으로 세팅

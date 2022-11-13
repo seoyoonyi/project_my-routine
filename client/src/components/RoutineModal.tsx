@@ -14,9 +14,9 @@ interface IRoutineModal {
 }
 
 const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal) => {
-	const { id, title, content, date, status, getRoutine } = routineItem;
+	const { id, title, content, date, activeStatus, timeStatus, getRoutine } = routineItem;
 	const [menuKey, setMenuKey] = useState<string>('');
-	const [originData, setOriginData] = useState({ title, content, date, status });
+	const [originData, setOriginData] = useState({ title, content, date, activeStatus, timeStatus });
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [isEditDate, setIsEditDate] = useState<boolean>(false);
 	const routineController = useContext(RoutineControllerContext);
@@ -33,10 +33,10 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 	const toggleIsEdit = () => setIsEdit(!isEdit);
 	const handleQuitEdit = () => {
 		setIsEdit(false);
-		setOriginData({ title, content, date, status });
+		setOriginData({ title, content, date, activeStatus, timeStatus });
 	};
 	const EditRoutineData = async () => {
-		await routineController.editRoutine(id, originData.title, originData.content, originData.date, originData.status);
+		await routineController.editRoutine(id, originData.title, originData.content, originData.date, originData.activeStatus, originData.timeStatus);
 		if (viewAll) {
 			getAllRoutines();
 		} else {
@@ -97,7 +97,7 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 					</>
 				) : (
 					<>
-						<p>{status}</p>
+						<p>{activeStatus}</p>
 						<h2 onClick={toggleIsEdit}>{title}</h2>
 						<p onClick={toggleIsEdit}>{content}</p>
 					</>

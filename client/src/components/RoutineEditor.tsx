@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import Btn from './Btn';
 import { getStringDate } from '../common/utils/utils';
-import { Modal, Input, Form, InputRef } from 'antd';
-import { StatusType } from '../common/type/type';
+import { Modal, Input, Form, InputRef, Radio } from 'antd';
+import { ActiveStatus, TimeStatus } from '../common/type/type';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
 import { RoutineContext } from '../common/context/RoutineContext';
 import styles from './RoutineEditor.module.css';
@@ -22,12 +22,14 @@ export interface IRoutineDataType {
 	title: string;
 	content: string;
 	date: string;
-	status: StatusType;
+	activeStatus: ActiveStatus;
+	timeStatus: TimeStatus;
 }
 
 const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineEditorProps) => {
 	const [form] = Form.useForm();
 	const [, forceUpdate] = useState({});
+	const [timeStatus, setTimeStatus] = useState<TimeStatus>('아침');
 	const { onBorder, setOnBorder } = borderController;
 	const { getRoutine, routineToggle, onAdd } = routinesAndEtcController;
 	const titleInput = useRef<InputRef>(null);
@@ -45,16 +47,16 @@ const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineE
 			title: '',
 			content: '',
 			date: getStringDate(),
-			status: 'DO',
+			activeStatus: 'DO',
+			timeStatus: '아침',
 		});
 	}, [form]);
 
 	const routineSave = () => routineToggle();
 
 	const addRoutineData = async () => {
-		const { title, content, date, status } = form.getFieldsValue(['title', 'content', 'date', 'status']);
-
-		await routineController.addRoutine(title, content, date, status);
+		const { title, content, date, activeStatus, timeStatus } = form.getFieldsValue(['title', 'content', 'date', 'activeStatus', 'timeStatus']);
+		await routineController.addRoutine(title, content, date, activeStatus, timeStatus);
 		getRoutine(date);
 	};
 
@@ -68,61 +70,21 @@ const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineE
 		}
 	};
 
+	const onTimeStatusChange = ({ timeStatus }: { timeStatus: TimeStatus }) => {
+		setTimeStatus(timeStatus);
+	};
+
 	return (
 		<Modal open={onAdd} onCancel={routineToggle} footer={null}>
-			{/* <Form form={form}>
-				<Form.Item className={styles.titleInputBox}>
-					<input
-						ref={titleInput}
-						name="title"
-						value={routineData.title}
-						onChange={handleChangeRoutine}
-						className={styles.titleInput}
-						placeholder="작업이름"
-					/>
-				</Form.Item>
-				<Form.Item className={styles.contentBox}>
-					<textarea
-						ref={contentInput}
-						name="content"
-						value={routineData.content}
-						onChange={handleChangeRoutine}
-						className={styles.contentTextArea}
-						placeholder="추가한 이유(150자 이내)"
-					/>
-				</Form.Item>
-				<div className={styles.routineStartBox}>
-					<p>언제시작</p>
-					<div>
-						<input type="text" />
-					</div>
-				</div>
-				<div className={styles.routineStartBox}>
-					<p>시간필터</p>
-					<div>
-						<Btn>아침</Btn>
-						<Btn>오후</Btn>
-						<Btn>저녁</Btn>
-					</div>
-				</div>
-				<Form.Item className={styles.routineStartBox}>
-					<p>루틴 시작일</p>
-					<Input type="date" name="date" onChange={handleChangeRoutine} value={routineData.date} />
-				</Form.Item>
-			</Form>
-
-			<div className={styles.routineSaveBtnBox}>
-				<Btn
-					onClick={handleSubmit}
-					type="primary"
-					size="large"
-					disabled={!form.isFieldsTouched(true) || !!form.getFieldsError().filter(({ errors }) => errors.length).length}
-				>
-					루틴저장
-				</Btn>
-			</div> */}
-
-			<Form form={form} name="horizontal_login" layout="inline" onFinish={handleSubmit} className={styles.editorForm}>
+			<Form
+				form={form}
+				name="horizontal_login"
+				layout="inline"
+				onFinish={handleSubmit}
+				className={styles.editorForm}
+				initialValues={{ timeStatus }}
+				onValuesChange={onTimeStatusChange}
+			>
 				<div className={styles.titleInputBox}>
 					<Form.Item name="title" rules={[{ required: true }]}>
 						<Input ref={titleInput} name="title" className={styles.titleInput} placeholder="작업이름" />
@@ -135,24 +97,27 @@ const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineE
 				</div>
 				<div className={styles.routineStartBox}>
 					<p>루틴 시작일</p>
-					<Form.Item name="date">
+					<Form.Item name="date" rules={[{ required: true }]}>
 						<Input type="date" />
 					</Form.Item>
 				</div>
 				<div className={styles.routineStartBox}>
+					<p>시간필터</p>
+					<Form.Item name="timeStatus" rules={[{ required: true }]}>
+						<Radio.Group>
+							<Radio.Button value="아침">아침</Radio.Button>
+							<Radio.Button value="오후">오후</Radio.Button>
+							<Radio.Button value="저녁">저녁</Radio.Button>
+						</Radio.Group>
+					</Form.Item>
+				</div>
+				{/* 앞에꺼 동작후 만들기 */}
+				{/* <div className={styles.routineStartBox}>
 					<p>언제시작</p>
 					<div>
 						<input type="text" />
 					</div>
-				</div>
-				<div className={styles.routineStartBox}>
-					<p>시간필터</p>
-					<div>
-						<Btn>아침</Btn>
-						<Btn>오후</Btn>
-						<Btn>저녁</Btn>
-					</div>
-				</div>
+				</div> */}
 				<Form.Item shouldUpdate>
 					{() => (
 						<Btn

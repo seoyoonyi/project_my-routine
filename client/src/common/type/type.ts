@@ -2,7 +2,8 @@ import { Dispatch, SetStateAction } from 'react';
 import RoutineClient from '../../service/routine-client';
 
 /* routine status 타입 */
-export type StatusType = 'DO' | 'DONE';
+export type ActiveStatus = 'DO' | 'DONE';
+export type TimeStatus = '아침' | '오후' | '저녁';
 
 /* children 타입 */
 export interface IChildrenType {
@@ -19,7 +20,8 @@ export interface IRoutine {
 	title: string;
 	content: string;
 	date: string;
-	status: StatusType;
+	activeStatus: ActiveStatus;
+	timeStatus: TimeStatus;
 }
 
 export interface IRoutineContextProps {

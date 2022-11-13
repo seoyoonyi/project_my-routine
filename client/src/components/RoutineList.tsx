@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StatusType } from '../common/type/type';
+import { ActiveStatus, TimeStatus } from '../common/type/type';
 import RoutineModal from './RoutineModal';
 import RoutineItem from './RoutineItem';
 
@@ -8,15 +8,16 @@ export interface IRoutineListProps {
 	title: string;
 	content: string;
 	date: string;
-	status: StatusType;
+	activeStatus: ActiveStatus;
+	timeStatus: TimeStatus;
 	getRoutine: (date?: string) => void;
 }
 
 const RoutineList = (routineItem: IRoutineListProps) => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-	const [status, setStatus] = useState<StatusType>(routineItem.status);
+	const [activeStatus, setActiveStatus] = useState<ActiveStatus>(routineItem.activeStatus);
 	const { getRoutine } = routineItem;
-	const statusController = { status, setStatus };
+	const activeStatusController = { activeStatus, setActiveStatus };
 
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -28,7 +29,7 @@ const RoutineList = (routineItem: IRoutineListProps) => {
 
 	return (
 		<>
-			<RoutineItem {...routineItem} showModal={showModal} statusController={statusController} />
+			<RoutineItem {...routineItem} showModal={showModal} activeStatusController={activeStatusController} />
 
 			{isModalOpen && <RoutineModal routineItem={routineItem} isModalOpen={isModalOpen} handleCancel={handleCancel} getRoutine={getRoutine} />}
 		</>
