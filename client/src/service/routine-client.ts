@@ -20,7 +20,7 @@ class RoutineClient {
 
 	async getRoutinesByDate(date?: string) {
 		try {
-			const response = await this.routineClient.get('routines/' + date);
+			const response = await this.routineClient.get('routines/date/' + date);
 			if (response.data.success) {
 				return response.data;
 			}
