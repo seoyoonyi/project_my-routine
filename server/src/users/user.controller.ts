@@ -89,7 +89,7 @@ export class UserController {
     return this.userService.delete(+id);
   }
 
-  @ApiOperation({ summary: "모든 회원탈퇴" })
+  @ApiOperation({ summary: "모든 회원탈퇴 - 관리용" })
   @ApiResponse({
     status: 400,
     description: "삭제할 대상이 존재하지 않습니다.",

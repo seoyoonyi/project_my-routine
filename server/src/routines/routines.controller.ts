@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from "@nestjs/common";
 import { RoutinesService } from "./routines.service";
 import { CreateRoutineDto } from "./dto/create-routine.dto";
@@ -38,10 +39,22 @@ export class RoutineController {
     return this.routineService.findAll();
   }
 
-  @ApiOperation({ summary: "특정 날짜 루틴 조회" })
-  @Get(":date")
-  async findBy(@Param("date") date: string) {
-    return this.routineService.findBy(date);
+  @ApiOperation({ summary: "활성화 여부를 조건으로 루틴 조회" })
+  @Get("active/:value")
+  async findByActive(@Param("value") value: string) {
+    return this.routineService.findByActive(value);
+  }
+
+  @ApiOperation({ summary: "특정 기간의 루틴 조회" })
+  @Get("date")
+  async findBetweenDate(@Query("from") from: string, @Query("to") to: string) {
+    return this.routineService.findBetweenDate(from, to);
+  }
+
+  @ApiOperation({ summary: "특정 기간의 루틴 조회" })
+  @Get("date/:value")
+  async findByDate(@Param("value") value: string) {
+    return this.routineService.findByDate(value);
   }
 
   @ApiOperation({ summary: "루틴 변경" })
@@ -67,7 +80,7 @@ export class RoutineController {
     return this.routineService.delete(+id);
   }
 
-  @ApiOperation({ summary: "모든 루틴 삭제" })
+  @ApiOperation({ summary: "모든 루틴 삭제 - 관리용" })
   @ApiResponse({
     status: 400,
     description: "삭제할 대상이 존재하지 않습니다.",

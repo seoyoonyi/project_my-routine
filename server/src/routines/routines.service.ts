@@ -1,9 +1,9 @@
 import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Between, Repository } from "typeorm";
 import { CreateRoutineDto } from "./dto/create-routine.dto";
 import { UpdateRoutineDto } from "./dto/update-routine.dto";
-import { Routine } from "./entitles/routine.entity";
+import { ActiveStatus, Routine } from "./entitles/routine.entity";
 
 @Injectable()
 export class RoutinesService {
@@ -19,8 +19,21 @@ export class RoutinesService {
     return this.repo.find();
   }
 
-  async findBy(date: string) {
-    return this.repo.find({ where: { date: date } });
+  async findByActive(value: string) {
+    if (value in ActiveStatus) {
+      return this.repo.find({
+        where: { activeStatus: value as ActiveStatus },
+      });
+    }
+    throw new HttpException("조회 조건이 적합하지 않습니다.", 400);
+  }
+
+  async findBetweenDate(from: string, to: string) {
+    return this.repo.find({ where: { date: Between(from, to) } });
+  }
+
+  async findByDate(value: string) {
+    return this.repo.find({ where: { date: value } });
   }
 
   async update(id: number, updateRoutineDto: UpdateRoutineDto) {

@@ -39,9 +39,3 @@
 
 @Unique(["email"]) =>
 @Column({ unique: true })로 대체가능한지 확인
-
-- 사용자가 루틴 status 넘기면 해당 staus만 필터링 되는 루틴 조회하기
-
-3. 전체보기 클릭시, 해당하는 '주' api 만들기
-
-- from, to parameter
