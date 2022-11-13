@@ -39,8 +39,12 @@ export const getCurrentWeekByHyphen = () => {
 	return setDefaultDate('hyphen');
 };
 
-//새로운 함수를 만들고 겟위크 리드바이 함수을 만들어서 담아 1주일에 담기겠지난 pop unshift 리턴
-// export const getCurrentWeekByParam;
+export const getCurrentWeekByParam = () => {
+	const currentWeek = getCurrentWeekByHyphen();
+	const from = currentWeek.shift();
+	const to = currentWeek.pop();
+	return { from, to };
+};
 
 export const getToday = () => {
 	// 한국시간으로 세팅

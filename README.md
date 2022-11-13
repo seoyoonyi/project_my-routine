@@ -14,7 +14,7 @@
 | server   | `nest.js / sqlite / typeorm` | API 서버    | 8000        |
 | API Docs | `swagger`                    | API 문서    | 8000 / docs |
 
-#### 프로젝트 사용언어 & 퍼블리싱
+#### 적용 기술
 
 - 사용언어: typescript
 - 퍼블리싱: antd, css_module, tailwind
@@ -33,7 +33,7 @@
 터미널 root 경로에서 npm start # client와 server가 동시에 구동됨
 ```
 
-### 더미 데이터 삽입
+### 더미 데이터 삽입 (local)
 
 1. npm start 명령어를 이용해서 client와 server 구동
 1. vscode 확장플러그인에서 SQLite 설치
