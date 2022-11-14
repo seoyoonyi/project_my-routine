@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, Fragment } from 'react';
 import RoutineList from '../components/RoutineList';
 import Btn from '../components/Btn';
 import RoutineEditor from '../components/RoutineEditor';
@@ -11,6 +11,7 @@ import { ActiveStatus, TimeStatus } from '../common/type/type';
 import { useContext } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import DropDown from '../components/DropDown';
 export interface IRoutine {
 	id: number;
 	title: string;
@@ -47,6 +48,16 @@ const Main = () => {
 		[routineController, currentWeek, setRoutineContextList],
 	);
 
+	const getRoutineActive = useCallback(
+		async (e: any) => {
+			const activeStatus = e.currentTarget.innerText;
+			const response = await routineController.getRoutinesByCondition(activeStatus);
+
+			setRoutineContextList(response.data);
+		},
+		[routineController, setRoutineContextList],
+	);
+
 	const routineToggle = () => {
 		setOnAdd((prev) => !prev);
 	};
@@ -67,11 +78,6 @@ const Main = () => {
 			setOnBorder(!onBorder);
 		}
 	};
-
-	/* 	const getWeek = (e: any) => {
-		const getWeekNumber = parseInt(e.currentTarget.value);
-		getWeekByNumber(getWeekNumber);
-	}; */
 
 	const borderController = { onBorder, setOnBorder };
 	const routinesAndEtcController = { getRoutine, routineToggle, onAdd };
@@ -111,15 +117,28 @@ const Main = () => {
 							<Btn>오전</Btn>
 							<Btn>저녁</Btn>
 						</div>
+						<div>
+							<DropDown getRoutineActive={getRoutineActive}></DropDown>
+						</div>
 					</div>
 				</div>
 				<CurrentWeekTap currentWeekController={currentWeekController} />
-
-				{routineContextList
-					.map((it: IRoutine) => {
-						return <RoutineList key={it.id} {...it} getRoutine={getRoutine} />;
-					})
-					.reverse()}
+				<p>DO</p>
+				{routineContextList.map((it: IRoutine) => {
+					return (
+						<Fragment key={it.id}>
+							{it.activeStatus === 'DO' ? (
+								<>
+									<RoutineList {...it} getRoutine={getRoutine} />
+								</>
+							) : (
+								<>
+									<RoutineList {...it} getRoutine={getRoutine} />
+								</>
+							)}
+						</Fragment>
+					);
+				})}
 			</MainContainer>
 		</>
 	);

@@ -8,22 +8,16 @@ import RoutineControllerContext from '../common/context/RoutineControllerContext
 
 interface IRoutineItemProps extends IRoutineListProps {
 	showModal: () => void;
-	activeStatusController: {
-		activeStatus: ActiveStatus;
-		setActiveStatus: Dispatch<SetStateAction<ActiveStatus>>;
-	};
+	activeStatus: ActiveStatus;
+	setActiveStatus: Dispatch<SetStateAction<ActiveStatus>>;
 }
 
-const RoutineItem = ({ id, title, content, date, activeStatusController, timeStatus, showModal }: IRoutineItemProps) => {
-	const { activeStatus, setActiveStatus } = activeStatusController;
+const RoutineItem = ({ id, title, content, date, activeStatus, setActiveStatus, timeStatus, showModal }: IRoutineItemProps) => {
 	const routineController = useContext(RoutineControllerContext);
-	const toggleActiveStatus = (routineStatus: ActiveStatus) => {
-		setActiveStatus(routineStatus);
-	};
 
 	const EditRoutineStatus = async () => {
 		const routineActiveStatus = activeStatus === 'DO' ? 'DONE' : 'DO';
-		toggleActiveStatus(routineActiveStatus);
+		setActiveStatus(routineActiveStatus);
 
 		await routineController.editRoutine(id, title, content, date, routineActiveStatus, timeStatus);
 	};
@@ -46,6 +40,7 @@ const RoutineItem = ({ id, title, content, date, activeStatusController, timeSta
 					</div>
 					<div className="flex w-full" onClick={() => showModal()}>
 						<div className="w-2/12">
+							<p className={styles.timeTxt}>{activeStatus}</p>
 							<p className={styles.timeTxt}>언제할 예정</p>
 						</div>
 						<div className={styles.routineTxtBox}>
