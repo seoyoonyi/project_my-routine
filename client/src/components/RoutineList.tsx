@@ -28,7 +28,7 @@ const RoutineList = (routineItem: IRoutineListProps) => {
 
 	return (
 		<>
-			<RoutineItem {...routineItem} showModal={showModal} activeStatus={activeStatus} setActiveStatus={setActiveStatus} />
+			<RoutineItem {...routineItem} showModal={showModal} activeStatus={activeStatus} setActiveStatus={setActiveStatus} getRoutine={getRoutine} />
 
 			{isModalOpen && <RoutineModal routineItem={routineItem} isModalOpen={isModalOpen} handleCancel={handleCancel} getRoutine={getRoutine} />}
 		</>

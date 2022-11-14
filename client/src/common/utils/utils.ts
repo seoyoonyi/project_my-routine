@@ -2,7 +2,7 @@ type FormatType = 'dash' | 'hyphen';
 
 const setDefaultDate = (type: FormatType) => {
 	const day = getToday();
-
+	console.log('DK');
 	let dayOfWeek = day.getDay();
 	if (day.getDay() === 0) {
 		// 현재 날짜를 기준으로 이번주 시작일 조정
@@ -45,14 +45,16 @@ export const getCurrentWeekByParam = () => {
 	const to = currentWeek.pop();
 	return { from, to };
 };
-/* 
-export const getWeekByNumber = (num: number) => {
-	return setDefaultDate(num);
-}; */
 
-export const getToday = () => {
+export const getToday = (day?: number) => {
 	// 한국시간으로 세팅
 	const now = new Date();
+	if (day) {
+		now.setDate(now.getDate() + day);
+	} else {
+		now.setDate(now.getDate());
+	}
+	console.log('day', day);
 	const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
 	const koreaTimeDiff = 9 * 60 * 60 * 1000;
 	return new Date(utcNow + koreaTimeDiff);

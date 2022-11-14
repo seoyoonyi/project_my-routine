@@ -3,7 +3,8 @@ import styles from './Btn.module.css';
 interface IBtnProps {
 	className?: string;
 	value?: string;
-	onClick?: (e?: any) => void;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	onClick?: any;
 	type?: 'text' | 'link' | 'ghost' | 'primary' | 'dashed';
 	size?: 'large';
 	children: React.ReactNode;
