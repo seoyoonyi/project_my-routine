@@ -12,13 +12,14 @@ interface ICurrentWeekProps {
 		moveDistance: number | null;
 		onBorder: boolean;
 		setOnBorder: Dispatch<SetStateAction<boolean>>;
+		dayNumber: number;
 	};
 }
 
 const CurrentWeekTap = ({ currentWeekController }: ICurrentWeekProps) => {
-	const { currentWeek, getRoutine, active, moveDistance, onBorder, setOnBorder } = currentWeekController;
+	const { currentWeek, getRoutine, active, moveDistance, onBorder, setOnBorder, dayNumber } = currentWeekController;
 	const { viewAll, setViewAll } = useContext(RoutineContext);
-	const currentWeekbyDash = useMemo(() => getCurrentWeekByDash(), []);
+	const currentWeekbyDash = useMemo(() => getCurrentWeekByDash(dayNumber), [dayNumber]);
 	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
 	const handleClickDay = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
 		const {

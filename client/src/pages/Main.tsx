@@ -1,10 +1,9 @@
-import { useEffect, useState, useCallback, useMemo, Fragment } from 'react';
-import RoutineList from '../components/RoutineList';
+import { useEffect, useState, useCallback, useMemo, Fragment, ChangeEventHandler, ChangeEvent } from 'react';
 import Btn from '../components/Btn';
 import RoutineEditor from '../components/RoutineEditor';
 import Header from '../components/Header';
 import CurrentWeekTap from '../components/CurrentWeekTap';
-import { getCurrentWeekByHyphen, getStringDate, getToday } from '../common/utils/utils';
+import { getCurrentWeekByDash, getCurrentWeekByHyphen, getStringDate } from '../common/utils/utils';
 import styles from './Main.module.css';
 import MainContainer from '../components/MainContainer';
 import { ActiveStatus, TimeStatus } from '../common/type/type';
@@ -23,8 +22,9 @@ export interface IRoutine {
 }
 
 const Main = () => {
+	const [dayNumber, setDayNumber] = useState(0);
 	const today = getStringDate();
-	const currentWeek = useMemo(() => getCurrentWeekByHyphen(), []);
+	const currentWeek = useMemo(() => getCurrentWeekByHyphen(dayNumber), [dayNumber]);
 	const dayIndex = currentWeek.findIndex((it: string) => it === today);
 	const [active, setActive] = useState<number>(dayIndex || 0);
 	const [moveDistance, setMoveDistance] = useState<number>(0);
@@ -32,6 +32,18 @@ const Main = () => {
 	const [onBorder, setOnBorder] = useState<boolean>(false);
 	const routineController = useContext(RoutineControllerContext);
 	const { setRoutineContextList, viewAll, setViewAll, getAllRoutines } = useContext(RoutineContext);
+
+	const changeWeek = (btnValue: number) => {
+		setDayNumber(dayNumber + btnValue);
+
+		console.log(currentWeek);
+		console.log(today in currentWeek);
+		if (today in currentWeek) {
+			setOnBorder(false);
+		}
+		setActive(7);
+		setOnBorder(true);
+	};
 
 	const getRoutine = useCallback(
 		async (date?: string) => {
@@ -89,11 +101,12 @@ const Main = () => {
 		moveDistance,
 		onBorder,
 		setOnBorder,
+		dayNumber,
 	};
 
 	useEffect(() => {
 		getRoutine(today);
-	}, [getRoutine, today, dayIndex]);
+	}, [getRoutine, today]);
 
 	return (
 		<>
@@ -113,8 +126,8 @@ const Main = () => {
 					<h2>2022 1월</h2>
 					<div className="flex justify-between">
 						<div className="mr-3">
-							<Btn>왼쪽</Btn>
-							<Btn onClick={() => getCurrentWeekByHyphen()}>오른쪽</Btn>
+							<Btn onClick={() => changeWeek(-7)}>왼쪽</Btn>
+							<Btn onClick={() => changeWeek(7)}>오른쪽</Btn>
 						</div>
 						<div>
 							<Btn>아침</Btn>

@@ -1,8 +1,7 @@
 type FormatType = 'dash' | 'hyphen';
 
-const setDefaultDate = (type: FormatType) => {
-	const day = getToday();
-	console.log('DK');
+export const setDefaultDate = (type: FormatType, dayNum?: number) => {
+	const day = getToday(dayNum);
 	let dayOfWeek = day.getDay();
 	if (day.getDay() === 0) {
 		// 현재 날짜를 기준으로 이번주 시작일 조정
@@ -31,12 +30,12 @@ export const getStringDate = () => {
 	return getToday().toISOString().slice(0, 10);
 };
 
-export const getCurrentWeekByDash = () => {
-	return setDefaultDate('dash');
+export const getCurrentWeekByDash = (day?: number) => {
+	return setDefaultDate('dash', day);
 };
 
-export const getCurrentWeekByHyphen = () => {
-	return setDefaultDate('hyphen');
+export const getCurrentWeekByHyphen = (day?: number) => {
+	return setDefaultDate('hyphen', day);
 };
 
 export const getCurrentWeekByParam = () => {
@@ -54,7 +53,7 @@ export const getToday = (day?: number) => {
 	} else {
 		now.setDate(now.getDate());
 	}
-	console.log('day', day);
+
 	const utcNow = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
 	const koreaTimeDiff = 9 * 60 * 60 * 1000;
 	return new Date(utcNow + koreaTimeDiff);
