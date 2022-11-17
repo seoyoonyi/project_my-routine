@@ -4,7 +4,6 @@ import { useContext, useState } from 'react';
 import { IRoutineListProps } from './RoutineList';
 import Btn from './Btn';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
-import { RoutineContext } from '../common/context/RoutineContext';
 
 interface IRoutineModal {
 	isModalOpen: boolean;
@@ -20,7 +19,6 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [isEditDate, setIsEditDate] = useState<boolean>(false);
 	const routineController = useContext(RoutineControllerContext);
-	const { getAllRoutines, viewAll } = useContext(RoutineContext);
 
 	const handleChangeEdit = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.currentTarget;
@@ -37,11 +35,8 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 	};
 	const EditRoutineData = async () => {
 		await routineController.editRoutine(id, originData.title, originData.content, originData.date, originData.activeStatus, originData.timeStatus);
-		if (viewAll) {
-			getAllRoutines();
-		} else {
-			getRoutine(originData.date);
-		}
+
+		getRoutine(originData.date);
 	};
 
 	const toggleIsEditDate = () => setIsEditDate(!isEditDate);
@@ -49,11 +44,8 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 	const removeRoutineData = async () => {
 		await routineController.removeRoutine(id);
 		handleCancel();
-		if (viewAll) {
-			getAllRoutines();
-		} else {
-			getRoutine(originData.date);
-		}
+
+		getRoutine(originData.date);
 	};
 	const handleMenuClick: MenuProps['onClick'] = (e) => {
 		const dropDownId = e.key;
