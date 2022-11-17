@@ -1,24 +1,17 @@
-import { Dispatch, SetStateAction, useContext } from 'react';
 import { useMemo } from 'react';
-import { RoutineContext } from '../common/context/RoutineContext';
+import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByDash } from '../common/utils/utils';
 import styles from './CurrentWeekTap.module.css';
 
 interface ICurrentWeekProps {
-	currentWeekController: {
-		currentWeek: string[];
-		getRoutine: (date?: string) => void;
-		active: number | null;
-		moveDistance: number | null;
-		onBorder: boolean;
-		setOnBorder: Dispatch<SetStateAction<boolean>>;
-		dayNumber: number;
-	};
+	onBorder: boolean;
+	dayNumber: number;
+	moveDistance: number;
 }
 
-const CurrentWeekTap = ({ currentWeekController }: ICurrentWeekProps) => {
-	const { currentWeek, getRoutine, active, moveDistance, onBorder, setOnBorder, dayNumber } = currentWeekController;
-	const { viewAll, setViewAll } = useContext(RoutineContext);
+const CurrentWeekTap = ({ onBorder, dayNumber, moveDistance }: ICurrentWeekProps) => {
+	const { getRoutine, active, currentWeek } = useRoutines({ dayNumber });
+
 	const currentWeekbyDash = useMemo(() => getCurrentWeekByDash(dayNumber), [dayNumber]);
 	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
 	const handleClickDay = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
@@ -27,10 +20,7 @@ const CurrentWeekTap = ({ currentWeekController }: ICurrentWeekProps) => {
 				dataset: { day },
 			},
 		} = e;
-		if (viewAll) {
-			setViewAll((viewAll) => !viewAll);
-			setOnBorder(!onBorder);
-		}
+
 		getRoutine(day);
 	};
 

@@ -1,19 +1,19 @@
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { ChevronDown } from 'lucide-react';
-import { useState } from 'react';
-import { ChangeEvent, useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByParam } from '../common/utils/utils';
 interface IDropDownType {
-	getRoutineActive: (activeStatus: string) => Promise<void>;
-	getRoutine: (today: string) => Promise<void>;
+	ActiveStatusTolggle: () => void;
+	changeActiveStatus: boolean;
 	today: string;
 }
 
-const DropDown = ({ getRoutine, today, getRoutineActive }: IDropDownType) => {
-	const [changeActiveStatus, setChangeActiveStatus] = useState<boolean>(false);
+const DropDown = ({ ActiveStatusTolggle, changeActiveStatus, today }: IDropDownType) => {
+	const { getRoutine } = useRoutines({ today });
 	const routineController = useContext(RoutineControllerContext);
 	const { setRoutineContextList } = useContext(RoutineContext);
 	const DateFromTo = Object.values(getCurrentWeekByParam());
@@ -62,11 +62,10 @@ const DropDown = ({ getRoutine, today, getRoutineActive }: IDropDownType) => {
 		},
 
 		{
-			label: '완료된 페이지 표시',
+			label: !changeActiveStatus ? '완료된 작업 숨기기' : '완료된 작업 표시',
 			key: '4',
 			onClick: () => {
-				setChangeActiveStatus((prev) => !prev);
-				getRoutineActive(changeActiveStatus ? 'DO' : 'DONE');
+				ActiveStatusTolggle();
 			},
 		},
 	];
@@ -78,6 +77,7 @@ const DropDown = ({ getRoutine, today, getRoutineActive }: IDropDownType) => {
 			placement="bottomRight"
 			className="flex items-center justify-center w-8 h-full rounded-md hover:bg-gray-100"
 		>
+			{/* eslint-disable jsx-a11y/anchor-is-valid */}
 			<a onClick={(e) => e.preventDefault()}>
 				<Space>
 					<ChevronDown size={20} color="#B5B5B5" />

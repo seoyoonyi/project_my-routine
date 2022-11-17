@@ -1,36 +1,17 @@
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import Btn from './Btn';
 import DropDown from './DropDown';
 import RoutineEditor from './RoutineEditor';
 interface IRoutineNavType {
 	changeWeek: (btnValue: number) => void;
-	routineToggle: () => void;
+	changeActiveStatus: boolean;
 	onAdd: boolean;
-	getRoutine: () => Promise<void>;
+	routineToggle: () => void;
+	ActiveStatusTolggle: () => void;
 	today: string;
-	getRoutineActive: (activeStatus: string) => Promise<void>;
-	borderController: {
-		onBorder: boolean;
-		setOnBorder: Dispatch<SetStateAction<boolean>>;
-	};
-	routinesAndEtcController: {
-		getRoutine: (date: string) => void;
-		routineToggle: () => void;
-		onAdd: boolean;
-	};
 }
 
-const RoutineNav = ({
-	changeWeek,
-	routineToggle,
-	onAdd,
-	borderController,
-	routinesAndEtcController,
-	getRoutine,
-	today,
-	getRoutineActive,
-}: IRoutineNavType) => {
+const RoutineNav = ({ changeWeek, changeActiveStatus, onAdd, routineToggle, ActiveStatusTolggle, today }: IRoutineNavType) => {
 	return (
 		<div>
 			<div className="flex items-center justify-between h-8">
@@ -52,9 +33,9 @@ const RoutineNav = ({
 				<div className="flex justify-between h-full">
 					<div className="mr-2">
 						<Btn onClick={routineToggle}>루틴 추가하기</Btn>
-						{onAdd && <RoutineEditor borderController={borderController} routinesAndEtcController={routinesAndEtcController} />}
+						{onAdd && <RoutineEditor routineToggle={routineToggle} onAdd={onAdd} />}
 					</div>
-					<DropDown getRoutine={getRoutine} today={today} getRoutineActive={getRoutineActive}></DropDown>
+					<DropDown ActiveStatusTolggle={ActiveStatusTolggle} changeActiveStatus={changeActiveStatus} today={today}></DropDown>
 				</div>
 			</div>
 		</div>

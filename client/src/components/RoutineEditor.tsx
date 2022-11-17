@@ -1,22 +1,15 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Btn from './Btn';
 import { getStringDate } from '../common/utils/utils';
 import { Modal, Input, Form, InputRef, Radio } from 'antd';
 import { ActiveStatus, TimeStatus } from '../common/type/type';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
-import { RoutineContext } from '../common/context/RoutineContext';
 import styles from './RoutineEditor.module.css';
 import TextArea from 'antd/lib/input/TextArea';
+import useRoutines from '../common/hooks/use-routines';
 interface IRoutineEditorProps {
-	borderController: {
-		onBorder: boolean;
-		setOnBorder: Dispatch<SetStateAction<boolean>>;
-	};
-	routinesAndEtcController: {
-		getRoutine: (date: string) => void;
-		routineToggle: () => void;
-		onAdd: boolean;
-	};
+	routineToggle: () => void;
+	onAdd: boolean;
 }
 export interface IRoutineDataType {
 	title: string;
@@ -26,16 +19,15 @@ export interface IRoutineDataType {
 	timeStatus: TimeStatus;
 }
 
-const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineEditorProps) => {
+const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
+	const { getRoutine } = useRoutines('');
 	const [form] = Form.useForm();
 	const [, forceUpdate] = useState({});
-	const [timeStatus, setTimeStatus] = useState<TimeStatus>('아침');
-	const { onBorder, setOnBorder } = borderController;
-	const { getRoutine, routineToggle, onAdd } = routinesAndEtcController;
+	const [timeStatus, setTimeStatus] = useState('');
+
 	const titleInput = useRef<InputRef>(null);
 	const contentInput = useRef<HTMLTextAreaElement>(null);
 	const routineController = useContext(RoutineControllerContext);
-	const { viewAll, setViewAll } = useContext(RoutineContext);
 
 	// To disable submit button at the beginning.
 	useEffect(() => {
@@ -48,7 +40,7 @@ const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineE
 			content: '',
 			date: getStringDate(),
 			activeStatus: 'DO',
-			timeStatus: '아침',
+			timeStatus: '',
 		});
 	}, [form]);
 
@@ -63,11 +55,6 @@ const RoutineEditor = ({ borderController, routinesAndEtcController }: IRoutineE
 	const handleSubmit = () => {
 		addRoutineData();
 		routineSave();
-
-		if (viewAll) {
-			setViewAll(false);
-			setOnBorder(!onBorder);
-		}
 	};
 
 	const onTimeStatusChange = ({ timeStatus }: { timeStatus: TimeStatus }) => {
