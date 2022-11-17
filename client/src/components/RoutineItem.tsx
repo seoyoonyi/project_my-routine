@@ -58,9 +58,8 @@ const RoutineItem = ({ id, title, content, date, activeStatus, setActiveStatus, 
 							<p className={styles.contentTxt}>{content}</p>
 						</div>
 						<div className="flex justify-end w-2/12">
-							{/* 날짜 주석처리 */}
-							{/* <p className={styles.dateTxt}>{date}</p> */}
-							<p className={styles.dateTxt}>{timeStatus}</p>
+							<p className="self-end flex-shrink-0 text-xs text-gray-500">{date}</p>
+							<p className="self-end flex-shrink-0 ml-2 text-xs text-gray-500">{timeStatus}</p>
 						</div>
 					</div>
 				</div>
