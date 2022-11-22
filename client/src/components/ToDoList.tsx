@@ -1,6 +1,7 @@
 import { Fragment, useContext, useMemo } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
 import { IRoutine } from '../common/type/type';
+import EmptyRoutine from './EmptyRoutine';
 import RoutineList from './RoutineList';
 
 const ToDoList = () => {
@@ -16,7 +17,8 @@ const ToDoList = () => {
 	}, [routineContextList, changeActiveStatus]);
 
 	return (
-		<div>
+		<>
+			{filtereRoutine.doneList?.length <= 0 && filtereRoutine.doList?.length <= 0 && <EmptyRoutine />}
 			{filtereRoutine.doList.map((it: IRoutine) => {
 				return (
 					<Fragment key={it.id}>
@@ -33,7 +35,7 @@ const ToDoList = () => {
 					</Fragment>
 				);
 			})}
-		</div>
+		</>
 	);
 };
 

@@ -1,27 +1,33 @@
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { ChevronDown } from 'lucide-react';
-import { useCallback, useContext } from 'react';
+import { Dispatch, SetStateAction, useCallback, useContext } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
 import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByParam } from '../common/utils/utils';
 interface IDropDownType {
 	ActiveStatusTolggle: () => void;
+	onWeek: boolean;
+	setOnWeek: Dispatch<SetStateAction<boolean>>;
 }
 
-const DropDown = ({ ActiveStatusTolggle }: IDropDownType) => {
+const DropDown = ({ ActiveStatusTolggle, onWeek, setOnWeek }: IDropDownType) => {
 	const { getRoutine } = useRoutines();
 	const routineController = useContext(RoutineControllerContext);
-	const { setRoutineContextList, today, changeActiveStatus } = useContext(RoutineContext);
+	const { setRoutineContextList, today, changeActiveStatus, setActive, onBorder, setOnBorder } = useContext(RoutineContext);
 	const DateFromTo = Object.values(getCurrentWeekByParam());
 
 	const getRoutineFromTo = useCallback(
 		async (from?: string, to?: string) => {
 			const response = await routineController.getRoutinesByDateFromTo(from, to);
 			setRoutineContextList(response.data);
+			if (!onWeek) {
+				setActive(7);
+				setOnBorder(!onBorder);
+			}
 		},
-		[routineController, setRoutineContextList],
+		[onBorder, onWeek, routineController, setActive, setOnBorder, setRoutineContextList],
 	);
 
 	const items: MenuProps['items'] = [
@@ -37,6 +43,7 @@ const DropDown = ({ ActiveStatusTolggle }: IDropDownType) => {
 			key: '1',
 			onClick: () => {
 				getRoutineFromTo(DateFromTo[0], DateFromTo[1]);
+				setOnWeek(true);
 			},
 		},
 

@@ -4,13 +4,9 @@ import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByDash } from '../common/utils/utils';
 import styles from './CurrentWeekTap.module.css';
 
-interface ICurrentWeekProps {
-	onBorder: boolean;
-}
-
-const CurrentWeekTap = ({ onBorder }: ICurrentWeekProps) => {
+const CurrentWeekTap = () => {
 	const { getRoutine } = useRoutines();
-	const { dayNumber, active, currentWeek, moveDistance } = useContext(RoutineContext);
+	const { dayNumber, active, currentWeek, moveDistance, onBorder } = useContext(RoutineContext);
 
 	const currentWeekbyDash = useMemo(() => getCurrentWeekByDash(dayNumber), [dayNumber]);
 	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];

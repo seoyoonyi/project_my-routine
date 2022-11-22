@@ -37,4 +37,6 @@ export interface IRoutineContextProps {
 	today: string;
 	changeActiveStatus: boolean;
 	setChangeActiveStatus: Dispatch<React.SetStateAction<boolean>>;
+	onBorder: boolean;
+	setOnBorder: Dispatch<React.SetStateAction<boolean>>;
 }

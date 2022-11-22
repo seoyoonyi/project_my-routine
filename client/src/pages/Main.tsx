@@ -18,9 +18,8 @@ export interface IRoutine {
 
 const Main = () => {
 	const { getRoutine } = useRoutines();
-	const { dayNumber, setDayNumber, setActive, currentWeek, today, setChangeActiveStatus } = useContext(RoutineContext);
+	const { dayNumber, setDayNumber, setActive, currentWeek, today, setChangeActiveStatus, setOnBorder } = useContext(RoutineContext);
 	const [onAdd, setOnAdd] = useState<boolean>(false);
-	const [onBorder, setOnBorder] = useState<boolean>(false);
 
 	const changeWeek = (btnValue: number) => {
 		setDayNumber(dayNumber + btnValue);
@@ -40,7 +39,7 @@ const Main = () => {
 		if (currentWeek.includes(today)) {
 			setOnBorder(false);
 		}
-	}, [currentWeek, today]);
+	}, [currentWeek, setOnBorder, today]);
 
 	useEffect(() => {
 		getRoutine(today);
@@ -52,7 +51,7 @@ const Main = () => {
 			<Header />
 			<MainContainer>
 				<RoutineNav changeWeek={changeWeek} onAdd={onAdd} routineToggle={routineToggle} ActiveStatusTolggle={ActiveStatusTolggle} />
-				<CurrentWeekTap onBorder={onBorder} />
+				<CurrentWeekTap />
 				<ToDoList />
 			</MainContainer>
 		</>

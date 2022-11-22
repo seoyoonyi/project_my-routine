@@ -6,7 +6,7 @@ interface IBtnProps {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	onClick?: any;
 	type?: 'text' | 'link' | 'ghost' | 'primary' | 'dashed';
-	size?: 'large';
+	size?: 'small' | 'large';
 	children: React.ReactNode;
 	htmlType?: 'button' | 'submit' | 'reset';
 	disabled?: true | false;

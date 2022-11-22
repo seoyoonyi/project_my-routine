@@ -17,6 +17,8 @@ const defaultValue: IRoutineContextProps = {
 	today: '',
 	changeActiveStatus: false,
 	setChangeActiveStatus: () => {},
+	onBorder: false,
+	setOnBorder: () => {},
 };
 
 export const RoutineContext = createContext(defaultValue);
@@ -30,6 +32,7 @@ export const RoutineProvider = ({ children }: IChildrenType) => {
 	const [active, setActive] = useState<number>(dayIndex || 0);
 	const [moveDistance, setMoveDistance] = useState<number>(0);
 	const [changeActiveStatus, setChangeActiveStatus] = useState<boolean>(false);
+	const [onBorder, setOnBorder] = useState<boolean>(false);
 
 	const value = {
 		routineContextList,
@@ -44,6 +47,8 @@ export const RoutineProvider = ({ children }: IChildrenType) => {
 		today,
 		changeActiveStatus,
 		setChangeActiveStatus,
+		onBorder,
+		setOnBorder,
 	};
 
 	return <RoutineContext.Provider value={value}>{children}</RoutineContext.Provider>;
