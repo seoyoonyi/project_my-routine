@@ -27,4 +27,14 @@ export interface IRoutine {
 export interface IRoutineContextProps {
 	routineContextList: IRoutine[];
 	setRoutineContextList: Dispatch<SetStateAction<IRoutine[]>>;
+	active: number;
+	setActive: Dispatch<React.SetStateAction<number>>;
+	moveDistance: number;
+	setMoveDistance: Dispatch<React.SetStateAction<number>>;
+	currentWeek: string[];
+	dayNumber: number;
+	setDayNumber: Dispatch<React.SetStateAction<number>>;
+	today: string;
+	changeActiveStatus: boolean;
+	setChangeActiveStatus: Dispatch<React.SetStateAction<boolean>>;
 }

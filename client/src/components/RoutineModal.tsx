@@ -4,16 +4,17 @@ import { useContext, useState } from 'react';
 import { IRoutineListProps } from './RoutineList';
 import Btn from './Btn';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import useRoutines from '../common/hooks/use-routines';
 
 interface IRoutineModal {
 	isModalOpen: boolean;
 	routineItem: IRoutineListProps;
 	handleCancel: () => void;
-	getRoutine: (date?: string) => void;
 }
 
 const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal) => {
-	const { id, title, content, date, activeStatus, timeStatus, getRoutine } = routineItem;
+	const { getRoutine } = useRoutines();
+	const { id, title, content, date, activeStatus, timeStatus } = routineItem;
 	const [menuKey, setMenuKey] = useState<string>('');
 	const [originData, setOriginData] = useState({ title, content, date, activeStatus, timeStatus });
 	const [isEdit, setIsEdit] = useState<boolean>(false);

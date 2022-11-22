@@ -1,16 +1,10 @@
 import { Fragment, useContext, useMemo } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
-import useRoutines from '../common/hooks/use-routines';
 import { IRoutine } from '../common/type/type';
 import RoutineList from './RoutineList';
 
-interface IToDoListType {
-	changeActiveStatus: boolean;
-}
-
-const ToDoList = ({ changeActiveStatus }: IToDoListType) => {
-	const { getRoutine } = useRoutines('');
-	const { routineContextList } = useContext(RoutineContext);
+const ToDoList = () => {
+	const { routineContextList, changeActiveStatus } = useContext(RoutineContext);
 
 	const filtereRoutine = useMemo(() => {
 		const doList = routineContextList.filter((it: IRoutine) => {
@@ -26,7 +20,7 @@ const ToDoList = ({ changeActiveStatus }: IToDoListType) => {
 			{filtereRoutine.doList.map((it: IRoutine) => {
 				return (
 					<Fragment key={it.id}>
-						<RoutineList {...it} getRoutine={getRoutine} />
+						<RoutineList {...it} />
 					</Fragment>
 				);
 			})}
@@ -35,7 +29,7 @@ const ToDoList = ({ changeActiveStatus }: IToDoListType) => {
 			{filtereRoutine.doneList.map((it: IRoutine) => {
 				return (
 					<Fragment key={it.id}>
-						<RoutineList {...it} getRoutine={getRoutine} />
+						<RoutineList {...it} />
 					</Fragment>
 				);
 			})}

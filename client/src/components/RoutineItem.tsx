@@ -10,10 +10,9 @@ interface IRoutineItemProps extends IRoutineListProps {
 	showModal: () => void;
 	activeStatus: ActiveStatus;
 	setActiveStatus: Dispatch<SetStateAction<ActiveStatus>>;
-	getRoutine: (date?: string) => void;
 }
 
-const RoutineItem = ({ id, title, content, date, activeStatus, setActiveStatus, timeStatus, showModal }: IRoutineItemProps) => {
+const RoutineItem = ({ id, title, content, date, timeStatus, activeStatus, setActiveStatus, showModal }: IRoutineItemProps) => {
 	const routineController = useContext(RoutineControllerContext);
 
 	const EditRoutineStatus = async () => {

@@ -20,7 +20,7 @@ export interface IRoutineDataType {
 }
 
 const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
-	const { getRoutine } = useRoutines('');
+	const { getRoutine } = useRoutines();
 	const [form] = Form.useForm();
 	const [, forceUpdate] = useState({});
 	const [timeStatus, setTimeStatus] = useState('');

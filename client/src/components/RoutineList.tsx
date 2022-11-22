@@ -10,13 +10,11 @@ export interface IRoutineListProps {
 	date: string;
 	activeStatus: ActiveStatus;
 	timeStatus: TimeStatus;
-	getRoutine: (date?: string) => void;
 }
 
 const RoutineList = (routineItem: IRoutineListProps) => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [activeStatus, setActiveStatus] = useState<ActiveStatus>(routineItem.activeStatus);
-	const { getRoutine } = routineItem;
 
 	const showModal = () => {
 		setIsModalOpen(true);
@@ -28,9 +26,9 @@ const RoutineList = (routineItem: IRoutineListProps) => {
 
 	return (
 		<>
-			<RoutineItem {...routineItem} showModal={showModal} activeStatus={activeStatus} setActiveStatus={setActiveStatus} getRoutine={getRoutine} />
+			<RoutineItem {...routineItem} showModal={showModal} activeStatus={activeStatus} setActiveStatus={setActiveStatus} />
 
-			{isModalOpen && <RoutineModal routineItem={routineItem} isModalOpen={isModalOpen} handleCancel={handleCancel} getRoutine={getRoutine} />}
+			{isModalOpen && <RoutineModal routineItem={routineItem} isModalOpen={isModalOpen} handleCancel={handleCancel} />}
 		</>
 	);
 };

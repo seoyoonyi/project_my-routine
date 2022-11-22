@@ -1,17 +1,10 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext } from 'react';
 import { RoutineContext } from '../context/RoutineContext';
 import RoutineControllerContext from '../context/RoutineControllerContext';
-import { getCurrentWeekByHyphen, getStringDate } from '../utils/utils';
 
-const useRoutines = ({ active, moveDistance, setMoveDistance, currentWeek, setActive }: any) => {
-	// const [dayNumber, setDayNumber] = useState(0);
-	// const today = getStringDate();
-	// const currentWeek = useMemo(() => getCurrentWeekByHyphen(dayNumber), [dayNumber]);
-	// const dayIndex = currentWeek.findIndex((it: string) => it === today);
-	// const [active, setActive] = useState<number>(dayIndex || 0);
-	// const [moveDistance, setMoveDistance] = useState<number>(0);
+const useRoutines = () => {
 	const routineController = useContext(RoutineControllerContext);
-	const { setRoutineContextList } = useContext(RoutineContext);
+	const { setRoutineContextList, setMoveDistance, currentWeek, setActive } = useContext(RoutineContext);
 
 	const borderActive = (index: number) => {
 		setMoveDistance(100 * index);
@@ -30,10 +23,11 @@ const useRoutines = ({ active, moveDistance, setMoveDistance, currentWeek, setAc
 				return;
 			}
 		},
-		[routineController, currentWeek, setRoutineContextList],
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[currentWeek, routineController, setActive, setRoutineContextList],
 	);
 
-	return { getRoutine, moveDistance, active, setActive, currentWeek };
+	return { getRoutine };
 };
 
 export default useRoutines;

@@ -1,16 +1,16 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
+import { RoutineContext } from '../common/context/RoutineContext';
 import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByDash } from '../common/utils/utils';
 import styles from './CurrentWeekTap.module.css';
 
 interface ICurrentWeekProps {
 	onBorder: boolean;
-	dayNumber: number;
-	moveDistance: number;
 }
 
-const CurrentWeekTap = ({ onBorder, dayNumber, moveDistance }: ICurrentWeekProps) => {
-	const { getRoutine, active, currentWeek } = useRoutines({ dayNumber });
+const CurrentWeekTap = ({ onBorder }: ICurrentWeekProps) => {
+	const { getRoutine } = useRoutines();
+	const { dayNumber, active, currentWeek, moveDistance } = useContext(RoutineContext);
 
 	const currentWeekbyDash = useMemo(() => getCurrentWeekByDash(dayNumber), [dayNumber]);
 	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];

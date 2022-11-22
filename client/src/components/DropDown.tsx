@@ -8,14 +8,12 @@ import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByParam } from '../common/utils/utils';
 interface IDropDownType {
 	ActiveStatusTolggle: () => void;
-	changeActiveStatus: boolean;
-	today: string;
 }
 
-const DropDown = ({ ActiveStatusTolggle, changeActiveStatus, today }: IDropDownType) => {
-	const { getRoutine } = useRoutines({ today });
+const DropDown = ({ ActiveStatusTolggle }: IDropDownType) => {
+	const { getRoutine } = useRoutines();
 	const routineController = useContext(RoutineControllerContext);
-	const { setRoutineContextList } = useContext(RoutineContext);
+	const { setRoutineContextList, today, changeActiveStatus } = useContext(RoutineContext);
 	const DateFromTo = Object.values(getCurrentWeekByParam());
 
 	const getRoutineFromTo = useCallback(

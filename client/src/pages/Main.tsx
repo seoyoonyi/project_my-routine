@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useContext } from 'react';
 import Header from '../components/Header';
 import CurrentWeekTap from '../components/CurrentWeekTap';
 import MainContainer from '../components/MainContainer';
@@ -6,7 +6,7 @@ import { ActiveStatus, TimeStatus } from '../common/type/type';
 import ToDoList from '../components/ToDoList';
 import RoutineNav from '../components/RoutineNav';
 import useRoutines from '../common/hooks/use-routines';
-import { getCurrentWeekByHyphen, getStringDate } from '../common/utils/utils';
+import { RoutineContext } from '../common/context/RoutineContext';
 export interface IRoutine {
 	id: number;
 	title: string;
@@ -17,18 +17,10 @@ export interface IRoutine {
 }
 
 const Main = () => {
-	const [dayNumber, setDayNumber] = useState(0);
-	const today = getStringDate();
-	const currentWeek = useMemo(() => getCurrentWeekByHyphen(dayNumber), [dayNumber]);
-	const dayIndex = currentWeek.findIndex((it: string) => it === today);
-	const [active, setActive] = useState<number>(dayIndex || 0);
-	const [moveDistance, setMoveDistance] = useState<number>(0);
-
-	const { getRoutine } = useRoutines({ active, moveDistance, setMoveDistance, currentWeek, setActive });
-
+	const { getRoutine } = useRoutines();
+	const { dayNumber, setDayNumber, setActive, currentWeek, today, setChangeActiveStatus } = useContext(RoutineContext);
 	const [onAdd, setOnAdd] = useState<boolean>(false);
 	const [onBorder, setOnBorder] = useState<boolean>(false);
-	const [changeActiveStatus, setChangeActiveStatus] = useState<boolean>(false);
 
 	const changeWeek = (btnValue: number) => {
 		setDayNumber(dayNumber + btnValue);
@@ -59,16 +51,9 @@ const Main = () => {
 		<>
 			<Header />
 			<MainContainer>
-				<RoutineNav
-					changeWeek={changeWeek}
-					changeActiveStatus={changeActiveStatus}
-					onAdd={onAdd}
-					routineToggle={routineToggle}
-					ActiveStatusTolggle={ActiveStatusTolggle}
-					today={today}
-				/>
-				<CurrentWeekTap onBorder={onBorder} dayNumber={dayNumber} moveDistance={moveDistance} />
-				<ToDoList changeActiveStatus={changeActiveStatus} />
+				<RoutineNav changeWeek={changeWeek} onAdd={onAdd} routineToggle={routineToggle} ActiveStatusTolggle={ActiveStatusTolggle} />
+				<CurrentWeekTap onBorder={onBorder} />
+				<ToDoList />
 			</MainContainer>
 		</>
 	);

@@ -1,17 +1,16 @@
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import Btn from './Btn';
 import DropDown from './DropDown';
 import RoutineEditor from './RoutineEditor';
 interface IRoutineNavType {
 	changeWeek: (btnValue: number) => void;
-	changeActiveStatus: boolean;
 	onAdd: boolean;
 	routineToggle: () => void;
 	ActiveStatusTolggle: () => void;
-	today: string;
 }
 
-const RoutineNav = ({ changeWeek, changeActiveStatus, onAdd, routineToggle, ActiveStatusTolggle, today }: IRoutineNavType) => {
+const RoutineNav = ({ changeWeek, onAdd, routineToggle, ActiveStatusTolggle }: IRoutineNavType) => {
 	return (
 		<div>
 			<div className="flex items-center justify-between h-8">
@@ -35,7 +34,7 @@ const RoutineNav = ({ changeWeek, changeActiveStatus, onAdd, routineToggle, Acti
 						<Btn onClick={routineToggle}>루틴 추가하기</Btn>
 						{onAdd && <RoutineEditor routineToggle={routineToggle} onAdd={onAdd} />}
 					</div>
-					<DropDown ActiveStatusTolggle={ActiveStatusTolggle} changeActiveStatus={changeActiveStatus} today={today}></DropDown>
+					<DropDown ActiveStatusTolggle={ActiveStatusTolggle}></DropDown>
 				</div>
 			</div>
 		</div>
