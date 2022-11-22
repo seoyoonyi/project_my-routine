@@ -5,6 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RoutineItem.module.css';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import useRoutines from '../common/hooks/use-routines';
 
 interface IRoutineItemProps extends IRoutineListProps {
 	showModal: () => void;
@@ -13,6 +14,7 @@ interface IRoutineItemProps extends IRoutineListProps {
 }
 
 const RoutineItem = ({ id, title, content, date, timeStatus, activeStatus, setActiveStatus, showModal }: IRoutineItemProps) => {
+	const { getRoutine } = useRoutines();
 	const routineController = useContext(RoutineControllerContext);
 
 	const EditRoutineStatus = async () => {
@@ -20,6 +22,7 @@ const RoutineItem = ({ id, title, content, date, timeStatus, activeStatus, setAc
 		setActiveStatus(routineActiveStatus);
 
 		await routineController.editRoutine(id, title, content, date, routineActiveStatus, timeStatus);
+		getRoutine(date);
 	};
 
 	return (
