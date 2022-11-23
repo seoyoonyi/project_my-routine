@@ -8,9 +8,8 @@
 @import './styles/antd.build.css';
 
 body {
-	font-family: 'Pretendard Std Variable', 'Pretendard Std', Pretendard, -apple-system,
-		BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple Color Emoji',
-		'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+	font-family: 'Pretendard Std Variable', 'Pretendard Std', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue',
+		'Segoe UI', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
 	font-size: initial;
 	color: #555;
 }
@@ -22,6 +21,11 @@ body {
 .ant-btn-primary:hover,
 .ant-btn-primary:focus {
 	background-color: rgba(55, 226, 213, 0.7);
+	border-color: #37e2d5;
+}
+
+.ant-btn-dashed:hover,
+.ant-btn-dashed:focus {
 	border-color: #37e2d5;
 }
 

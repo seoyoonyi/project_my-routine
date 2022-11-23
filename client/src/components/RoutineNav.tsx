@@ -43,8 +43,8 @@ const RoutineNav = ({ changeWeek, onAdd, routineToggle, ActiveStatusTolggle }: I
 				<div className="flex items-center justify-between h-full">
 					{onWeek && (
 						<Btn size="small" type="dashed" className="flex items-center mr-4 rounded-md" onClick={weekToggle}>
-							<X size={16} color="#B5B5B5" />
-							<span className="text-xs text-gray-400">이번주</span>
+							<span className="mx-1 text-xs text-[#1CE6D5]">이번주</span>
+							<X size={14} color="#B5B5B5" />
 						</Btn>
 					)}
 					<div className="mr-2">
