@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Input, Form, Checkbox } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
@@ -22,6 +22,8 @@ type ErrorResponse = {
 const Login = () => {
 	const { login } = useAuth();
 	const navigate = useNavigate();
+	const [form] = Form.useForm();
+	const [, forceUpdate] = useState({});
 
 	const onFinish = async (values: any) => {
 		const loginForm = {
@@ -44,28 +46,19 @@ const Login = () => {
 		}
 	};
 
+	useEffect(() => {
+		forceUpdate({});
+	}, []);
+
 	return (
 		<>
 			<Header />
 			<MainContainer className={styles.loginContainer}>
-				<Form className={styles.loginForm} onFinish={onFinish}>
-					<Form.Item
-						name="email"
-						rules={[{ validator: validateEmail(useCallback) }]}
-						className={styles.loginFormItem}
-					>
-						<Input
-							className={styles.loginBox}
-							placeholder="이메일"
-							prefix={<UserOutlined />}
-							required
-						/>
+				<Form form={form} className={styles.loginForm} onFinish={onFinish}>
+					<Form.Item name="email" rules={[{ validator: validateEmail(useCallback) }]} className={styles.loginFormItem}>
+						<Input className={styles.loginBox} placeholder="이메일" prefix={<UserOutlined />} required />
 					</Form.Item>
-					<Form.Item
-						name="pw"
-						rules={[{ validator: validatePW(useCallback) }]}
-						className={styles.loginFormItem}
-					>
+					<Form.Item name="pw" rules={[{ validator: validatePW(useCallback) }]} className={styles.loginFormItem}>
 						<Input.Password
 							className={styles.loginBox}
 							placeholder="비밀번호"
@@ -76,9 +69,20 @@ const Login = () => {
 					<div className={styles.autoLogin}>
 						<Checkbox>로그인 상태 유지</Checkbox>
 					</div>
-					<Btn type="primary" size="large" className={styles.loginBtn} htmlType="submit">
-						로그인
-					</Btn>
+
+					<Form.Item shouldUpdate>
+						{() => (
+							<Btn
+								type="primary"
+								htmlType="submit"
+								size="large"
+								className={styles.loginBtn}
+								disabled={!form.isFieldsTouched(true) || !!form.getFieldsError().filter(({ errors }) => errors.length).length}
+							>
+								로그인
+							</Btn>
+						)}
+					</Form.Item>
 					<ul className={styles.loginSubMenu}>
 						<li>
 							<Link to="/">비밀번호 찾기</Link>

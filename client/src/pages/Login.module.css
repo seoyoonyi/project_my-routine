@@ -1,5 +1,5 @@
 .loginContainer {
-	@apply h-screen bg-gray-100;
+	@apply h-screen bg-gray-50;
 }
 .loginForm {
 	@apply w-[400px] md:w-[350px] sm:w-[300px] mx-auto;
@@ -37,6 +37,7 @@
 
 .loginBtn {
 	@apply w-full rounded-md;
+	/* background: red !important; */
 }
 
 .loginSubMenu {
