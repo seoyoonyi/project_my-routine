@@ -43,3 +43,7 @@
 	@apply text-xs text-gray-500 self-end;
 	margin-bottom: 3.5px;
 }
+
+.lineThroughTxt {
+	@apply line-through;
+}

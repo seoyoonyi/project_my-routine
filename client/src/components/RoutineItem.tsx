@@ -43,11 +43,11 @@ const RoutineItem = ({ id, title, content, date, timeStatus, activeStatus, setAc
 					</div>
 					<div className="flex w-full" onClick={() => showModal()}>
 						<div className="w-2/12">
-							<p className={styles.timeTxt}>{activeStatus}</p>
-							<p className={styles.timeTxt}>언제할 예정</p>
+							{/* <p className={styles.timeTxt}>{activeStatus}</p> */}
+							<p className={styles.timeTxt}>테스트 샘플시간</p>
 						</div>
 						<div className={styles.routineTxtBox}>
-							<h3 className={styles.titleTxt}>(도전루틴뱃지){title}</h3>
+							<h3 className={activeStatus === 'DONE' ? (styles.titleTxt, styles.lineThroughTxt) : styles.titleTxt}>🔥 {title}</h3>
 							<p className={styles.contentTxt}>{content}</p>
 						</div>
 						<div className="flex justify-end w-2/12">

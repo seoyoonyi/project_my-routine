@@ -41,6 +41,11 @@ body {
 .ant-modal-header {
 	height: 54px;
 }
+
+.ant-form-inline .ant-form-item {
+	margin-right: 0;
+}
+
 .ant-input:hover,
 .ant-input:focus,
 .ant-input-focused,
@@ -50,6 +55,36 @@ body {
 .ant-input-affix-wrapper:hover {
 	border-color: #37e2d5;
 	box-shadow: 0 0 0 2px rgb(55 226 213 / 20%);
+}
+/* .textarea.ant-input {
+	height: 100%;
+} */
+.ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child {
+	border-right-color: #37e2d5;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
+	border-color: #37e2d5;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+	border-color: #37e2d5;
+	color: #37e2d5;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+	background-color: #37e2d5;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active {
+	border-color: #37e2d5;
+	color: #37e2d5;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active::before {
+	background-color: #37e2d5;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+	border-color: #37e2d5;
+	color: #37e2d5;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before {
+	background-color: #37e2d5;
 }
 
 /* FIXME: npm run build 했을 시 input[type='date'] 부분 에러 */

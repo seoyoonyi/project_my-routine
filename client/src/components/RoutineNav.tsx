@@ -16,12 +16,14 @@ interface IRoutineNavType {
 const RoutineNav = ({ changeWeek, onAdd, routineToggle, ActiveStatusTolggle }: IRoutineNavType) => {
 	const { getRoutine } = useRoutines();
 	const { today, onBorder, setOnBorder } = useContext(RoutineContext);
+
 	const [onWeek, setOnWeek] = useState<boolean>(false);
 	const weekToggle = () => {
 		setOnWeek(false);
 		getRoutine(today);
 		setOnBorder(!onBorder);
 	};
+
 	return (
 		<div>
 			<div className="flex items-center justify-between h-8">
@@ -47,6 +49,7 @@ const RoutineNav = ({ changeWeek, onAdd, routineToggle, ActiveStatusTolggle }: I
 							<X size={14} color="#B5B5B5" />
 						</Btn>
 					)}
+
 					<div className="mr-2">
 						<Btn onClick={routineToggle}>루틴 추가하기</Btn>
 						{onAdd && <RoutineEditor routineToggle={routineToggle} onAdd={onAdd} />}

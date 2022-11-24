@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Btn from './Btn';
 import { getStringDate } from '../common/utils/utils';
-import { Modal, Input, Form, InputRef, Radio } from 'antd';
+import { Modal, Input, Form, Radio } from 'antd';
 import { ActiveStatus, TimeStatus } from '../common/type/type';
 import RoutineControllerContext from '../common/context/RoutineControllerContext';
 import styles from './RoutineEditor.module.css';
@@ -25,8 +25,6 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 	const [, forceUpdate] = useState({});
 	const [timeStatus, setTimeStatus] = useState('');
 
-	const titleInput = useRef<InputRef>(null);
-	const contentInput = useRef<HTMLTextAreaElement>(null);
 	const routineController = useContext(RoutineControllerContext);
 
 	// To disable submit button at the beginning.
@@ -48,6 +46,7 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 
 	const addRoutineData = async () => {
 		const { title, content, date, activeStatus, timeStatus } = form.getFieldsValue(['title', 'content', 'date', 'activeStatus', 'timeStatus']);
+
 		await routineController.addRoutine(title, content, date, activeStatus, timeStatus);
 		getRoutine(date);
 	};
@@ -62,24 +61,23 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 	};
 
 	return (
-		<Modal open={onAdd} onCancel={routineToggle} footer={null}>
+		<Modal open={onAdd} onCancel={routineToggle} footer={null} className={styles.modalBox}>
 			<Form
 				form={form}
 				name="horizontal_login"
 				layout="inline"
 				onFinish={handleSubmit}
-				className={styles.editorForm}
 				initialValues={{ timeStatus }}
 				onValuesChange={onTimeStatusChange}
 			>
 				<div className={styles.titleInputBox}>
-					<Form.Item name="title" rules={[{ required: true }]}>
-						<Input ref={titleInput} name="title" className={styles.titleInput} placeholder="작업이름" />
+					<Form.Item name="title">
+						<Input name="title" className={styles.titleInput} placeholder="작업이름" required />
 					</Form.Item>
 				</div>
-				<div className={styles.contentBox}>
-					<Form.Item name="content" rules={[{ required: true }]}>
-						<TextArea ref={contentInput} name="content" className={styles.contentTextArea} placeholder="추가한 이유(150자 이내)" />
+				<div className={styles.contentTextAreaBox}>
+					<Form.Item name="content">
+						<TextArea name="content" className={styles.contentTextArea} placeholder="추가한 이유(150자 이내)" required />
 					</Form.Item>
 				</div>
 				<div className={styles.routineStartBox}>
@@ -92,9 +90,15 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 					<p>시간필터</p>
 					<Form.Item name="timeStatus" rules={[{ required: true }]}>
 						<Radio.Group>
-							<Radio.Button value="아침">아침</Radio.Button>
-							<Radio.Button value="오후">오후</Radio.Button>
-							<Radio.Button value="저녁">저녁</Radio.Button>
+							<Radio.Button className={styles.timeStatusBtn} value="아침">
+								아침
+							</Radio.Button>
+							<Radio.Button className={styles.timeStatusBtn} value="오후">
+								오후
+							</Radio.Button>
+							<Radio.Button className={styles.timeStatusBtn} value="저녁">
+								저녁
+							</Radio.Button>
 						</Radio.Group>
 					</Form.Item>
 				</div>
@@ -105,11 +109,12 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 						<input type="text" />
 					</div>
 				</div> */}
-				<Form.Item shouldUpdate>
+				<Form.Item shouldUpdate className={styles.routineSaveBtnBox}>
 					{() => (
 						<Btn
 							type="primary"
 							htmlType="submit"
+							size="large"
 							disabled={!form.isFieldsTouched(true) || !!form.getFieldsError().filter(({ errors }) => errors.length).length}
 						>
 							루틴저장

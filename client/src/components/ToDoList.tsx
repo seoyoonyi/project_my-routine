@@ -27,7 +27,7 @@ const ToDoList = () => {
 				);
 			})}
 
-			{filtereRoutine.doneList?.length > 0 && <p>완료됨</p>}
+			{filtereRoutine.doneList?.length > 0 && <p className="pb-1 pl-1 mt-10 text-sm font-medium text-gray-500 border-b-2 border-gray-100">완료됨</p>}
 			{filtereRoutine.doneList.map((it: IRoutine) => {
 				return (
 					<Fragment key={it.id}>

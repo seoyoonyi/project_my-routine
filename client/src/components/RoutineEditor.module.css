@@ -1,33 +1,58 @@
-/* .editorForm {
-	@apply;
-} */
+.modalBox {
+	@apply pb-20;
+}
 .titleInputBox {
 	@apply w-full flex;
 	margin-top: 32px;
 	border-bottom: 1px solid #eee;
 }
-.titleInput {
-	width: 100%;
-	padding: 10px 9px;
-}
-.titleInput:focus {
-	outline: none;
-}
-.ant-form-inline .ant-form-item {
-	margin-right: 0;
+
+.titleInputBox div {
+	@apply w-full;
 }
 
-.contentBox {
-	@apply w-full;
+.titleInputBox input:hover,
+.titleInputBox input:focus,
+.titleInputBox input.ant-input-focused,
+.titleInputBox input:not(.ant-input-affix-wrapper-disabled):hover,
+.titleInputBox input:focus,
+.titleInputBox input:focus-within,
+.titleInputBox input:hover {
+	border: none;
+	box-shadow: none;
+}
+.titleInput {
+	padding: 10px 9px;
+	border: none;
+}
+
+.contentTextAreaBox {
+	@apply w-full h-28;
 	border-bottom: 1px solid #eee;
 }
-.contentTextArea {
-	width: 100%;
-	padding: 10px 9px;
-	resize: none;
+.contentTextAreaBox div {
+	@apply h-full;
 }
-.contentTextArea:focus {
-	outline: none;
+
+.contentTextArea {
+	@apply w-full px-[9px] py-[10px];
+	height: 100% !important;
+	resize: none;
+	border: none;
+}
+.contentTextAreaBox textarea:hover,
+.contentTextAreaBox textarea:focus,
+.contentTextAreaBox textarea.ant-input-focused,
+.contentTextAreaBox textarea:not(.ant-input-affix-wrapper-disabled):hover,
+.contentTextAreaBox textarea:focus,
+.contentTextAreaBox textarea:focus-within,
+.contentTextAreaBox textarea:hover {
+	border: none;
+	box-shadow: none;
+}
+
+.timeStatusBtn:hover {
+	color: #37e2d5;
 }
 
 .routineStartBox {
@@ -35,15 +60,16 @@
 	padding: 10px 9px;
 	border-bottom: 1px solid #eee;
 }
-
 .routineStartBox p {
 	@apply text-gray-500 font-medium;
 }
 
 .routineSaveBtnBox {
-	@apply w-full mt-5 mb-7;
+	@apply w-full h-16 mt-10;
 }
-
+.routineSaveBtnBox div {
+	@apply h-full;
+}
 .routineSaveBtnBox button {
-	@apply w-full;
+	@apply w-full h-full;
 }
