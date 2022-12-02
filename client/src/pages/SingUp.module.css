@@ -11,7 +11,7 @@
 	@apply font-bold text-gray-700;
 }
 .signUpForm fieldset ul li span.smallTxt {
-	@apply text-sm text-gray-500;
+	@apply text-xs text-gray-500;
 }
 .signUpFormItem {
 	margin-bottom: 25px;

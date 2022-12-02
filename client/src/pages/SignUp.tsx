@@ -7,12 +7,13 @@ import styles from './SingUp.module.css';
 import Btn from '../components/Btn';
 
 const SignUp = () => {
+	const [form] = Form.useForm();
 	return (
 		<>
 			<Header />
 			<MainContainer className={styles.signUpContainer}>
 				<div className={styles.signUpForm}>
-					<Form>
+					<Form form={form}>
 						<fieldset>
 							<legend>회원가입</legend>
 							<ul>
@@ -25,7 +26,7 @@ const SignUp = () => {
 								<li>
 									<p>비밀번호</p>
 									<span className={styles.smallTxt}>
-										영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
+										영문/숫자/특수문자를 포함한 10자 이상의 비밀번호를 입력해주세요.
 									</span>
 									<Form.Item className={styles.signUpFormItem} name="password" hasFeedback>
 										<Input.Password
@@ -61,8 +62,25 @@ const SignUp = () => {
 							</ul>
 
 							<Btn type="primary" htmlType="submit" size="large" className={styles.nextBtn}>
-								다음
+								가입하기
 							</Btn>
+
+							<Form.Item shouldUpdate>
+								{() => (
+									<Btn
+										type="primary"
+										htmlType="submit"
+										size="large"
+										className={styles.loginBtn}
+										disabled={
+											!form.isFieldsTouched(true) ||
+											!!form.getFieldsError().filter(({ errors }) => errors.length).length
+										}
+									>
+										로그인
+									</Btn>
+								)}
+							</Form.Item>
 						</fieldset>
 					</Form>
 					<div className={styles.loginLink}>

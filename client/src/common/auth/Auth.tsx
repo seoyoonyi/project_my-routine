@@ -36,6 +36,8 @@ export const AuthProvider = ({ children }: Props) => {
 	const logout = () => {
 		setUser(null);
 		tokenStorage.removeToken();
+		// const authenticated = localStorage.getItem("authenticated")
+		// localStorage.setItem("authenticated", authenticated);
 	};
 
 	const value = {
