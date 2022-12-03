@@ -4,7 +4,7 @@
   "description": "마이루틴",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"cd client && sleep 5 && npm run start\" \"cd server && npm run start:dev\"",
+    "start": "concurrently --names CLIENT,SERVER -c bgBlue.bold,bgCyan.bold \"cd client && sleep 5 && npm run start\" \"cd server && npm run start:dev\"",
     "check": "cd client && tsc --noEmit"
   },
   "repository": {
