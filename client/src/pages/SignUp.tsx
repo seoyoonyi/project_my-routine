@@ -1,13 +1,21 @@
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { useCallback } from 'react';
 import { Form, Input } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import Header from '../components/Header';
 import { Link } from 'react-router-dom';
 import MainContainer from '../components/MainContainer';
 import styles from './SingUp.module.css';
 import Btn from '../components/Btn';
+import {
+	validateEmail,
+	validateName,
+	validatePW,
+	validatePWCheck,
+} from '../common/utils/validate-check';
 
 const SignUp = () => {
 	const [form] = Form.useForm();
+
 	return (
 		<>
 			<Header />
@@ -19,7 +27,11 @@ const SignUp = () => {
 							<ul>
 								<li>
 									<p>이메일</p>
-									<Form.Item className={styles.signUpFormItem} name="id">
+									<Form.Item
+										name="id"
+										className={styles.signUpFormItem}
+										rules={[{ validator: validateEmail(useCallback) }]}
+									>
 										<Input className={styles.signUpBox} />
 									</Form.Item>
 								</li>
@@ -28,7 +40,12 @@ const SignUp = () => {
 									<span className={styles.smallTxt}>
 										영문/숫자/특수문자를 포함한 10자 이상의 비밀번호를 입력해주세요.
 									</span>
-									<Form.Item className={styles.signUpFormItem} name="password" hasFeedback>
+									<Form.Item
+										name="password"
+										className={styles.signUpFormItem}
+										rules={[{ validator: validatePW(useCallback) }]}
+										hasFeedback
+									>
 										<Input.Password
 											className={styles.signUpBox}
 											iconRender={(visible) =>
@@ -44,6 +61,14 @@ const SignUp = () => {
 										name="pwRe"
 										dependencies={['password']}
 										hasFeedback
+										rules={[
+											validatePWCheck.options,
+											({ getFieldValue }) => ({
+												validator(_, value) {
+													return validatePWCheck.validate(getFieldValue, value);
+												},
+											}),
+										]}
 									>
 										<Input.Password
 											className={styles.signUpBox}
@@ -55,15 +80,21 @@ const SignUp = () => {
 								</li>
 								<li>
 									<p>닉네임</p>
-									<Form.Item className={styles.signUpFormItem} name="email">
+									<Form.Item
+										className={styles.signUpFormItem}
+										name="name"
+										rules={[
+											() => ({
+												validator(_, value) {
+													return validateName(value);
+												},
+											}),
+										]}
+									>
 										<Input className={styles.signUpBox} />
 									</Form.Item>
 								</li>
 							</ul>
-
-							<Btn type="primary" htmlType="submit" size="large" className={styles.nextBtn}>
-								가입하기
-							</Btn>
 
 							<Form.Item shouldUpdate>
 								{() => (
@@ -71,13 +102,13 @@ const SignUp = () => {
 										type="primary"
 										htmlType="submit"
 										size="large"
-										className={styles.loginBtn}
+										className={styles.singUpBtn}
 										disabled={
 											!form.isFieldsTouched(true) ||
 											!!form.getFieldsError().filter(({ errors }) => errors.length).length
 										}
 									>
-										로그인
+										가입하기
 									</Btn>
 								)}
 							</Form.Item>

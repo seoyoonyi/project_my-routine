@@ -19,7 +19,7 @@
 .signUpBox {
 	height: 40px;
 }
-.nextBtn {
+.singUpBtn {
 	@apply w-full rounded-md;
 	margin-bottom: 20px;
 }
