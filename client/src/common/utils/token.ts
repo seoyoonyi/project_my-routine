@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const SAVEINFO = 'saveInfo';
+const SAVE_INFO = "saveInfo";
 let localStorage: any;
-if (typeof window == 'undefined') {
-	localStorage = global.localStorage;
+if (typeof window == "undefined") {
+  localStorage = global.localStorage;
 } else {
-	localStorage = window.localStorage;
+  localStorage = window.localStorage;
 }
 
 export default class TokenStorage {
-	saveToken(info: any) {
-		localStorage && localStorage.setItem(SAVEINFO, JSON.stringify(info));
-	}
-	getToken() {
-		return localStorage && JSON.parse(localStorage.getItem(SAVEINFO));
-	}
-	removeToken() {
-		localStorage && localStorage.removeItem(SAVEINFO);
-	}
-	clearToken() {
-		localStorage && localStorage.removeItem(SAVEINFO);
-	}
+  saveToken(info: any) {
+    localStorage && localStorage.setItem(SAVE_INFO, JSON.stringify(info));
+  }
+  getToken() {
+    return localStorage && JSON.parse(localStorage.getItem(SAVE_INFO));
+  }
+  removeToken() {
+    localStorage && localStorage.removeItem(SAVE_INFO);
+  }
+  clearToken() {
+    localStorage && localStorage.removeItem(SAVE_INFO);
+  }
 }
