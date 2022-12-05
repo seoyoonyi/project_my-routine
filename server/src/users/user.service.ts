@@ -18,7 +18,7 @@ export class UserService {
   }
 
   async create(body: CreateUserDto): Promise<Omit<User, "password" | "id">> {
-    const { email, name, password } = body;
+    const { email, name, password, haskeepLogin } = body;
     const findUserExist = await this.repo.findOne({ where: { email } });
 
     if (findUserExist) {
@@ -31,9 +31,14 @@ export class UserService {
       email,
       name,
       password: hashedPassword,
+      haskeepLogin,
     });
 
-    const readonlyUserDto = { name: user.name, email: user.email };
+    const readonlyUserDto = {
+      name: user.name,
+      email: user.email,
+      haskeepLogin: user.haskeepLogin,
+    };
     return readonlyUserDto;
   }
 
