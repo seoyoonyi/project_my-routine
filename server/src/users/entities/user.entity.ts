@@ -1,6 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { IsString, IsEmail, IsNotEmpty, IsNumber } from "class-validator";
+import {
+  IsString,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsBoolean,
+} from "class-validator";
 
 @Entity()
 @Unique(["email"])
@@ -42,4 +48,13 @@ export class User {
   @IsNotEmpty()
   @Column({ select: false })
   password: string;
+
+  @ApiProperty({
+    example: false,
+    description: "email",
+    required: true,
+  })
+  @IsBoolean()
+  @Column({ default: false })
+  haskeepLogin: boolean;
 }
