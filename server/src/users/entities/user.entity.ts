@@ -51,7 +51,7 @@ export class User {
 
   @ApiProperty({
     example: false,
-    description: "email",
+    description: "haskeepLogin",
     required: true,
   })
   @IsBoolean()
