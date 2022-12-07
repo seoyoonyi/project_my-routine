@@ -1,53 +1,74 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { useState, createContext, useContext } from 'react';
-import TokenStorage from '../utils/token';
+import axios from "axios";
+import { useState, createContext, useContext, useEffect } from "react";
+import TokenStorage from "../utils/token";
+
 const tokenStorage = new TokenStorage();
 
 export type userType = {
-	haskeepLogin: boolean;
-	token: string;
+  id: number;
+  token: string;
 };
 
 type Props = {
-	children: React.ReactNode;
+  children: React.ReactNode;
 };
 
 type ContextType = {
-	token: userType['token'] | null;
-	login: (user: userType) => void;
-	logout: () => void;
+  token: userType["token"] | null;
+  login: (user: userType) => void;
+  logout: () => void;
 };
 
+/* eslint-disable @typescript-eslint/no-empty-function */
 const contextDefaultValues: ContextType = {
-	token: null,
-	login: () => {},
-	logout: () => {},
+  token: null,
+  login: () => {},
+  logout: () => {},
 };
 
 const AuthContext = createContext(contextDefaultValues);
 
 export const AuthProvider = ({ children }: Props) => {
-	const [token, setToken] = useState<userType['token'] | null>(null);
+  const [token, setToken] = useState<userType["token"] | null>(null);
 
-	const login = (user: userType) => {
-		setToken(user.token);
-		tokenStorage.saveToken(user.token);
-	};
+  useEffect(() => {
+    const ret = tokenStorage.getToken();
+    if (!ret) {
+      return;
+    }
+    const { id, token } = ret;
 
-	const logout = () => {
-		setToken(null);
-		tokenStorage.removeToken();
-	};
+    (async () => {
+      // TODO: user-client 만들거나 localhost:8000을 베이스 url로 변경
+      const response = await axios.get(`http://localhost:8000/users/${id}`);
+      const {
+        data: { data, success },
+      } = response;
+      if (success && data.haskeepLogin) {
+        setToken(token);
+      }
+    })();
+  }, []);
 
-	const value = {
-		token,
-		login,
-		logout,
-	};
+  const login = (user: userType) => {
+    setToken(user.token);
+    tokenStorage.saveToken({ token: user.token, id: user.id });
+  };
 
-	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  const logout = () => {
+    setToken(null);
+    tokenStorage.removeToken();
+  };
+
+  const value = {
+    token,
+    login,
+    logout,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
-	return useContext(AuthContext);
+  return useContext(AuthContext);
 };

@@ -12,7 +12,9 @@ export default class TokenStorage {
     localStorage && localStorage.setItem(SAVE_INFO, JSON.stringify(info));
   }
   getToken() {
-    return localStorage && JSON.parse(localStorage.getItem(SAVE_INFO));
+    return (
+      (localStorage && JSON.parse(localStorage.getItem(SAVE_INFO))) || null
+    );
   }
   removeToken() {
     localStorage && localStorage.removeItem(SAVE_INFO);
