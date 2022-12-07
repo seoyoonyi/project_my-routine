@@ -62,7 +62,7 @@ const Header = () => {
 									</Link>
 								</li>
 								<li>
-									{auth.user ? (
+									{auth.token ? (
 										<Link
 											to="/login"
 											className="flex items-center px-5 py-3 font-medium text-gray-600 transition duration-150 ease-in-out hover:text-gray-900"

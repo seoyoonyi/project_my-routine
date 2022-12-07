@@ -1,27 +1,27 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import {
   IsString,
   IsEmail,
   IsNotEmpty,
   IsNumber,
   IsBoolean,
-} from "class-validator";
+} from 'class-validator';
 
 @Entity()
-@Unique(["email"])
+@Unique(['email'])
 export class User {
   @ApiProperty({
     example: 1,
-    description: "id",
+    description: 'id',
   })
   @PrimaryGeneratedColumn()
   @IsNumber()
   id: number;
 
   @ApiProperty({
-    example: "홍길동",
-    description: "name",
+    example: '홍길동',
+    description: 'name',
     required: true,
   })
   @IsString()
@@ -30,8 +30,8 @@ export class User {
   name: string;
 
   @ApiProperty({
-    example: "adcde@gmail.com",
-    description: "email",
+    example: 'adcde@gmail.com',
+    description: 'email',
     required: true,
   })
   @IsEmail()
@@ -40,8 +40,8 @@ export class User {
   email: string;
 
   @ApiProperty({
-    example: "123456",
-    description: "password",
+    example: '123456',
+    description: 'password',
     required: true,
   })
   @IsString()
@@ -51,7 +51,7 @@ export class User {
 
   @ApiProperty({
     example: false,
-    description: "haskeepLogin",
+    description: 'haskeepLogin',
     required: true,
   })
   @IsBoolean()

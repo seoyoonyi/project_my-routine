@@ -10,6 +10,7 @@ import api from '../service/api';
 import Btn from '../components/Btn';
 import Header from '../components/Header';
 import styles from './Login.module.css';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 type ErrorResponse = {
 	message: string;
@@ -22,20 +23,28 @@ const Login = () => {
 	const [, forceUpdate] = useState({});
 	const [isDirty, setIsDirty] = useState(false);
 	const [isValid, setIsValid] = useState(false);
+	const [checked, setChecked] = useState(false);
+
+	const onChange = (e: CheckboxChangeEvent) => {
+		setChecked(e.target.checked);
+	};
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onFinish = async (values: any) => {
 		const loginForm = {
 			email: values.email,
 			password: values.pw,
+			haskeepLogin: checked,
 		};
 
 		try {
 			const response = await axios.post(`${api.users}/login`, loginForm);
-
-			if (response.data.success === true) {
+			const {
+				data: { data, success },
+			} = response;
+			if (success === true) {
 				// 브라우저 종료 후에도 로그인 유지하기 위함
-				login(response.data.data.token);
+				login({ haskeepLogin: data.haskeepLogin, token: data.token });
 				navigate('/');
 			}
 		} catch (error) {
@@ -87,7 +96,9 @@ const Login = () => {
 						/>
 					</Form.Item>
 					<div className={styles.autoLogin}>
-						<Checkbox>로그인 상태 유지</Checkbox>
+						<Checkbox checked={checked} onChange={onChange}>
+							로그인 상태 유지
+						</Checkbox>
 					</div>
 
 					<Form.Item shouldUpdate>
