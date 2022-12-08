@@ -3,7 +3,7 @@ import type { MenuProps } from 'antd';
 import { useContext, useState } from 'react';
 import { IRoutineListProps } from './RoutineList';
 import Btn from './Btn';
-import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import { RoutineControllerContext } from '../common/context/APIControllerProvider';
 import useRoutines from '../common/hooks/use-routines';
 
 interface IRoutineModal {
@@ -35,7 +35,14 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 		setOriginData({ title, content, date, activeStatus, timeStatus });
 	};
 	const EditRoutineData = async () => {
-		await routineController.editRoutine(id, originData.title, originData.content, originData.date, originData.activeStatus, originData.timeStatus);
+		await routineController.editRoutine(
+			id,
+			originData.title,
+			originData.content,
+			originData.date,
+			originData.activeStatus,
+			originData.timeStatus,
+		);
 
 		getRoutine(originData.date);
 	};
@@ -67,7 +74,15 @@ const RoutineModal = ({ isModalOpen, routineItem, handleCancel }: IRoutineModal)
 			]}
 		/>
 	);
-	const dropDown = <Dropdown.Button key={menuKey} overlay={menu} trigger={['click']} className="dropdown" type="text" />;
+	const dropDown = (
+		<Dropdown.Button
+			key={menuKey}
+			overlay={menu}
+			trigger={['click']}
+			className="dropdown"
+			type="text"
+		/>
+	);
 
 	return (
 		<>

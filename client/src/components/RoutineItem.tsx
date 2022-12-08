@@ -4,7 +4,7 @@ import { IRoutineListProps } from './RoutineList';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './RoutineItem.module.css';
-import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import { RoutineControllerContext } from '../common/context/APIControllerProvider';
 import useRoutines from '../common/hooks/use-routines';
 
 interface IRoutineItemProps extends IRoutineListProps {
@@ -13,7 +13,16 @@ interface IRoutineItemProps extends IRoutineListProps {
 	setActiveStatus: Dispatch<SetStateAction<ActiveStatus>>;
 }
 
-const RoutineItem = ({ id, title, content, date, timeStatus, activeStatus, setActiveStatus, showModal }: IRoutineItemProps) => {
+const RoutineItem = ({
+	id,
+	title,
+	content,
+	date,
+	timeStatus,
+	activeStatus,
+	setActiveStatus,
+	showModal,
+}: IRoutineItemProps) => {
 	const { getRoutine } = useRoutines();
 	const routineController = useContext(RoutineControllerContext);
 
@@ -31,7 +40,11 @@ const RoutineItem = ({ id, title, content, date, timeStatus, activeStatus, setAc
 				<div className={styles.routineContent}>
 					<div className={styles.routineActiveStatus}>
 						<span
-							className={activeStatus === 'DONE' ? `${styles.routineActiveStatusCircle} ${styles.active}` : styles.routineActiveStatusCircle}
+							className={
+								activeStatus === 'DONE'
+									? `${styles.routineActiveStatusCircle} ${styles.active}`
+									: styles.routineActiveStatusCircle
+							}
 							onClick={EditRoutineStatus}
 						>
 							{activeStatus === 'DONE' && (
@@ -47,7 +60,15 @@ const RoutineItem = ({ id, title, content, date, timeStatus, activeStatus, setAc
 							<p className={styles.timeTxt}>테스트 샘플시간</p>
 						</div>
 						<div className={styles.routineTxtBox}>
-							<h3 className={activeStatus === 'DONE' ? (styles.titleTxt, styles.lineThroughTxt) : styles.titleTxt}>🔥 {title}</h3>
+							<h3
+								className={
+									activeStatus === 'DONE'
+										? (styles.titleTxt, styles.lineThroughTxt)
+										: styles.titleTxt
+								}
+							>
+								🔥 {title}
+							</h3>
 							<p className={styles.contentTxt}>{content}</p>
 						</div>
 						<div className="flex justify-end w-2/12">

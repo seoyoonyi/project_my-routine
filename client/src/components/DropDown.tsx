@@ -3,7 +3,7 @@ import { Dropdown, Space } from 'antd';
 import { ChevronDown } from 'lucide-react';
 import { Dispatch, SetStateAction, useCallback, useContext } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
-import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import { RoutineControllerContext } from '../common/context/APIControllerProvider';
 import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByParam } from '../common/utils/utils';
 interface IDropDownType {
@@ -15,7 +15,8 @@ interface IDropDownType {
 const DropDown = ({ ActiveStatusTolggle, onWeek, setOnWeek }: IDropDownType) => {
 	const { getRoutine } = useRoutines();
 	const routineController = useContext(RoutineControllerContext);
-	const { setRoutineContextList, today, changeActiveStatus, setActive, onBorder, setOnBorder } = useContext(RoutineContext);
+	const { setRoutineContextList, today, changeActiveStatus, setActive, onBorder, setOnBorder } =
+		useContext(RoutineContext);
 	const DateFromTo = Object.values(getCurrentWeekByParam());
 
 	const getRoutineFromTo = useCallback(

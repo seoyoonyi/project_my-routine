@@ -1,10 +1,11 @@
 import { useCallback, useContext } from 'react';
 import { RoutineContext } from '../context/RoutineContext';
-import RoutineControllerContext from '../context/RoutineControllerContext';
+import { RoutineControllerContext } from '../context/APIControllerProvider';
 
 const useRoutines = () => {
 	const routineController = useContext(RoutineControllerContext);
-	const { setRoutineContextList, setMoveDistance, currentWeek, setActive } = useContext(RoutineContext);
+	const { setRoutineContextList, setMoveDistance, currentWeek, setActive } =
+		useContext(RoutineContext);
 
 	const borderActive = (index: number) => {
 		setMoveDistance(100 * index);

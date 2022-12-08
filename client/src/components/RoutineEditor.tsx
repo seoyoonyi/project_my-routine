@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Btn from './Btn';
 import { getStringDate } from '../common/utils/utils';
 import { Modal, Input, Form, Radio } from 'antd';
 import { ActiveStatus, TimeStatus } from '../common/type/type';
-import RoutineControllerContext from '../common/context/RoutineControllerContext';
+import { RoutineControllerContext } from '../common/context/APIControllerProvider';
 import styles from './RoutineEditor.module.css';
 import TextArea from 'antd/lib/input/TextArea';
 import useRoutines from '../common/hooks/use-routines';
@@ -45,7 +45,13 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 	const routineSave = () => routineToggle();
 
 	const addRoutineData = async () => {
-		const { title, content, date, activeStatus, timeStatus } = form.getFieldsValue(['title', 'content', 'date', 'activeStatus', 'timeStatus']);
+		const { title, content, date, activeStatus, timeStatus } = form.getFieldsValue([
+			'title',
+			'content',
+			'date',
+			'activeStatus',
+			'timeStatus',
+		]);
 
 		await routineController.addRoutine(title, content, date, activeStatus, timeStatus);
 		getRoutine(date);
@@ -77,7 +83,12 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 				</div>
 				<div className={styles.contentTextAreaBox}>
 					<Form.Item name="content">
-						<TextArea name="content" className={styles.contentTextArea} placeholder="추가한 이유(150자 이내)" required />
+						<TextArea
+							name="content"
+							className={styles.contentTextArea}
+							placeholder="추가한 이유(150자 이내)"
+							required
+						/>
 					</Form.Item>
 				</div>
 				<div className={styles.routineStartBox}>
@@ -115,7 +126,10 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 							type="primary"
 							htmlType="submit"
 							size="large"
-							disabled={!form.isFieldsTouched(true) || !!form.getFieldsError().filter(({ errors }) => errors.length).length}
+							disabled={
+								!form.isFieldsTouched(true) ||
+								!!form.getFieldsError().filter(({ errors }) => errors.length).length
+							}
 						>
 							루틴저장
 						</Btn>
