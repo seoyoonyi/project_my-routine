@@ -1,8 +1,10 @@
-import { useCallback } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import alertInfo, { timer } from '../common/utils/alert';
 import Header from '../components/Header';
-import { Link } from 'react-router-dom';
 import MainContainer from '../components/MainContainer';
 import styles from './SingUp.module.css';
 import Btn from '../components/Btn';
@@ -12,23 +14,51 @@ import {
 	validatePW,
 	validatePWCheck,
 } from '../common/utils/validate-check';
+import { UserControllerContext } from '../common/context/APIControllerProvider';
 
 const SignUp = () => {
 	const [form] = Form.useForm();
+	const userController = useContext(UserControllerContext);
+	const [, forceUpdate] = useState({});
+	const [, setSubmitLoading] = useState(false);
+	const navigate = useNavigate();
+
+	const handleSignUp = async () => {
+		setSubmitLoading(true);
+
+		try {
+			const { name, email, password } = form.getFieldsValue(['name', 'email', 'password']);
+			await userController.signUpUser(name, email, password);
+
+			alertInfo('축하드립니다.', '회원가입이 완료되었습니다. \n 로그인해주세요.', 'success');
+			setTimeout(() => {
+				setSubmitLoading(false);
+				navigate('/login');
+			}, timer);
+		} catch (error) {
+			setSubmitLoading(false);
+			const err = error as AxiosError;
+			throw new Error(err.message);
+		}
+	};
+
+	useEffect(() => {
+		forceUpdate({});
+	}, []);
 
 	return (
 		<>
 			<Header />
 			<MainContainer className={styles.signUpContainer}>
 				<div className={styles.signUpForm}>
-					<Form form={form}>
+					<Form form={form} onFinish={handleSignUp}>
 						<fieldset>
 							<legend>회원가입</legend>
 							<ul>
 								<li>
 									<p>이메일</p>
 									<Form.Item
-										name="id"
+										name="email"
 										className={styles.signUpFormItem}
 										rules={[{ validator: validateEmail(useCallback) }]}
 									>
