@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState, createContext, useContext, useLayoutEffect } from 'react';
 import { UserControllerContext } from '../context/APIControllerProvider';
 import TokenStorage from '../utils/token';
@@ -41,9 +40,8 @@ export const AuthProvider = ({ children }: Props) => {
 		const { id, token } = ret;
 		(async () => {
 			const response = await userController.getUserId(id);
-			const {
-				data: { data, success },
-			} = response;
+
+			const { data, success } = response;
 			if (success && data.haskeepLogin) {
 				setToken(token);
 			}
