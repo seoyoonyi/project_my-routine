@@ -1,0 +1,19 @@
+.errorIconGroup {
+	@apply flex justify-center items-center mt-10;
+}
+
+.errorIcon404 {
+	@apply ml-2 text-[82px] text-[#37e2d5] font-bold;
+}
+
+.errorTit {
+	@apply text-4xl font-extrabold mt-9;
+}
+
+.errorDesc {
+	@apply text-xl font-medium mt-3 text-gray-500;
+}
+
+.errorBtn {
+	@apply mt-14 rounded-md;
+}
