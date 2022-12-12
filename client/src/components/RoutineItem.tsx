@@ -55,10 +55,9 @@ const RoutineItem = ({
 						</span>
 					</div>
 					<div className="flex w-full" onClick={() => showModal()}>
-						<div className="w-2/12">
-							{/* <p className={styles.timeTxt}>{activeStatus}</p> */}
+						{/* <div className="w-2/12">
 							<p className={styles.timeTxt}>테스트 샘플시간</p>
-						</div>
+						</div> */}
 						<div className={styles.routineTxtBox}>
 							<h3
 								className={
@@ -67,7 +66,7 @@ const RoutineItem = ({
 										: styles.titleTxt
 								}
 							>
-								🔥 {title}
+								{title}
 							</h3>
 							<p className={styles.contentTxt}>{content}</p>
 						</div>

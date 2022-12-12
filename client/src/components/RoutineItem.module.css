@@ -27,7 +27,8 @@
 	@apply flex items-center justify-center w-full h-full;
 }
 .routineTxtBox {
-	@apply w-8/12 h-full;
+	/* @apply w-8/12 h-full; */
+	@apply w-10/12 h-full;
 }
 .titleTxt {
 	@apply text-gray-700;
