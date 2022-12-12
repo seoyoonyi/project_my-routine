@@ -1,0 +1,102 @@
+.formBox {
+	@apply pb-20;
+}
+
+.inputGroup {
+	@apply w-full rounded-md overflow-hidden;
+	border: 1px solid #eee;
+}
+
+.titleInputBox {
+	@apply w-full flex;
+}
+
+.titleInputBox div {
+	@apply w-full;
+}
+
+.titleInputBox input {
+	@apply text-xl;
+}
+
+.titleInputBox input:hover,
+.titleInputBox input:focus,
+.titleInputBox input.ant-input-focused,
+.titleInputBox input:not(.ant-input-affix-wrapper-disabled):hover,
+.titleInputBox input:focus,
+.titleInputBox input:focus-within,
+.titleInputBox input:hover {
+	border: none;
+	box-shadow: none;
+}
+.titleInput {
+	padding: 10px 9px;
+	border: none;
+}
+
+.contentTextAreaBox {
+	@apply w-full h-20;
+}
+.contentTextAreaBox div {
+	@apply h-full;
+}
+
+.contentTextArea {
+	@apply w-full px-[9px] py-[10px];
+	height: 100% !important;
+	resize: none;
+	border: none;
+}
+.contentTextAreaBox textarea:hover,
+.contentTextAreaBox textarea:focus,
+.contentTextAreaBox textarea.ant-input-focused,
+.contentTextAreaBox textarea:not(.ant-input-affix-wrapper-disabled):hover,
+.contentTextAreaBox textarea:focus,
+.contentTextAreaBox textarea:focus-within,
+.contentTextAreaBox textarea:hover {
+	border: none;
+	box-shadow: none;
+}
+
+.btnGroup {
+	@apply w-full flex justify-end mt-2 pb-2;
+	border-bottom: 1px solid #eee;
+}
+.btnGroup button + button {
+	@apply ml-2;
+}
+.titleContentBox {
+	@apply w-full pb-2;
+	border-bottom: 1px solid #eee;
+}
+
+.titleContentBox h2 {
+	@apply text-xl pl-2 pb-1;
+}
+
+.titleContentBox p {
+	@apply pl-2;
+}
+
+.timeStatusBtn:hover {
+	color: #37e2d5;
+}
+
+.routineStartBox {
+	@apply w-full flex justify-between items-center;
+	padding: 10px 9px;
+	border-bottom: 1px solid #eee;
+}
+.routineStartBox p {
+	@apply text-gray-500 font-medium;
+}
+
+.routineSaveBtnBox {
+	@apply w-full h-16 mt-10;
+}
+.routineSaveBtnBox div {
+	@apply h-full;
+}
+.routineSaveBtnBox button {
+	@apply w-full h-full;
+}

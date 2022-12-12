@@ -70,7 +70,7 @@ const RoutineEditor = ({ routineToggle, onAdd }: IRoutineEditorProps) => {
 		<Modal open={onAdd} onCancel={routineToggle} footer={null} className={styles.modalBox}>
 			<Form
 				form={form}
-				name="horizontal_login"
+				name="routine_editor"
 				layout="inline"
 				onFinish={handleSubmit}
 				initialValues={{ timeStatus }}
