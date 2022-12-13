@@ -63,7 +63,7 @@ export const validatePWCheck = {
 
 //닉네임
 export const validateName = (value: string) => {
-	const regExp = /[가-힣]/g;
+	const regExp = /^[가-힣a-zA-Z]+$/;
 
 	if (!value) {
 		return Promise.reject(new Error('닉네임을 입력해주세요.'));
@@ -75,7 +75,7 @@ export const validateName = (value: string) => {
 		return Promise.reject(new Error('닉네임은 2 ~ 20자 입니다.'));
 	}
 	if (!regExp.test(value)) {
-		return Promise.reject(new Error('닉네임은 한글만 사용할 수 있습니다.'));
+		return Promise.reject(new Error('닉네임은 영문,한글만 사용할 수 있습니다.'));
 	}
 	return Promise.resolve();
 };
