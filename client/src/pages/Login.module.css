@@ -1,5 +1,5 @@
 .loginContainer {
-	@apply h-screen bg-gray-50;
+	@apply h-screen bg-gray-100;
 }
 .loginForm {
 	@apply w-[400px] md:w-[350px] sm:w-[300px] mx-auto;
