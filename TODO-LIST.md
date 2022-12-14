@@ -10,6 +10,14 @@
 - 요금제 페이지
 - 메인 인트로 페이지
 - v6 CreatRouter
+- 리액트 서스펜스로 로딩처리(suspense)
+- 앤트디 스켈레톤 처리
+- 시간 필터 적용
+  - '모든시간' event.key 안 얻어짐 => 대쳬: 서브메뉴에 '모든시간' 넣기
+  - 시간 필터에 '모든시간' 추가 원함
+  - 마이루틴처럼 시간필터를 적용시키기 원함
+    - routine-client에서 getRoutinesByCondition 사용 불가능. activeStatus과 timeStatus 값이 둘다 있어야함. 둘중 하나만 있을때 인자값을 분기 태우기 힘듦.
+    - getRoutinesByConditionTime를 만들었으나 과거에 있던 '아침','오후','저녁'시간까지 불러와짐
 
 ### 완료
 
