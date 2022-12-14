@@ -46,7 +46,9 @@ class RoutineClient {
 	async getRoutinesByCondition(activeStatus?: string, timeStatus?: string) {
 		try {
 			// condition?active=값&time=값
-			const response = await this.routineClient.get('routines/condition?active=' + activeStatus + '&time=' + timeStatus);
+			const response = await this.routineClient.get(
+				'routines/condition?active=' + activeStatus + '&time=' + timeStatus,
+			);
 			if (response.data.success) {
 				return response.data;
 			}
@@ -56,7 +58,25 @@ class RoutineClient {
 		}
 	}
 
-	async addRoutine(title: string, content: string, date: string, activeStatus: ActiveStatus, timeStatus: TimeStatus) {
+	async getRoutinesByConditionTime(timeStatus: string) {
+		try {
+			const response = await this.routineClient.get('routines/condition?time=' + timeStatus);
+			if (response.data.success) {
+				return response.data;
+			}
+		} catch (error) {
+			const err = error as AxiosError;
+			throw new Error(err.message);
+		}
+	}
+
+	async addRoutine(
+		title: string,
+		content: string,
+		date: string,
+		activeStatus: ActiveStatus,
+		timeStatus: TimeStatus,
+	) {
 		try {
 			const response = await this.routineClient.post('routines', {
 				title,
@@ -74,7 +94,14 @@ class RoutineClient {
 		}
 	}
 
-	async editRoutine(id: number, title: string, content: string, date: string, activeStatus: ActiveStatus, timeStatus: TimeStatus) {
+	async editRoutine(
+		id: number,
+		title: string,
+		content: string,
+		date: string,
+		activeStatus: ActiveStatus,
+		timeStatus: TimeStatus,
+	) {
 		try {
 			const response = await this.routineClient.patch('routines/' + id, {
 				title,

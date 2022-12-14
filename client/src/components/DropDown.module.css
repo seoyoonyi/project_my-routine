@@ -1,0 +1,3 @@
+.allTimeBtn div span {
+	@apply last:top-[50%] last:translate-y-[-47%];
+}

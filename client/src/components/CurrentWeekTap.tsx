@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { MouseEvent, useContext, useMemo } from 'react';
 import { RoutineContext } from '../common/context/RoutineContext';
 import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByDash } from '../common/utils/utils';
@@ -10,7 +10,7 @@ const CurrentWeekTap = () => {
 
 	const currentWeekbyDash = useMemo(() => getCurrentWeekByDash(dayNumber), [dayNumber]);
 	const dayArr = ['월', '화', '수', '목', '금', '토', '일'];
-	const handleClickDay = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+	const handleClickDay = (e: MouseEvent<HTMLLIElement, globalThis.MouseEvent>) => {
 		const {
 			currentTarget: {
 				dataset: { day },
@@ -25,7 +25,9 @@ const CurrentWeekTap = () => {
 			{currentWeekbyDash.map((it: string, index) => {
 				return (
 					<li
-						className={`px-5 py-2 w-[14.285%] hover:bg-gray-200 ${active === index ? 'day dayActiveBtn' : 'day'}`}
+						className={`px-5 py-2 w-[14.285%] hover:bg-gray-200 ${
+							active === index ? 'day dayActiveBtn' : 'day'
+						}`}
 						data-day={currentWeek[index]}
 						key={it}
 						onClick={(e) => {

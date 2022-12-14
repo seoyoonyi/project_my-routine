@@ -6,6 +6,7 @@ import { RoutineContext } from '../common/context/RoutineContext';
 import { RoutineControllerContext } from '../common/context/APIControllerProvider';
 import useRoutines from '../common/hooks/use-routines';
 import { getCurrentWeekByParam } from '../common/utils/utils';
+import styles from './DropDown.module.css';
 interface IDropDownType {
 	ActiveStatusTolggle: () => void;
 	onWeek: boolean;
@@ -31,17 +32,23 @@ const DropDown = ({ ActiveStatusTolggle, onWeek, setOnWeek }: IDropDownType) => 
 		[onBorder, onWeek, routineController, setActive, setOnBorder, setRoutineContextList],
 	);
 
+	const getConditionTime: MenuProps['onClick'] = async (e) => {
+		const time = e.key;
+		const response = await routineController.getRoutinesByConditionTime(time);
+		setRoutineContextList(response.data);
+	};
+
 	const items: MenuProps['items'] = [
 		{
 			label: '오늘',
-			key: '0',
+			key: '오늘',
 			onClick: () => {
 				getRoutine(today);
 			},
 		},
 		{
 			label: '이번 주',
-			key: '1',
+			key: '이번 주',
 			onClick: () => {
 				getRoutineFromTo(DateFromTo[0], DateFromTo[1]);
 				setOnWeek(true);
@@ -49,19 +56,23 @@ const DropDown = ({ ActiveStatusTolggle, onWeek, setOnWeek }: IDropDownType) => 
 		},
 
 		{
-			key: '3',
+			key: '모든시간',
 			label: '모든시간',
+			className: styles.allTimeBtn,
+			onClick: (e) => {
+				getConditionTime(e);
+			},
 			children: [
 				{
-					key: '3-1',
+					key: '아침',
 					label: '아침',
 				},
 				{
-					key: '3-2',
+					key: '오후',
 					label: '오후',
 				},
 				{
-					key: '3-3',
+					key: '저녁',
 					label: '저녁',
 				},
 			],
@@ -69,7 +80,7 @@ const DropDown = ({ ActiveStatusTolggle, onWeek, setOnWeek }: IDropDownType) => 
 
 		{
 			label: !changeActiveStatus ? '완료된 작업 숨기기' : '완료된 작업 표시',
-			key: '4',
+			key: !changeActiveStatus ? '완료된 작업 숨기기' : '완료된 작업 표시',
 			onClick: () => {
 				ActiveStatusTolggle();
 			},
